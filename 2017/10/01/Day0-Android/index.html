@@ -12,7 +12,7 @@
     
     <title>
         
-            أرشيف: 2017 | 
+            Day0 | 
         
         Hexo
     </title>
@@ -65,15 +65,18 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="أرشيف: 2017 | Hexo">
+    <meta property="og:title" content="Day0 | Hexo">
     <meta property="og:image" content="/img/icon.png" />
     <meta property="og:description" content="">
     
 
     
+        <meta property="article:published_time" content="Oct 01, 2017" />
+        <meta property="article:modified_time" content="Oct 19, 2017" />
+    
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="أرشيف: 2017 | Hexo">
+    <meta name="twitter:title" content="Day0 | Hexo">
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="/img/icon.png">
     <meta name="twitter:card" content="summary_large_image" />
@@ -81,13 +84,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com/archives/2017/index.html" />
+        <link rel="canonical" href="http://yoursite.com/2017/10/01/Day0-Android/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Hexo",
+        "logo": "/img/icon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "John Doe",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/icon.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "headline": "Day0",
+    "url": "http://yoursite.com/2017/10/01/Day0-Android/index.html",
+    "datePublished": "Oct 01, 2017",
+    "dateModified": "Oct 19, 2017",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com"
+    }
+}
+</script>
 
 
     
@@ -275,155 +308,344 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#版本号"><span class="post-toc-number">1.</span> <span class="post-toc-text">版本号</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获取版本号"><span class="post-toc-number">2.</span> <span class="post-toc-text">获取版本号</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#版本号适配"><span class="post-toc-number">3.</span> <span class="post-toc-text">版本号适配</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-0的权限"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">6.0的权限</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#通知的副标题-API-LEVEL16才能使用"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">通知的副标题 API LEVEL16才能使用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7-0-分屏多任务"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">7.0 分屏多任务</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#UML图"><span class="post-toc-number">3.0.4.</span> <span class="post-toc-text">UML图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#泛化-generalization"><span class="post-toc-number">3.0.4.1.</span> <span class="post-toc-text">泛化(generalization)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#实现-realize"><span class="post-toc-number">3.0.4.2.</span> <span class="post-toc-text">实现(realize)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#依赖-dependency"><span class="post-toc-number">3.0.4.3.</span> <span class="post-toc-text">依赖(dependency)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#关联-association"><span class="post-toc-number">3.0.4.4.</span> <span class="post-toc-text">关联(association)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#聚合-aggregation"><span class="post-toc-number">3.0.4.5.</span> <span class="post-toc-text">聚合(aggregation)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#组合-composition"><span class="post-toc-number">3.0.4.6.</span> <span class="post-toc-text">组合(composition)</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#抽象类和接口"><span class="post-toc-number">3.0.5.</span> <span class="post-toc-text">抽象类和接口</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内部类"><span class="post-toc-number">3.0.6.</span> <span class="post-toc-text">内部类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闭包From"><span class="post-toc-number">3.0.7.</span> <span class="post-toc-text">闭包From</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#AndroidStudio"><span class="post-toc-number">3.0.8.</span> <span class="post-toc-text">AndroidStudio</span></a></li></ol></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/10/19/hello-world/">Hello World</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            Welcome to Hexo
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/10/19/hello-world/" target="_self">واصل القراءة</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/icon.png" width="44px" height="44px" alt="John Doe's avatar">
-            </div>
-            <div>
-                <strong>John Doe</strong>
-                <span>Oct 19, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/10/01/Day0-Android/">Day0</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            版本号
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/10/01/Day0-Android/" target="_self">واصل القراءة</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/icon.png" width="44px" height="44px" alt="John Doe's avatar">
-            </div>
-            <div>
-                <strong>John Doe</strong>
-                <span>Oct 01, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                Day0
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/icon.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>John Doe</strong>
+        <span>Oct 01, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Day0&url=http://yoursite.com/2017/10/01/Day0-Android/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                شارك على Weibo
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Day0&url=http://yoursite.com/2017/10/01/Day0-Android/index.html&via=John Doe" target="_blank">
+            <li class="mdl-menu__item">
+                شارك على Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/01/Day0-Android/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                شارك على Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/01/Day0-Android/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                شارك على Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h2><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Codename</th>
+<th>API</th>
+<th>Distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.3.3 - 2.3.7</td>
+<td>Gingerbread</td>
+<td>10</td>
+<td>0.7%</td>
+</tr>
+<tr>
+<td>4.0.3 - 4.0.4</td>
+<td>Ice Cream Sandwich</td>
+<td>15</td>
+<td>0.7%</td>
+</tr>
+<tr>
+<td>4.1.x</td>
+<td>Jelly Bean</td>
+<td>16</td>
+<td>2.7%</td>
+</tr>
+<tr>
+<td>4.2.x</td>
+<td>-</td>
+<td>17</td>
+<td>3.8%</td>
+</tr>
+<tr>
+<td>4.3</td>
+<td>-</td>
+<td>18</td>
+<td>1.1%</td>
+</tr>
+<tr>
+<td>4.4</td>
+<td>KitKat</td>
+<td>19</td>
+<td>16.0%</td>
+</tr>
+<tr>
+<td>5.0</td>
+<td>Lollipop</td>
+<td>21</td>
+<td>7.4%</td>
+</tr>
+<tr>
+<td>5.1</td>
+<td></td>
+<td>22</td>
+<td>21.8%</td>
+</tr>
+<tr>
+<td>6.0</td>
+<td>Marshmallow</td>
+<td>23</td>
+<td>32.3%</td>
+</tr>
+<tr>
+<td>7.0</td>
+<td>Nougat</td>
+<td>24</td>
+<td>12.3%</td>
+</tr>
+<tr>
+<td>7.1</td>
+<td></td>
+<td>25</td>
+<td>1.2%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="获取版本号"><a href="#获取版本号" class="headerlink" title="获取版本号"></a>获取版本号</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">   * 获取Android发布的版本</div><div class="line">   */</div><div class="line">  public static String getVersion() &#123;</div><div class="line">      return android.os.Build.VERSION.RELEASE;</div><div class="line">  &#125;</div><div class="line">  /**</div><div class="line">   * 获取SDK的API Level</div><div class="line">   * @return</div><div class="line">   */</div><div class="line">  public static int getSDK() &#123;</div><div class="line">      return android.os.Build.VERSION.SDK_INT;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h2 id="版本号适配"><a href="#版本号适配" class="headerlink" title="版本号适配"></a>版本号适配</h2><p>TODO <a href="http://blog.csdn.net/haovip123/article/details/54618642" target="_blank" rel="external">http://blog.csdn.net/haovip123/article/details/54618642</a></p>
+<h4 id="6-0的权限"><a href="#6-0的权限" class="headerlink" title="6.0的权限"></a>6.0的权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">protected boolean hasPermission(String permission) &#123;</div><div class="line">      if (Build.VERSION.SDK_INT &gt; Build.VERSION_CODES.LOLLIPOP_MR1)</div><div class="line">          return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);</div><div class="line">      return true;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h4 id="通知的副标题-API-LEVEL16才能使用"><a href="#通知的副标题-API-LEVEL16才能使用" class="headerlink" title="通知的副标题 API LEVEL16才能使用"></a>通知的副标题 API LEVEL16才能使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.JELLY_BEAN) &#123;    </div><div class="line">builder.setSubText(&quot;it is really basic&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="7-0-分屏多任务"><a href="#7-0-分屏多任务" class="headerlink" title="7.0 分屏多任务"></a>7.0 分屏多任务</h4><p>将 DecorView 从 PhoneWindow 中移出来, 并添加了 DecorCaptionView 作为分屏的实现</p>
+<blockquote>
+<p>API Level建议写成版本名VERSION_CODES, 少用数字</p>
+</blockquote>
+<h4 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h4><h5 id="泛化-generalization"><a href="#泛化-generalization" class="headerlink" title="泛化(generalization)"></a>泛化(generalization)</h5><p>= is-a, 继承<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/generalization.jpg" alt=""></p>
+<h5 id="实现-realize"><a href="#实现-realize" class="headerlink" title="实现(realize)"></a>实现(realize)</h5><p>= like-a, 实现<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/realize.jpg" alt=""></p>
+<h5 id="依赖-dependency"><a href="#依赖-dependency" class="headerlink" title="依赖(dependency)"></a>依赖(dependency)</h5><p>= 方法的形参, 局部变量, 对静态方法的调用<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/dependency.jpg" alt=""></p>
+<h5 id="关联-association"><a href="#关联-association" class="headerlink" title="关联(association)"></a>关联(association)</h5><p>= 成员变量<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/association.jpg" alt=""></p>
+<h5 id="聚合-aggregation"><a href="#聚合-aggregation" class="headerlink" title="聚合(aggregation)"></a>聚合(aggregation)</h5><p>= has-a, 不是强依赖, 如果整体不存在了, 个体还是存在的<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/aggregation.jpg" alt=""></p>
+<h5 id="组合-composition"><a href="#组合-composition" class="headerlink" title="组合(composition)"></a>组合(composition)</h5><p>= contains-a, 强依赖, 如果整体不存在了, 部分也不存在了<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/composition.jpg" alt=""></p>
+<p>聚合和组合是关联关系的一种特例<br>组合 &gt; 聚合 &gt; 关联 &gt; 依赖;</p>
+<h4 id="抽象类和接口"><a href="#抽象类和接口" class="headerlink" title="抽象类和接口"></a>抽象类和接口</h4><p>抽象类是对根源的抽象, 接口是对动作的抽象<br>抽象类是像xxx一样, 接口是能xxx这样<br>抽象类可以有非抽象方法, 接口不行<br>抽象类可以没有抽象方法, 接口不行<br>抽象类可以有参数, 接口不行</p>
+<h4 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h4><p>内部类只是 Java 的语法糖之一（在编译期做手脚）, 过了编译期后, 变生成两个 Java 文件<br>内部类会持有外部类的引用<br>匿名内部类是唯一没有构造器的类, 一般用于实现抽象类/接口</p>
+<h4 id="闭包From"><a href="#闭包From" class="headerlink" title="闭包From"></a>闭包<a href="http://www.jianshu.com/p/f55b11a4cec2" target="_blank" rel="external">From</a></h4><p>对象是带方法的数据, 而闭包是带(外部)数据的方法<br>条件如下：</p>
+<ol>
+<li>一个依赖于外部自由变量的函数</li>
+<li>这个函数能够访问外围环境里的自由变量</li>
+</ol>
+<ul>
+<li><p>关于组合子:内部操作依赖的变量全部由参数提供了的 <strong>“自给自足”</strong> 的函数<br>f(x,y) = x+y</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> x+y;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>关于自由变量: 在函数作用域以外，由函数的外部环境提供的参数就叫”自由变量（Free Variable）”<br>f(x)=x+y</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> y=<span class="number">3</span>;</div><div class="line">add()&#123;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">2</span>;</div><div class="line">    <span class="keyword">return</span> x+y;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>闭包: 就是把函数以及变量包起来，使得变量的生存周期延长。闭包跟面向对象是一棵树上的两条枝，实现的功能是等价的。所以java的类其实也是闭包</p>
+</li>
+<li>内部类是闭包(包含外部类的引用)<br>如果局部内部类直接使用外部类的局部变量, 在Java多线程等情况下, 可能会产生外部类已被回收, 但是内部类还在运行, 那么内部类就可能会去访问一个不存在的外部类的局部变量.<br>那么当局部变量被置为 final 时, 编译器会将 final 局部变量复制一份, 复制品直接作为局部内部中的数据成员, 这样, 当局部内部类访问变量时, 其实访问的是复制品.<blockquote>
+<p>Java编译器实现的只是capture-by-value(包括lambda表达式)，并没有实现capture-by-reference</p>
+</blockquote>
+</li>
+</ul>
+<p>而且由于被 final 修饰的变量赋值后不能再修改, 所以就保证了复制品与原始变量的一致, 给人的感觉：好像局部变量的生命期延长了.这也是 Java的闭包.</p>
+<h4 id="AndroidStudio"><a href="#AndroidStudio" class="headerlink" title="AndroidStudio"></a>AndroidStudio</h4><ul>
+<li>代码提示快捷键ClassNameCompletion<ul>
+<li>win &amp; mac: Control + Shift + 空格键</li>
+<li>和系统冲突, 建议keymap里修改.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>参考<br><a href="https://developer.android.com/about/dashboards/index.html?hl=zh-cn" target="_blank" rel="external">Google | 信息中心</a><br><a href="http://www.jianshu.com/p/830d0eb44a56" target="_blank" rel="external">简书 | Android-SDK版本号表格</a><br><a href="http://blog.csdn.net/qq_31655965/article/details/54645220" target="_blank" rel="external">CSDN | 重新认识java（四） — 组合、聚合与继承的爱恨情仇</a><br><a href="http://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html" target="_blank" rel="external">CSDN | 看懂UML类图和时序图</a><br><a href="http://www.cnblogs.com/olvo/archive/2012/05/03/2481014.html" target="_blank" rel="external">cnblogs | UML类图关系（泛化 、继承、实现、依赖、关联、聚合、组合）</a></p>
+</blockquote>
+
+    
+
     
 </div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/10/19/hello-world/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            أحدث
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     

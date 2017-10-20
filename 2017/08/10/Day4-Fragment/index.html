@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Fragment," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Fragment 的使用和生命周期">
+<meta name="keywords" content="Android,Fragment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day4 - Fragment">
+<meta property="og:url" content="http://yoursite.com/2017/08/10/Day4-Fragment/index.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="Fragment 的使用和生命周期">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-20T06:16:43.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day4 - Fragment">
+<meta name="twitter:description" content="Fragment 的使用和生命周期">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/10/Day4-Fragment/"/>
+
+
+
+
+
+  <title>Day4 - Fragment | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/Day4-Fragment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day4 - Fragment</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T17:24:00+08:00">
+                2017-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Fragment 的使用和生命周期<br><a id="more"></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>Fragment初始化用newInstance</li>
+<li>viewPager开多Fragment, 考虑懒加载</li>
+<li><p>getActivity空指针，<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* 避免异步中进行```commit()</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>避免在<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">* genymotion别乱拖,否则横竖屏切换不会重启activity</div><div class="line">* fragment第二次进入显示白[原因](http://blog.csdn.net/u014452224/article/details/45920315?spm=5176.8246799.blogcont.4.nDyPzm)</div><div class="line">* onBackPressed[BUG](http://blog.csdn.net/zhanhong39/article/details/61261521)</div><div class="line">* [FragmentStateLoss](https://juejin.im/entry/58636864128fe10069efc4b5)</div><div class="line"></div><div class="line">## 生命周期</div><div class="line">##### 只有在activity处于```onResume()```时，fragment的生命周期才会自由，否则，被activity控制</div><div class="line">* ```onAttach()```, 拿到activity, [添加Listener](https://stackoverflow.com/questions/32155446/a-method-of-mainactivity-called-from-a-fragment-or-using-a-singleton-class-whic)</div><div class="line">* ```onCreate（）```, ？？？</div><div class="line">* ```onCreateView（）```, 创建视图</div><div class="line">* ```onActivityCreated()```, activity的onCreate 返回时调用</div><div class="line">* ```onDestroyView()```, Fragment视图被移除时调用</div><div class="line">* ```onDestroy()```,</div><div class="line">* ```onDetach()```, Fragment 与 activity 取消关联时调用, 操作与```onAttach()```相反</div><div class="line">* ![](https://raw.githubusercontent.com/sunxlfred/RES/master/activity_fragment_lifecycle_new.png)</div><div class="line"></div><div class="line">## 加载</div><div class="line">#### 静态加载,类似 view</div><div class="line">* activity 的布局中</div><div class="line">  ```xml</div><div class="line">  &lt;fragment  </div><div class="line">       android:id=&quot;@+id/id_fragment_title&quot;  **必须包含ID**</div><div class="line">       android:name=&quot;com.包名.路径.TitleFragment&quot;  </div><div class="line">       android:layout_width=&quot;fill_parent&quot;  </div><div class="line">       android:layout_height=&quot;45dp&quot; /&gt;</div></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<h4 id="动态加载"><a href="#动态加载" class="headerlink" title="动态加载"></a>动态加载</h4><p><strong>1.构造</strong><br><strong>Google规定 Fragment 需要提供一个 public 的无参构造函数，在 framework 状态恢复时使用</strong></p>
+<ul>
+<li><p>如果需要接受外部的参数创建Fragment的, 需保存参数到 bundle:</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">inflate（<span class="keyword">int</span> resources,  当前布局D</div><div class="line">         ViewGroup root, 根布局G</div><div class="line">         <span class="keyword">boolean</span> attachToRoot 是否依赖根布局G）,</div></pre></td></tr></table></figure>
+<blockquote>
+<p>viewgroup的<figure class="highlight plain"><figcaption><span>如果设置第三个参数为false, 则当前布局D 不依赖于根布局G, 返回的是xml为根布局的view</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">  * 如果不设置attachToRoot的false,</div><div class="line">  * 当fragmentTransaction add 时, **```java.lang.IllegalStateException: The specified child already has a parent. You must call removeView() on the child&apos;s parent first.```**</div><div class="line">  * 当viewpager导入, 直接报 **OOM**</div><div class="line">* 这个参数是parentView, 当你创建子布局时, 如果希望这个布局依赖于第二</div><div class="line">  ```java</div><div class="line">  //FragmentOne中的newInstance函数</div><div class="line">      public static FragmentOne newInstance(String text)&#123;</div><div class="line">          FragmentOne fragmentOne = new FragmentOne();</div><div class="line">          Bundle bundle = new Bundle();</div><div class="line">          bundle.putString(&quot;name&quot;, text);//传参</div><div class="line">          fragmentOne.setArguments(bundle);</div><div class="line">          return fragmentOne;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      @Override</div><div class="line">      public void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">          super.onCreate(savedInstanceState);</div><div class="line">          text = getArguments() != null ? getArguments().getString(&quot;name&quot;) : &quot;&quot;;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      @Override</div><div class="line">      public void onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)&#123;</div><div class="line">        View view = inflater.inflate(R.layout.fragmentm, container, false);</div><div class="line">        return view;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">  作者：DrunkPian0</div><div class="line">  链接：http://www.jianshu.com/p/caa5d6568faa</div><div class="line">  來源：简书</div><div class="line">  著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div></pre></td></tr></table></figure></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>2.替换</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">FragmentManager fragmentManager = getFragmentManager();</div><div class="line">FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();</div><div class="line">fragmentTransaction.replace(布局，Fragment 实例)</div><div class="line">fragmentTransaction.commit();</div></pre></td></tr></table></figure></p>
+<p><strong>3. 通信</strong></p>
+<ul>
+<li><p><strong>activity传给fragment</strong><br>  activity 中通过<figure class="highlight plain"><figcaption><span>Fragment 实例,</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">    也可以</div><div class="line"></div><div class="line">* **Fragment传给activity**</div><div class="line">    1. fragment内部创建接口</div><div class="line">        ```java</div><div class="line">        public interface FragmentOneBtnClickListener&#123;</div><div class="line">              void onOneBtnClick();</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>fragment内按钮点击时调用</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Button button = (android.widget.Button) view.findViewById(R.id.btn_frag_one);</div><div class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (getActivity() <span class="keyword">instanceof</span> FragmentOneBtnClickListener)&#123;</div><div class="line">           ((FragmentOneBtnClickListener)getActivity()).onOneBtnClick();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>activity实现接口及方法</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">OneFragment</span>.<span class="title">FragmentOneBtnClickListener</span></span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOneBtnClick</span><span class="params">()</span> </span>&#123;</div><div class="line">        Toast.makeText(<span class="keyword">this</span>, <span class="string">"one"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>Fragment.startActivityForResult();</strong><br>Activity 里的 FragmentOne 调用 <figure class="highlight plain"><figcaption><span>开启ActivityTwo, ActivityTwo里的FragmentTwo操作回调时调用```getActivity().setResult(FragmentOne.REQUEST_DETAIL, intent); ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### FragmentManager</div><div class="line">当activity被杀死重建时,fragment会被保存, 但会创建新的FragmentManager, 新FragmentManager会先去获取保存下来的fragment队列, 再去重建, 从而恢复之前的状态</div><div class="line">##### FragmentTransaction [(Google)](https://developer.android.com/reference/android/app/FragmentTransaction.html#commitAllowingStateLoss())</div><div class="line">* ```add()```; 添加 Fragment</div><div class="line">* ```remove()```; 移除 Fragment, 若添加 ```addToBackStack(null)```，则不会执行 ``onDestroy()`` 和 ```onDetach()```;</div><div class="line">* ```replace()```;  = remove + add</div><div class="line">* ```hide()```; 隐藏</div><div class="line">* ```show()```; 显示隐藏的</div><div class="line">* ```detach(fragment)```; 移除 view, 但 fragment 依然被 FragmentManager 管理</div><div class="line">* ```attach()```; 重建视图</div><div class="line">* **```commit();```** 默认异步，并不立刻执行，而是加入 UI 线程的队列中，</div><div class="line">  * 后接executePendingTransactions() 立即执行所有 pending在队列中的transaction</div><div class="line">* **```commitAllowStateLoss();```**</div><div class="line">* **```commitNow()^v24^```**, 只同步执行此次 transaction（完善executePendingTransactions），不可与addToBackStack()共用</div><div class="line">* **```commitNowAllowStateLoss()```**</div><div class="line"></div><div class="line"></div><div class="line">##### Back Stack</div><div class="line">* Activity 的 BackStack，系统维护，每个 task 一个 BackStack</div><div class="line">* Fragment 的 BackStack，宿主 Activity 维护，每个 activity 一个</div><div class="line">* 通过 addToBackStack 调用，按 Back 键后执行 commit 进去的 transaction 的逆操作</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">## v4.fragment 和 app.fragment(以下简称v4和app)</div><div class="line">1. 支持版本不同, v4支持到4, app只支持11及以上</div><div class="line">2. v4需要jar包</div><div class="line">3. 获取 FragmentManager</div><div class="line">    * v4: ```getSupportFragmentManager</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>app: <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">4. 包含 v4 的 Activity 需要继承 FragmentActivity</div><div class="line">5. v4的不支持 objectAnimator, Animator, 即不支持属性动画，只支持位移动画。[参考](http://www.jianshu.com/p/1d2a3d5229fd)</div><div class="line">6. mStateSaved 何时置为true</div><div class="line">    * v4在 ```onSaveInstanceState``` 和 ```onStop</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>app在 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">##### 举例</div><div class="line">###### 例1 commitAllowStateLoss</div><div class="line">1. acticity 中放入 FragmentA;</div><div class="line">2. activity 被后台，运行 ```onStop``` 和 ```onSaveInstanceState```;</div><div class="line">3. 某个事件触发下，FragmentB replace FragmentA,提交的是 **```commitAllowStateLoss```**;</div><div class="line">4. 此时可能会发生两种情况</div><div class="line">    * 第一种，系统杀死了activity，activity重建，使用步骤2的onSaveInstanceState恢复，A恢复，B没有</div><div class="line">    * 第二种，activity 没被杀死，FragmentB 显示，到下次 Activity stop时，这个包含了 B 的状态被保存了下来</div><div class="line"></div><div class="line">###### 例2 fragment中执行异步</div><div class="line">1. activity 执行AsyncTask, 同时打开 ~~ProgressDialog~~ ([API26被弃用,推荐ProgressBar和Notification](https://developer.android.com/reference/android/app/ProgressDialog.html))</div><div class="line">2. 执行过程中, 进行旋转屏幕 可能的情况如下:</div><div class="line">    * 上个线程还在执行, 又开一个线程, 可能操作一些已经被处理的控件, 报空</div><div class="line">    * 关闭dialog的代码在onPostExecute, 但是上个线程被杀死, 无法关闭</div><div class="line">* 解决: DialogFragment    </div><div class="line"></div><div class="line">###### 例3 内存泄漏 [from简书](http://www.jianshu.com/p/caa5d6568faa)</div><div class="line">1. util.class</div><div class="line">  ```java</div><div class="line">  public class Util &#123;   </div><div class="line">    private Context mContext;  </div><div class="line">    private static Util sInstance;  </div><div class="line">      private Util(Context context) &#123;  </div><div class="line">          this.mContext = context;  </div><div class="line">      &#125;  </div><div class="line">      public static Util getInstance(Context context) &#123;  </div><div class="line">          if (sInstance == null) &#123;  </div><div class="line">              sInstance = new Util(context);  </div><div class="line">          &#125;  </div><div class="line">          return sInstance;  </div><div class="line">      &#125;  </div><div class="line">      //other methods  </div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Fragment用了上面的类</li>
+<li><p>Fragment被干掉, GC想回收Fragment占用的内存, 但因为sInstance 是静态的, 一直持有fragment的引用, 即使<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* 解决:</div><div class="line">  1. 用 ```getApplicationContext()</div></pre></td></tr></table></figure></p>
+<ol>
+<li>弱引用<ul>
+<li>把sInstance用WeakReference包起来, 需要的时候<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">###### 例4 横竖屏切换[fromHongYang](http://blog.csdn.net/lmj623565791/article/details/37992017)</div><div class="line">* 横竖屏切换时, activity重建, fragment生命周期跟着变, 同时因为activity的```onSaveInstanceState```, 之前的fragment们也被还原出来，会产生多个fragment</div><div class="line">* **第一次切换**</div><div class="line">  * ![](https://raw.githubusercontent.com/sunxlfred/RES/master/fragment%E6%A8%AA%E7%AB%96%E5%B1%8F%E5%88%87%E6%8D%A2%E7%AC%AC%E4%B8%80%E6%AC%A1.png)</div><div class="line">* **第二次切换**</div><div class="line">  * ![](https://github.com/sunxlfred/RES/raw/master/fragment%E6%A8%AA%E7%AB%96%E5%B1%8F%E5%88%87%E6%8D%A2%E4%B8%A4%E6%AC%A1.png)</div><div class="line">* 按下Home键后的生命周期</div><div class="line">  * ![](https://raw.githubusercontent.com/sunxlfred/RES/master/WhenOnSaveInstanceState.png)</div><div class="line">* 解决: activity 的 ```onCreate```方法中添加bundle非空后再进行```transaction```和 ```commit```,</div><div class="line">  ```java</div><div class="line">  @Override</div><div class="line">  protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    ...</div><div class="line">    if (savedInstanceState == null) &#123;</div><div class="line">        FragmentManager fragmentManager = getFragmentManager();</div><div class="line">        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();</div><div class="line">        fragmentTransaction.add(R.id.layout, oneFragment, &quot;one&quot;);</div><div class="line">        fragmentTransaction.commit();</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">  &#125;</div></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Fragment-ActionBar-ToolBar"><a href="#Fragment-ActionBar-ToolBar" class="headerlink" title="Fragment+ActionBar(ToolBar)"></a>Fragment+ActionBar(ToolBar)</h2><h4 id="Fragment自己实现"><a href="#Fragment自己实现" class="headerlink" title="Fragment自己实现"></a>Fragment自己实现</h4><ol>
+<li><strong>Fragment 的 xml 里添加 toolBar</strong></li>
+<li><p><strong>onCreate加入 setHasOptionsMenu(true)</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setHasOptionsMenu(<span class="keyword">true</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置依赖的activity.setSupportActionBar</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Nullable</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    View view = inflater.inflate(R.layout.fragment_one, container, <span class="keyword">false</span>);</div><div class="line">    Toolbar toolbar = (Toolbar) view.findViewById(R.id.fragment_toolbar);</div><div class="line">    mActivity.setSupportActionBar(toolbar);</div><div class="line">    <span class="keyword">return</span> view;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>实现onCreateOptionsMenu</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu, MenuInflater inflater)</span> </span>&#123;</div><div class="line">   <span class="keyword">super</span>.onCreateOptionsMenu(menu, inflater);</div><div class="line">   inflater.inflate(R.menu.toolbar, menu);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>点击事件onOptionsItemSelected</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span>  </span>&#123;  </div><div class="line">    <span class="keyword">switch</span> (item.getItemId())  &#123;  </div><div class="line">      <span class="keyword">case</span> R.id.id_menu_fra_test:  </div><div class="line">          Toast.makeText(getActivity(), <span class="string">"FragmentMenuItem1"</span>, Toast.LENGTH_SHORT).show();  </div><div class="line">          <span class="keyword">break</span>;  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="Activity实现"><a href="#Activity实现" class="headerlink" title="Activity实现"></a>Activity实现</h4><h4 id="PS-Activity自身ToolBar"><a href="#PS-Activity自身ToolBar" class="headerlink" title="PS: Activity自身ToolBar"></a>PS: Activity自身ToolBar</h4><ol>
+<li>manifest 把 theme 的 parent 改成 NoActionBar</li>
+<li>activity布局里添加ToolBar</li>
+<li><p>activity的onCreate方法setSupportActionBar();</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);</div><div class="line">setSupportActionBar(toolbar);</div></pre></td></tr></table></figure>
+</li>
+<li><p>activity 重写 onCreateOptionsMenu 添加布局</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</div><div class="line">    getMenuInflater().inflate(R.menu.toolbar, menu);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 重写 onOptionsItemSelected 添加点击事件</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (item.getItemId())&#123;</div><div class="line">        <span class="keyword">case</span> R.id.backup:</div><div class="line">            Toast.makeText(<span class="keyword">this</span>, <span class="string">"backup"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> R.id.delete:</div><div class="line">            Toast.makeText(<span class="keyword">this</span>, <span class="string">"del"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> R.id.settings:</div><div class="line">            Toast.makeText(<span class="keyword">this</span>, <span class="string">"set"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="FragmentPagerAdapter-和-FragmentStatePagerAdapter"><a href="#FragmentPagerAdapter-和-FragmentStatePagerAdapter" class="headerlink" title="FragmentPagerAdapter 和 FragmentStatePagerAdapter"></a>FragmentPagerAdapter 和 FragmentStatePagerAdapter</h2><ul>
+<li>FragmentPagerAdapter: 调用depatch(), 只销毁视图, 适合主界面</li>
+<li>FragmentPagerAdapter: 销毁, 可存数据进bundle, 然后保存在onSaveInstanceState</li>
+</ul>
+<h2 id="DialogFragment-替代-Dialog和AlertDialog"><a href="#DialogFragment-替代-Dialog和AlertDialog" class="headerlink" title="DialogFragment 替代 Dialog和AlertDialog"></a>DialogFragment 替代 Dialog和AlertDialog</h2><p>Dialog和继承的AlertDialog无法在横竖屏切换时保存数据, DialogFragment依靠FragmentManager自动重建并恢复数据</p>
+<ul>
+<li><p>自定义view 的 DialogFragment 创建</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EditDialogFragment</span> <span class="keyword">extends</span> <span class="title">DialogFragment</span> </span>&#123;</div><div class="line">   <span class="meta">@Nullable</span></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">       View inflate = inflater.inflate(R.layout.fragment_dialog, container);</div><div class="line">       getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);</div><div class="line">       <span class="keyword">return</span> inflate;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>AlertDialog 的 DialogFragment 创建</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">        AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder(getActivity());</div><div class="line"></div><div class="line">        LayoutInflater layoutInflater = getActivity().getLayoutInflater();</div><div class="line">        View view = layoutInflater.inflate(R.layout.fragment_dialog, <span class="keyword">null</span>);</div><div class="line"><span class="comment">//        editName = (EditText) view.findViewById(R.id.id_txt_your_name);</span></div><div class="line">        builder.setView(view)</div><div class="line">                .setNegativeButton(<span class="string">"sign"</span>,</div><div class="line">                        <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">                            <span class="meta">@Override</span></div><div class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</div><div class="line">                                Toast.makeText(getContext(),<span class="string">"test"</span>,Toast.LENGTH_SHORT).show();</div><div class="line"><span class="comment">//                                LoginCompleteListener loginCompleteListener = (LoginCompleteListener) getActivity();</span></div><div class="line"><span class="comment">//                                loginCompleteListener.onLoginComplete(editName.getText().toString(), "123");</span></div><div class="line">                            &#125;</div><div class="line">                        &#125;).setPositiveButton(<span class="string">"Cancel"</span>, <span class="keyword">null</span>);</div><div class="line">        <span class="keyword">return</span> builder.create();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Fragment来保存数据"><a href="#Fragment来保存数据" class="headerlink" title="Fragment来保存数据"></a>Fragment来保存数据</h2><h4 id="系统帮助数据恢复"><a href="#系统帮助数据恢复" class="headerlink" title="系统帮助数据恢复"></a>系统帮助数据恢复</h4><ul>
+<li><p>少量数据 <figure class="highlight plain"><figcaption><span>和 ```onRestoreInstanceState```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">* 大量数据, 无法序列化, 如bitmap, 用Fragment存放, 但是切勿传递任何包含context的对象</div><div class="line">    1. 创建Fragment, **添加 ```setRetainInstance```**</div><div class="line">    ```java</div><div class="line">    public class RetainedFragment extends Fragment &#123;</div><div class="line"></div><div class="line">        // data object we want to retain</div><div class="line">        private MyDataObject data;</div><div class="line"></div><div class="line">        // this method is only called once for this fragment</div><div class="line">        @Override</div><div class="line">        public void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">            super.onCreate(savedInstanceState);</div><div class="line">            // retain this fragment</div><div class="line">            setRetainInstance(true);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setData(MyDataObject data) &#123;</div><div class="line">            this.data = data;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public MyDataObject getData() &#123;</div><div class="line">            return data;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>activity调用fragment保存<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> RetainedFragment dataFragment;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.main);</div><div class="line"></div><div class="line">        <span class="comment">// find the retained fragment on activity restarts</span></div><div class="line">        FragmentManager fm = getFragmentManager();</div><div class="line">        dataFragment = (DataFragment) fm.findFragmentByTag(“data”);</div><div class="line"></div><div class="line">        <span class="comment">// create the fragment and data the first time</span></div><div class="line">        <span class="keyword">if</span> (dataFragment == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// add the fragment</span></div><div class="line">            dataFragment = <span class="keyword">new</span> DataFragment();</div><div class="line">            fm.beginTransaction().add(dataFragment, “data”).commit();</div><div class="line">            <span class="comment">// load the data from the web</span></div><div class="line">            dataFragment.setData(loadMyData());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// the data is available in dataFragment.getData()</span></div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">        <span class="comment">// store the data in the fragment</span></div><div class="line">        dataFragment.setData(collectMyLoadedData());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="自行处理数据变更（activity不重走生命周期-不推荐"><a href="#自行处理数据变更（activity不重走生命周期-不推荐" class="headerlink" title="自行处理数据变更（activity不重走生命周期, 不推荐)"></a>自行处理数据变更（activity不重走生命周期, 不推荐)</h4><ol>
+<li><p>在manifest的\<activity>里添加属性</activity></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MyActivity"</span></span></div><div class="line"><span class="tag">          <span class="attr">android:configChanges</span>=<span class="string">"orientation|keyboardHidden"</span></span></div><div class="line"><span class="tag">          <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>屏幕切换时可通过<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">```java</div><div class="line">@Override</div><div class="line">public void onConfigurationChanged(Configuration newConfig) &#123;</div><div class="line">    super.onConfigurationChanged(newConfig);</div><div class="line"></div><div class="line">    // Checks the orientation of the screen</div><div class="line">    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) &#123;</div><div class="line">        Toast.makeText(this, &quot;landscape&quot;, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125; else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)&#123;</div><div class="line">        Toast.makeText(this, &quot;portrait&quot;, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</li>
+</ol>
+<h4 id="进阶-Fragment保存AsyncTask"><a href="#进阶-Fragment保存AsyncTask" class="headerlink" title="进阶-Fragment保存AsyncTask"></a>进阶-Fragment保存AsyncTask</h4><p>activity在 <figure class="highlight plain"><figcaption><span>和 ```onSaveInstanceState``` 回调AsyncTask, 并在onCreate时调用 setData</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">1. 创建Fragment, 不过setData保存的是AsyncTask</div><div class="line">```java</div><div class="line">public class OtherRetainedFragment extends Fragment</div><div class="line">&#123;</div><div class="line"></div><div class="line">    // data object we want to retain</div><div class="line">    // 保存一个异步的任务</div><div class="line">    private MyAsyncTask data;</div><div class="line"></div><div class="line">    // this method is only called once for this fragment</div><div class="line">    @Override</div><div class="line">    public void onCreate(Bundle savedInstanceState)</div><div class="line">    &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        // retain this fragment</div><div class="line">        setRetainInstance(true);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setData(MyAsyncTask data)</div><div class="line">    &#123;</div><div class="line">        this.data = data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public MyAsyncTask getData()</div><div class="line">    &#123;</div><div class="line">        return data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>创建AsyncTask</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAsyncTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span>&lt;<span class="title">Void</span>, <span class="title">Void</span>, <span class="title">Void</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> FixProblemsActivity activity;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 是否完成</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isCompleted;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 进度框</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> LoadingDialog mLoadingDialog;</div><div class="line">    <span class="keyword">private</span> List&lt;String&gt; items;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyAsyncTask</span><span class="params">(FixProblemsActivity activity)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.activity = activity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 开始时，显示加载框</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPreExecute</span><span class="params">()</span> </span>&#123;</div><div class="line">        mLoadingDialog = <span class="keyword">new</span> LoadingDialog();</div><div class="line">        mLoadingDialog.show(activity.getFragmentManager(), <span class="string">"LOADING"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 加载数据</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> Void <span class="title">doInBackground</span><span class="params">(Void... params)</span> </span>&#123;</div><div class="line">        items = loadingData();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 加载完成回调当前的Activity</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Void unused)</span> </span>&#123;</div><div class="line">        isCompleted = <span class="keyword">true</span>;</div><div class="line">        notifyActivityTaskCompleted();</div><div class="line">        <span class="keyword">if</span> (mLoadingDialog != <span class="keyword">null</span>)</div><div class="line">            mLoadingDialog.dismiss();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getItems</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> items;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> List&lt;String&gt; <span class="title">loadingData</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">5000</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(<span class="string">"通过Fragment保存大量数据"</span>,</div><div class="line">                <span class="string">"onSaveInstanceState保存数据"</span>,</div><div class="line">                <span class="string">"getLastNonConfigurationInstance已经被弃用"</span>, <span class="string">"RabbitMQ"</span>, <span class="string">"Hadoop"</span>,</div><div class="line">                <span class="string">"Spark"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 设置Activity，因为Activity会一直变化</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> activity</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setActivity</span><span class="params">(FixProblemsActivity activity)</span> </span>&#123;</div><div class="line">        <span class="comment">// 如果上一个Activity销毁，将与上一个Activity绑定的DialogFragment销毁</span></div><div class="line">        <span class="keyword">if</span> (activity == <span class="keyword">null</span>) &#123;</div><div class="line">            mLoadingDialog.dismiss();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 设置为当前的Activity</span></div><div class="line">        <span class="keyword">this</span>.activity = activity;</div><div class="line">        <span class="comment">// 开启一个与当前Activity绑定的等待框</span></div><div class="line">        <span class="keyword">if</span> (activity != <span class="keyword">null</span> &amp;&amp; !isCompleted) &#123;</div><div class="line">            mLoadingDialog = <span class="keyword">new</span> LoadingDialog();</div><div class="line">            mLoadingDialog.show(activity.getFragmentManager(), <span class="string">"LOADING"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 如果完成，通知Activity</span></div><div class="line">        <span class="keyword">if</span> (isCompleted) &#123;</div><div class="line">            notifyActivityTaskCompleted();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">notifyActivityTaskCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != activity) &#123;</div><div class="line">            activity.onTaskCompleted();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建activity</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FixProblemsActivity</span> <span class="keyword">extends</span> <span class="title">ListActivity</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MainActivity"</span>;</div><div class="line">    <span class="keyword">private</span> ListAdapter mAdapter;</div><div class="line">    <span class="keyword">private</span> List&lt;String&gt; mDatas;</div><div class="line">    <span class="keyword">private</span> OtherRetainedFragment dataFragment;</div><div class="line">    <span class="keyword">private</span> MyAsyncTask mMyTask;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        Log.e(TAG, <span class="string">"onCreate"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// find the retained fragment on activity restarts</span></div><div class="line">        FragmentManager fm = getFragmentManager();</div><div class="line">        dataFragment = (OtherRetainedFragment) fm.findFragmentByTag(<span class="string">"data"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// create the fragment and data the first time</span></div><div class="line">        <span class="keyword">if</span> (dataFragment == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// add the fragment</span></div><div class="line">            dataFragment = <span class="keyword">new</span> OtherRetainedFragment();</div><div class="line">            fm.beginTransaction().add(dataFragment, <span class="string">"data"</span>).commit();</div><div class="line">        &#125;</div><div class="line">        mMyTask = dataFragment.getData();</div><div class="line">        <span class="keyword">if</span> (mMyTask != <span class="keyword">null</span>) &#123;</div><div class="line">            mMyTask.setActivity(<span class="keyword">this</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mMyTask = <span class="keyword">new</span> MyAsyncTask(<span class="keyword">this</span>);</div><div class="line">            dataFragment.setData(mMyTask);</div><div class="line">            mMyTask.execute();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// the data is available in dataFragment.getData()</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle state)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onRestoreInstanceState(state);</div><div class="line">        Log.e(TAG, <span class="string">"onRestoreInstanceState"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</div><div class="line">        mMyTask.setActivity(<span class="keyword">null</span>);</div><div class="line">        <span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line">        Log.e(TAG, <span class="string">"onSaveInstanceState"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        Log.e(TAG, <span class="string">"onDestroy"</span>);</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 回调</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTaskCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">        mDatas = mMyTask.getItems();</div><div class="line">        mAdapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(FixProblemsActivity.<span class="keyword">this</span>,</div><div class="line">                android.R.layout.simple_list_item_1, mDatas);</div><div class="line">        setListAdapter(mAdapter);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="BUGS"><a href="#BUGS" class="headerlink" title="BUGS"></a>BUGS</h2><ul>
+<li>findFragmentByTag 查不到<ul>
+<li>解决: 在 onCreate() 里提交commit()后, 在 onStart() 里find, 不能直接在commit()之后</li>
+</ul>
+</li>
+</ul>
+<h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><h5 id="WTFs-min-2-fragment-count"><a href="#WTFs-min-2-fragment-count" class="headerlink" title="WTFs/min = 2^fragment count"></a>WTFs/min = 2^fragment count</h5><blockquote>
+<p>参考</p>
+<ul>
+<li><a href="http://www.jianshu.com/p/caa5d6568faa" target="_blank" rel="external">简书 | EP38-Fragment单例和内存泄露</a></li>
+<li><a href="http://www.jianshu.com/p/73503a9a0df8" target="_blank" rel="external">简书 | Android Fragment使用(一) 基础篇 温故知新</a></li>
+<li><a href="http://blog.csdn.net/daogepiqian/article/details/49333297" target="_blank" rel="external">CSDN | android.support.v4.app.Fragment和 android.app.Fragment的区别</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/37970961" target="_blank" rel="external">CSDN | Android Fragment 真正的完全解析（上）</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/37992017" target="_blank" rel="external">CSDN | Android Fragment 真正的完全解析（下）</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/42628537#reply" target="_blank" rel="external">CSDN | Android Fragment 你应该知道的一切</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/37815413" target="_blank" rel="external">CSDN | Android 官方推荐 : DialogFragment 创建对话框</a></li>
+<li><a href="https://developer.android.com/guide/topics/resources/runtime-changes.html#RetainingAnObject" target="_blank" rel="external">Google | 处理运行时变更</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/37936275" target="_blank" rel="external">CSDN |  Android 屏幕旋转 处理 AsyncTask 和 ProgressDialog 的最佳方案</a></li>
+<li><a href="http://blog.csdn.net/kaizideai/article/details/68484187" target="_blank" rel="external">CSDN | android fragment事务的提交使用的时候出现的一些问题。。</a></li>
+<li><a href="http://www.jianshu.com/p/f50a1d7ab161" target="_blank" rel="external">简书 | Fragment进阶-commit使用细节及源码分析</a></li>
+</ul>
+<p>建议阅读</p>
+<ul>
+<li><blockquote>
+<p><a href="http://yifeng.studio/2016/12/15/android-fragment-attentions/" target="_blank" rel="external">Android Fragment 的使用，一些你不可不知的注意事项</a></p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Fragment/" rel="tag"># Fragment</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/09/Day3-7层4层网络协议/" rel="next" title="Day3 - 7层/4层网络协议">
+                <i class="fa fa-chevron-left"></i> Day3 - 7层/4层网络协议
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/14/Day5单例/" rel="prev" title="Day5 - 单例">
+                Day5 - 单例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态加载"><span class="nav-number">1.0.1.</span> <span class="nav-text">动态加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment-ActionBar-ToolBar"><span class="nav-number">2.</span> <span class="nav-text">Fragment+ActionBar(ToolBar)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fragment自己实现"><span class="nav-number">2.0.1.</span> <span class="nav-text">Fragment自己实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity实现"><span class="nav-number">2.0.2.</span> <span class="nav-text">Activity实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PS-Activity自身ToolBar"><span class="nav-number">2.0.3.</span> <span class="nav-text">PS: Activity自身ToolBar</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FragmentPagerAdapter-和-FragmentStatePagerAdapter"><span class="nav-number">3.</span> <span class="nav-text">FragmentPagerAdapter 和 FragmentStatePagerAdapter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DialogFragment-替代-Dialog和AlertDialog"><span class="nav-number">4.</span> <span class="nav-text">DialogFragment 替代 Dialog和AlertDialog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment来保存数据"><span class="nav-number">5.</span> <span class="nav-text">Fragment来保存数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#系统帮助数据恢复"><span class="nav-number">5.0.1.</span> <span class="nav-text">系统帮助数据恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自行处理数据变更（activity不重走生命周期-不推荐"><span class="nav-number">5.0.2.</span> <span class="nav-text">自行处理数据变更（activity不重走生命周期, 不推荐)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进阶-Fragment保存AsyncTask"><span class="nav-number">5.0.3.</span> <span class="nav-text">进阶-Fragment保存AsyncTask</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BUGS"><span class="nav-number">6.</span> <span class="nav-text">BUGS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套"><span class="nav-number">7.</span> <span class="nav-text">嵌套</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#WTFs-min-2-fragment-count"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">WTFs/min = 2^fragment count</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

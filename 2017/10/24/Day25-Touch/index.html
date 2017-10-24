@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,Touch," />
 
 
 
@@ -77,17 +77,18 @@
 
 
 
-<meta name="description" content="概念 用户的Touch事件被包装成MotionEvent. 分为: ACTION_DOWN: 表示用户开始触摸. ACTION_MOVE: 表示用户在移动(手指或者其他). ACTION_UP: 表示用户抬起了手指. ACTION_CANCEL: 表示手势被取消了. ACTION_OUTSIDE: 表示用户触碰超出了正常的UI边界. ACTION_POINTER_DOWN: 有一个非主要的手指按下">
+<meta name="description" content="TODO View.onTouchEvent的分析.">
+<meta name="keywords" content="Android,Touch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="花花世界">
-<meta property="og:url" content="http://yoursite.com/2017/10/18/Day26-Touch/index.html">
+<meta property="og:title" content="Day25 - Touch">
+<meta property="og:url" content="http://yoursite.com/2017/10/24/Day25-Touch/index.html">
 <meta property="og:site_name" content="花花世界">
-<meta property="og:description" content="概念 用户的Touch事件被包装成MotionEvent. 分为: ACTION_DOWN: 表示用户开始触摸. ACTION_MOVE: 表示用户在移动(手指或者其他). ACTION_UP: 表示用户抬起了手指. ACTION_CANCEL: 表示手势被取消了. ACTION_OUTSIDE: 表示用户触碰超出了正常的UI边界. ACTION_POINTER_DOWN: 有一个非主要的手指按下">
+<meta property="og:description" content="TODO View.onTouchEvent的分析.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-24T08:27:21.573Z">
+<meta property="og:updated_time" content="2017-10-24T08:33:56.706Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="花花世界">
-<meta name="twitter:description" content="概念 用户的Touch事件被包装成MotionEvent. 分为: ACTION_DOWN: 表示用户开始触摸. ACTION_MOVE: 表示用户在移动(手指或者其他). ACTION_UP: 表示用户抬起了手指. ACTION_CANCEL: 表示手势被取消了. ACTION_OUTSIDE: 表示用户触碰超出了正常的UI边界. ACTION_POINTER_DOWN: 有一个非主要的手指按下">
+<meta name="twitter:title" content="Day25 - Touch">
+<meta name="twitter:description" content="TODO View.onTouchEvent的分析.">
 
 
 
@@ -117,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/18/Day26-Touch/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/24/Day25-Touch/"/>
 
 
 
 
 
-  <title> | 花花世界</title>
+  <title>Day25 - Touch | 花花世界</title>
   
 
 
@@ -260,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/18/Day26-Touch/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/Day25-Touch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FredSun">
@@ -277,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Day25 - Touch</h1>
         
 
         <div class="post-meta">
@@ -289,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-18T13:45:40+08:00">
-                2017-10-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T16:32:00+08:00">
+                2017-10-24
               </time>
             
 
@@ -299,6 +300,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -327,7 +350,8 @@
       
 
       
-        <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ol>
+        <p>TODO View.onTouchEvent的分析.<br><a id="more"></a></p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ol>
 <li>用户的Touch事件被包装成MotionEvent. 分为:<ul>
 <li>ACTION_DOWN: 表示用户开始触摸.</li>
 <li>ACTION_MOVE: 表示用户在移动(手指或者其他).</li>
@@ -438,6 +462,14 @@ public boolean superDispatchTouchEvent(MotionEvent event) {
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Touch/" rel="tag"># Touch</a>
+          
+        </div>
       
 
       
@@ -559,7 +591,7 @@ public boolean superDispatchTouchEvent(MotionEvent event) {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

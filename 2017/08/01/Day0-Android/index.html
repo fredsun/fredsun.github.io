@@ -77,25 +77,27 @@
 
 
 
-<meta name="description" content="版本号/UML/抽象/内部类/闭包/AndroidStudioBug">
+<meta name="description" content="版本号/HAL层UML/抽象/内部类/闭包/AndroidStudioBug">
 <meta name="keywords" content="Android,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day0 - Android">
 <meta property="og:url" content="http://yoursite.com/2017/08/01/Day0-Android/index.html">
 <meta property="og:site_name" content="花花世界">
-<meta property="og:description" content="版本号/UML/抽象/内部类/闭包/AndroidStudioBug">
+<meta property="og:description" content="版本号/HAL层UML/抽象/内部类/闭包/AndroidStudioBug">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/3a09f47b9bff6c94a072ab6a37ddd463fa1da9ec/android-stack_1x.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/3a09f47b9bff6c94a072ab6a37ddd463fa1da9ec/android-stack_2x.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/generalization.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/realize.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/dependency.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/association.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/aggregation.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/composition.jpg">
-<meta property="og:updated_time" content="2017-10-18T16:00:00.000Z">
+<meta property="og:updated_time" content="2017-10-25T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day0 - Android">
-<meta name="twitter:description" content="版本号/UML/抽象/内部类/闭包/AndroidStudioBug">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/5df5d67951c2322ef1933ee60b8296d45d24db96/generalization.jpg">
+<meta name="twitter:description" content="版本号/HAL层UML/抽象/内部类/闭包/AndroidStudioBug">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/3a09f47b9bff6c94a072ab6a37ddd463fa1da9ec/android-stack_1x.jpg">
 
 
 
@@ -357,7 +359,7 @@
       
 
       
-        <p>版本号/UML/抽象/内部类/闭包/AndroidStudioBug<br><a id="more"></a></p>
+        <p>版本号/HAL层UML/抽象/内部类/闭包/AndroidStudioBug<br><a id="more"></a></p>
 <h2 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h2><table>
 <thead>
 <tr>
@@ -438,7 +440,16 @@
 </table>
 <h2 id="获取版本号"><a href="#获取版本号" class="headerlink" title="获取版本号"></a>获取版本号</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">   * 获取Android发布的版本</div><div class="line">   */</div><div class="line">  public static String getVersion() &#123;</div><div class="line">      return android.os.Build.VERSION.RELEASE;</div><div class="line">  &#125;</div><div class="line">  /**</div><div class="line">   * 获取SDK的API Level</div><div class="line">   * @return</div><div class="line">   */</div><div class="line">  public static int getSDK() &#123;</div><div class="line">      return android.os.Build.VERSION.SDK_INT;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
 <h2 id="版本号适配"><a href="#版本号适配" class="headerlink" title="版本号适配"></a>版本号适配</h2><p>TODO <a href="http://blog.csdn.net/haovip123/article/details/54618642" target="_blank" rel="external">http://blog.csdn.net/haovip123/article/details/54618642</a></p>
+<h2 id="Android-几层"><a href="#Android-几层" class="headerlink" title="Android 几层"></a>Android 几层</h2><ul>
+<li>原 4 层</li>
+<li><img src="https://raw.githubusercontent.com/sunxlfred/RES/3a09f47b9bff6c94a072ab6a37ddd463fa1da9ec/android-stack_1x.jpg" alt=""></li>
+<li>现 5 层</li>
+<li><img src="https://raw.githubusercontent.com/sunxlfred/RES/3a09f47b9bff6c94a072ab6a37ddd463fa1da9ec/android-stack_2x.png" alt=""><blockquote>
+<p>HAL层:<br>谷歌把 Linux 内核空间分成了 User Space 和 Kernal Space. HAL层运行在 UserSpace. Linux 内核运行在Kernal Space. Android 源代码遵循 Apache License, Linux内核源代码遵循 GNU License. GNULicense 需要在发布时发布源代码. 谷歌为了保护制造商的信息, 把硬件信息等放进了HAL.所以android是开放, 并不属于Linux的分支, 因为没了HAL层的驱动对硬件层的支持不完整, 不是可移植系统.</p>
 <h4 id="6-0的权限"><a href="#6-0的权限" class="headerlink" title="6.0的权限"></a>6.0的权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">protected boolean hasPermission(String permission) &#123;</div><div class="line">      if (Build.VERSION.SDK_INT &gt; Build.VERSION_CODES.LOLLIPOP_MR1)</div><div class="line">          return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);</div><div class="line">      return true;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
 <h4 id="通知的副标题-API-LEVEL16才能使用"><a href="#通知的副标题-API-LEVEL16才能使用" class="headerlink" title="通知的副标题 API LEVEL16才能使用"></a>通知的副标题 API LEVEL16才能使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.JELLY_BEAN) &#123;    </div><div class="line">builder.setSubText(&quot;it is really basic&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="7-0-分屏多任务"><a href="#7-0-分屏多任务" class="headerlink" title="7.0 分屏多任务"></a>7.0 分屏多任务</h4><p>将 DecorView 从 PhoneWindow 中移出来, 并添加了 DecorCaptionView 作为分屏的实现</p>
 <blockquote>
@@ -669,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号"><span class="nav-number">1.</span> <span class="nav-text">版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取版本号"><span class="nav-number">2.</span> <span class="nav-text">获取版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号适配"><span class="nav-number">3.</span> <span class="nav-text">版本号适配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-0的权限"><span class="nav-number">3.0.1.</span> <span class="nav-text">6.0的权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知的副标题-API-LEVEL16才能使用"><span class="nav-number">3.0.2.</span> <span class="nav-text">通知的副标题 API LEVEL16才能使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-0-分屏多任务"><span class="nav-number">3.0.3.</span> <span class="nav-text">7.0 分屏多任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML图"><span class="nav-number">3.0.4.</span> <span class="nav-text">UML图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#泛化-generalization"><span class="nav-number">3.0.4.1.</span> <span class="nav-text">泛化(generalization)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现-realize"><span class="nav-number">3.0.4.2.</span> <span class="nav-text">实现(realize)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖-dependency"><span class="nav-number">3.0.4.3.</span> <span class="nav-text">依赖(dependency)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关联-association"><span class="nav-number">3.0.4.4.</span> <span class="nav-text">关联(association)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#聚合-aggregation"><span class="nav-number">3.0.4.5.</span> <span class="nav-text">聚合(aggregation)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组合-composition"><span class="nav-number">3.0.4.6.</span> <span class="nav-text">组合(composition)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类和接口"><span class="nav-number">3.0.5.</span> <span class="nav-text">抽象类和接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类"><span class="nav-number">3.0.6.</span> <span class="nav-text">内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包From"><span class="nav-number">3.0.7.</span> <span class="nav-text">闭包From</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AndroidStudio"><span class="nav-number">3.0.8.</span> <span class="nav-text">AndroidStudio</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号"><span class="nav-number">1.</span> <span class="nav-text">版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取版本号"><span class="nav-number">2.</span> <span class="nav-text">获取版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号适配"><span class="nav-number">3.</span> <span class="nav-text">版本号适配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-几层"><span class="nav-number">4.</span> <span class="nav-text">Android 几层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-0的权限"><span class="nav-number">4.0.1.</span> <span class="nav-text">6.0的权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知的副标题-API-LEVEL16才能使用"><span class="nav-number">4.0.2.</span> <span class="nav-text">通知的副标题 API LEVEL16才能使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-0-分屏多任务"><span class="nav-number">4.0.3.</span> <span class="nav-text">7.0 分屏多任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML图"><span class="nav-number">4.0.4.</span> <span class="nav-text">UML图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#泛化-generalization"><span class="nav-number">4.0.4.1.</span> <span class="nav-text">泛化(generalization)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现-realize"><span class="nav-number">4.0.4.2.</span> <span class="nav-text">实现(realize)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖-dependency"><span class="nav-number">4.0.4.3.</span> <span class="nav-text">依赖(dependency)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关联-association"><span class="nav-number">4.0.4.4.</span> <span class="nav-text">关联(association)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#聚合-aggregation"><span class="nav-number">4.0.4.5.</span> <span class="nav-text">聚合(aggregation)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组合-composition"><span class="nav-number">4.0.4.6.</span> <span class="nav-text">组合(composition)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类和接口"><span class="nav-number">4.0.5.</span> <span class="nav-text">抽象类和接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类"><span class="nav-number">4.0.6.</span> <span class="nav-text">内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包From"><span class="nav-number">4.0.7.</span> <span class="nav-text">闭包From</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AndroidStudio"><span class="nav-number">4.0.8.</span> <span class="nav-text">AndroidStudio</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

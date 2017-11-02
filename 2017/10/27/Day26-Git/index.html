@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Android,web," />
+  <meta name="keywords" content="Android,Git," />
 
 
 
@@ -77,21 +77,18 @@
 
 
 
-<meta name="description" content="现在已经都说四层网络结构了">
-<meta name="keywords" content="Android,web">
+<meta name="description" content="建远程库时最好有 README .md, 别空空荡荡的">
+<meta name="keywords" content="Android,Git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Day3 - 7层&#x2F;4层网络协议">
-<meta property="og:url" content="http://yoursite.com/2017/08/09/Day3-7层4层网络协议/index.html">
+<meta property="og:title" content="Day26 - Git">
+<meta property="og:url" content="http://yoursite.com/2017/10/27/Day26-Git/index.html">
 <meta property="og:site_name" content="花花世界">
-<meta property="og:description" content="现在已经都说四层网络结构了">
+<meta property="og:description" content="建远程库时最好有 README .md, 别空空荡荡的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/%E4%B8%83%E5%B1%82%E7%BD%91%E7%BB%9COSI.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/tcp_ip%E5%8D%8F%E8%AE%AE%E6%A8%A1%E5%9E%8B.png">
-<meta property="og:updated_time" content="2017-10-20T06:14:55.423Z">
+<meta property="og:updated_time" content="2017-10-31T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Day3 - 7层&#x2F;4层网络协议">
-<meta name="twitter:description" content="现在已经都说四层网络结构了">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/%E4%B8%83%E5%B1%82%E7%BD%91%E7%BB%9COSI.png">
+<meta name="twitter:title" content="Day26 - Git">
+<meta name="twitter:description" content="建远程库时最好有 README .md, 别空空荡荡的">
 
 
 
@@ -121,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/09/Day3-7层4层网络协议/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/27/Day26-Git/"/>
 
 
 
 
 
-  <title>Day3 - 7层/4层网络协议 | 花花世界</title>
+  <title>Day26 - Git | 花花世界</title>
   
 
 
@@ -264,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/09/Day3-7层4层网络协议/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/27/Day26-Git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FredSun">
@@ -281,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Day3 - 7层/4层网络协议</h1>
+          <h1 class="post-title" itemprop="name headline">Day26 - Git</h1>
         
 
         <div class="post-meta">
@@ -293,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-09T23:42:00+08:00">
-                2017-08-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-27T10:35:00+08:00">
+                2017-10-27
               </time>
             
 
@@ -353,19 +350,42 @@
       
 
       
-        <p>现在已经都说四层网络结构了<br><a id="more"></a></p>
-<h4 id="学会了"><a href="#学会了" class="headerlink" title="学会了"></a>学会了</h4><ul>
-<li>复习七层网络结构，在 tcp 协议族中，又合并拆分成四层，</li>
-<li><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/%E4%B8%83%E5%B1%82%E7%BD%91%E7%BB%9COSI.png" alt="七层"></li>
-<li><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/tcp_ip%E5%8D%8F%E8%AE%AE%E6%A8%A1%E5%9E%8B.png" alt=""><ul>
-<li>主机</li>
-<li>应用层, HTTP 协议, HTTPS/FTP/POP3/SMTP/Telnet/DNS包含了原表示层和会话层</li>
-<li>传输层, TCP协议, UDP</li>
-<li>网络层, IPV4／IPV6, ICMP, OSPF, EIGRP, IGMP</li>
-<li>数据链路层, SLIP, CSLIP, PPP, MTU</li>
+        <p>建远程库时最好有 README .md, 别空空荡荡的<br><a id="more"></a></p>
+<blockquote>
+<p>区别其他版本控制<br>git 分为工作区, 版本库的暂存区和版本库的分支<br>git 操作的是文件的修改, 而不是文件. 我们在工作区修改过的文件 add 后进入暂存区, 再接着第二次修改后, 如果不 add, 直接 commit, 提交到分支里的是暂存区里的第一次修改</p>
+</blockquote>
+<h3 id="HTTPS-和-SSH"><a href="#HTTPS-和-SSH" class="headerlink" title="HTTPS 和 SSH"></a>HTTPS 和 SSH</h3><p>TODO</p>
+<p>###1. 建库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd [localUrl]   进入本地目录</div><div class="line">git init    初始化git</div><div class="line">git remote add origin [remoteUrl]    关联远程仓库, origin 是远程库的默认代称.</div></pre></td></tr></table></figure></p>
+<p>###2. 拉取<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git pull origin master    拉取master分支里的仓库. master是默认主分支名称</div><div class="line">或者</div><div class="line">git clones [remoteUrl]    直接拉取全部仓库到本地</div></pre></td></tr></table></figure></p>
+<p>###3. 提交<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add xxx</div><div class="line">git commit -m &quot;提交信息&quot;</div><div class="line">git push -u origin master   将本地的master分支推送到origin主机, 同时指定origin为默认主机</div><div class="line">之后的提交不用-u, 直接 git push origin master就行</div></pre></td></tr></table></figure></p>
+<p>###4. 后悔药-版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git log    查看详细提交信息,版本号等</div><div class="line">git log --pretty=oneline    查看精简提交信息, 只有版本号和提交描述</div><div class="line">git reset --hard HEAD^    回退上一个版本, HEAD^^回退上上个版本, HEAD~100往上100个版本</div><div class="line">git reset xxxxxx    穿越到指定版本, 版本号还不必写全, git会自行查找, 但也不能太短</div><div class="line">git reflog    再次打开terminal时查看之前用过的命令</div></pre></td></tr></table></figure></p>
+<p>###5. 查看工作区<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git status    查看工作区哪些文件修改了, 修改的记得add.</div></pre></td></tr></table></figure></p>
+<p>###6. 后悔药-操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git checkout -- file    撤销修改.一定要加--, 不然checkout是在切换分支.</div><div class="line">cheout的结果: 1.只是修改, 回到修改前. 2.add进暂存区后又改了文件, 回到修改前也就是add后的</div><div class="line">git reset file    撤销add.</div></pre></td></tr></table></figure></p>
+<p>###7. 删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rm file</div><div class="line">git commit -m &quot;删除描述&quot;</div></pre></td></tr></table></figure></p>
+<p>###8. 分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">git checkout -b dev    创建并选择分支== git checkout dev + git branch dev.</div><div class="line">git branch    查看所有分支</div><div class="line">git branch dev    创建dev分支</div><div class="line">git checkout dev    选择dev分支</div><div class="line">在dev分支操作一同后, 开始合并</div><div class="line">git merge dev    dev合并进master</div><div class="line">git branch -d dev    删掉dev, 强行删除把 D 大写</div><div class="line"></div><div class="line">git log --graph    查看分支合并图</div><div class="line">git merge --no-ff -m &quot;保留分支信息的合并描述&quot; dev   以后能看出这里做过合并</div></pre></td></tr></table></figure></p>
+<p>###9. 临时保存现场<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git stash    保存现场</div><div class="line">git stash pop    恢复现场.并删除stash</div><div class="line">或</div><div class="line">git stash apply    恢复现场, 删除需要自己 git stash drop</div><div class="line">git stash list    查看stash列表</div><div class="line">git stash apply stash@&#123;0&#125;    恢复指定stash</div></pre></td></tr></table></figure></p>
+<p>###10. 给提交打 tag<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git tag v1.0    打tag, 默认给最新的commit</div><div class="line">git tag vx 622222    给指定commit 打tag</div><div class="line">git tag    查看tag</div><div class="line">git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164    用 -a 指定 tag 创建说明文字 -m</div><div class="line">git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a    给tag上密钥</div><div class="line">git -d tag v0.1    删除tag</div></pre></td></tr></table></figure></p>
+<p>###11. tag 推送到远程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git push origin v1.0</div><div class="line">git push origin --tags    推送全部 tag</div><div class="line">如果已经推送到远程, 删除tag会麻烦一点</div><div class="line">git tag -d v0.9    先删除本地tag</div><div class="line">git push origin :refs/tags/v0.9    在删除远程tag</div></pre></td></tr></table></figure></p>
+<h4 id="拉取单个文件夹参考"><a href="#拉取单个文件夹参考" class="headerlink" title="拉取单个文件夹参考"></a>拉取单个文件夹<a href="http://jasonkarns.com/blog/subdirectory-checkouts-with-git-sparse-checkout/" target="_blank" rel="external">参考</a></h4><ol>
+<li>初始化新仓库<br>git init <repo><br>cd <repo><br>git remote add –f <name> <url></url></name></repo></repo></li>
+<li>打开 sparse-checkout 特性<br>git config core.sparsecheckout true</li>
+<li>配置.git/info/sparse-checkout, 列出你想要的 checkout 目录<br>echo some/dir/ &gt;&gt; .git/info/sparse-checkout<br>echo another/sub/tree &gt;&gt; .git/info/sparse-checkout</li>
+<li>拉取.(remote == name, branch 通常为 master)<br>git pull <remote> <branch></branch></remote></li>
+</ol>
+<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><h4 id="Everything-up-to-date"><a href="#Everything-up-to-date" class="headerlink" title="Everything up-to-date"></a>Everything up-to-date</h4><ol>
+<li>没有 git add.</li>
+<li>没有 git commit -m “提交信息”</li>
+</ol>
+<h4 id="Couldn’t-find-remote-ref-master"><a href="#Couldn’t-find-remote-ref-master" class="headerlink" title="Couldn’t find remote ref master"></a>Couldn’t find remote ref master</h4><ol>
+<li>仓库里什么都没, readme,.gitignore…..</li>
+</ol>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a href="http://www.cnblogs.com/kevingrace/p/6259905.html" target="_blank" rel="external">Everything up-to-date</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013743858312764dca7ad6d0754f76aa562e3789478044000" target="_blank" rel="external">廖雪峰的git</a></li>
 </ul>
-</li>
-</ul>
+</blockquote>
 
       
     </div>
@@ -385,7 +405,7 @@
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/web/" rel="tag"># web</a>
+            <a href="/tags/Git/" rel="tag"># Git</a>
           
         </div>
       
@@ -398,8 +418,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/07/Day2-导入外部数据库/" rel="next" title="Day2 - 导入外部数据库">
-                <i class="fa fa-chevron-left"></i> Day2 - 导入外部数据库
+              <a href="/2017/10/24/Day25-Touch/" rel="next" title="Day25 - Touch">
+                <i class="fa fa-chevron-left"></i> Day25 - Touch
               </a>
             
           </div>
@@ -407,10 +427,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/10/Day4-Fragment/" rel="prev" title="Day4 - Fragment">
-                Day4 - Fragment <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -556,7 +572,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#学会了"><span class="nav-number">1.</span> <span class="nav-text">学会了</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS-和-SSH"><span class="nav-number">1.</span> <span class="nav-text">HTTPS 和 SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拉取单个文件夹参考"><span class="nav-number">1.1.</span> <span class="nav-text">拉取单个文件夹参考</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#报错"><span class="nav-number"></span> <span class="nav-text">报错</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Everything-up-to-date"><span class="nav-number">0.1.</span> <span class="nav-text">Everything up-to-date</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Couldn’t-find-remote-ref-master"><span class="nav-number">0.2.</span> <span class="nav-text">Couldn’t find remote ref master</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,Android," />
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="上进的懒狗">
-<meta property="og:type" content="website">
-<meta property="og:title" content="花花世界">
-<meta property="og:url" content="http://yoursite.com/tags/Window/index.html">
+<meta name="description" content="回调的简单demo">
+<meta name="keywords" content="Java,Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day27 - 回调">
+<meta property="og:url" content="http://yoursite.com/2017/11/07/Day27-Java回调/index.html">
 <meta property="og:site_name" content="花花世界">
-<meta property="og:description" content="上进的懒狗">
+<meta property="og:description" content="回调的简单demo">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-06T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="花花世界">
-<meta name="twitter:description" content="上进的懒狗">
+<meta name="twitter:title" content="Day27 - 回调">
+<meta name="twitter:description" content="回调的简单demo">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/Window/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/07/Day27-Java回调/"/>
 
 
 
 
 
-  <title>标签: Window | 花花世界</title>
+  <title>Day27 - 回调 | 花花世界</title>
   
 
 
@@ -151,7 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,54 +247,179 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Window<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/07/Day27-Java回调/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/09/18/Day18-Activity&DecorView/" itemprop="url">
-              
-                <span itemprop="name">Day18 - Activity & DecorView</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Day27 - 回调</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-18T14:57:00+08:00"
-              content="2017-09-18" >
-          09-18
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-07T10:15:00+08:00">
+                2017-11-07
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>回调的简单demo<br><a id="more"></a></p>
+<ol>
+<li><p>需要返回值的类创建接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class A&#123;</div><div class="line">    //1. 创建接口</div><div class="line">    public interface Callback&#123;</div><div class="line">        boolean doSomething();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //2. 创建接口实例</div><div class="line">    private Callback mCallback;</div><div class="line"></div><div class="line">    //3. 给接口实例赋值的方法</div><div class="line">    public void setCallback(Callback callback)&#123;</div><div class="line">        this.mCallback = callback;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //4. 正常使用接口的回调值的地方</div><div class="line">    public void execute()&#123;</div><div class="line">        Log.i(tag, mCallback.doSomething()+&quot;&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>返回数值的类.<br>创建需要值的类, 并实现接口, 重写接口方法.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class B extends AppCompatActivity implements A.Callback &#123;</div><div class="line">    //1. 创建A的实例</div><div class="line">    private A mA;</div><div class="line">    //2. 实现A里的接口</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        ...</div><div class="line">        A mA = new A();</div><div class="line">        //3. B发起回调, 通过A的实例</div><div class="line">        mA.setCallback(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //4. 实现接口 &amp; 重写方法</div><div class="line">    @Override</div><div class="line">    public boolean doSomething() &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/27/Day26-Git/" rel="next" title="Day26 - Git">
+                <i class="fa fa-chevron-left"></i> Day26 - Git
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -300,6 +427,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -535,6 +666,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 

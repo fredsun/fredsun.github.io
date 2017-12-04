@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,CoordinatorLayout," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="仿知乎CoordinatorLayout的完整实现">
+<meta name="keywords" content="Android,CoordinatorLayout">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day28 - find知乎CoordinatorLayout">
+<meta property="og:url" content="http://yoursite.com/2017/12/05/Day28-find知乎CoordinatorLayout的实现/index.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="仿知乎CoordinatorLayout的完整实现">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2470338-40a68daa8057e683.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_list.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_detail.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/d6707c8c2b90e0af077cb44fbd063ea2c2b987e2/findzhihu_findFrameInterceptLayout.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/findzhihu_find0x7f0400be.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_find2130968766.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_fragmentpaging.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg">
+<meta property="og:updated_time" content="2017-12-04T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day28 - find知乎CoordinatorLayout">
+<meta name="twitter:description" content="仿知乎CoordinatorLayout的完整实现">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/05/Day28-find知乎CoordinatorLayout的实现/"/>
+
+
+
+
+
+  <title>Day28 - find知乎CoordinatorLayout | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/05/Day28-find知乎CoordinatorLayout的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day28 - find知乎CoordinatorLayout</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-05T00:03:00+08:00">
+                2017-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>仿知乎CoordinatorLayout的完整实现<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg" alt=""><br><a id="more"></a></p>
+<blockquote>
+<p>tips:<br>CoordinatorLayout(协调员布局)能实现一种类似协调视图之间改变效果的布局</p>
+</blockquote>
+<p>文章分为三部分</p>
+<ol>
+<li>CoordinatorLayout 概念的简介</li>
+<li>仿写知乎自定义简单behavior.（非gif演示）</li>
+<li>完整的拆包分析知乎和仿写知乎包括 MainActivity, 首页回答的 ListFragment, 和点击首页回答打开的回答详情的 DetailFragment. (gif演示的实现)</li>
+</ol>
+<p>比较啰嗦, 建议阅读时间9分钟.<br>可以直接跳到代码部分</p>
+<p><a href="https://github.com/sunxlfred/FindZhihu" target="_blank" rel="external">Demo地址</a><br><img src="http://upload-images.jianshu.io/upload_images/2470338-40a68daa8057e683.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FindZhihu.gif"></p>
+<h1 id="「协调员」CoordinatorLayout"><a href="#「协调员」CoordinatorLayout" class="headerlink" title="「协调员」CoordinatorLayout"></a>「协调员」CoordinatorLayout</h1><h2 id="「协调」概念"><a href="#「协调」概念" class="headerlink" title="「协调」概念"></a>「协调」概念</h2><ol>
+<li>铺垫: 正常的事件分发传递, 如果某一层 View 消费掉了 Down事件. 之后的 MOVE, UP 事件都是传递到这一层, 无法直接实现子 view 和其他子 view的「协调」. 于是谷歌在15年的Design<br>SupportLibrary包 Revision 22.2.0 加入了 CoordinatorLayout.</li>
+<li>作为「协调员」的核心外部控件 CoordinatorLayout: 是实现了 NestedScrollingParent 接口的 ViewGroup. 根据谷歌的描述, 它作为一个<strong>顶级布局</strong>, 同时作为<strong>子视图交互</strong>的容器 FrameLayout.<br>那么它的子视图有哪些呢?<ul>
+<li>被依赖子View, 即可滚动的view, 实现 NestedScrollingChild 的子 view .(RecyclerView已实现)</li>
+<li>依赖子View, 如 AppbarLayout(随着滑动的进行而跟着操作的view)</li>
+</ul>
+</li>
+</ol>
+<p>而依赖子view 依靠 <strong>behavior</strong> 控制. 谷歌对于behavior的描述是: CoordinatorLayout的子view的交互行为插件, 一个 behavior 可以实现一个或者多个交互</p>
+<h2 id="Behavior-里的方法"><a href="#Behavior-里的方法" class="headerlink" title="Behavior 里的方法"></a>Behavior 里的方法</h2><p>分类1: view 监听另一个 view 的状态变化, 比如大小, 位置, 显示.</p>
+<ol>
+<li><strong>layoutDependsOn</strong> 用来确定子View是否有另一个同级的View作为布局从属</li>
+<li><strong>onDependentViewChanged</strong> 响应被依赖子View的变化</li>
+</ol>
+<p>分类2: view 监听 CoordinatorLayout 里的滑动状态</p>
+<ol>
+<li><strong>onStartNestedScroll</strong>  我们要不要关心, 要关心什么样的滑动</li>
+<li><strong>onNestedPreScroll</strong> 在嵌套滑动进行时，对象消费滚动距离前回调(<strong>使用的最频繁</strong>)</li>
+</ol>
+<h2 id="「协调」Demo-简单Behavior链接"><a href="#「协调」Demo-简单Behavior链接" class="headerlink" title="「协调」Demo-简单Behavior链接"></a>「协调」Demo-简单Behavior<a href="http://blog.csdn.net/qibin0506/article/details/50290421" target="_blank" rel="external">链接</a></h2><hr>
+<blockquote>
+<p>下面我们开始仿造知乎的详情页来自定义一个 Behavior</p>
+</blockquote>
+<h3 id="知乎Behavior归纳"><a href="#知乎Behavior归纳" class="headerlink" title="知乎Behavior归纳"></a>知乎Behavior归纳</h3><h4 id="1-MainActivity-里的-Listfragment-首页"><a href="#1-MainActivity-里的-Listfragment-首页" class="headerlink" title="1. MainActivity 里的 Listfragment(首页)"></a>1. MainActivity 里的 Listfragment(首页)</h4><ol>
+<li>滑动一定距离就隐藏</li>
+<li>触发效果后, 手不松, 在新的位置重置触发第1步所需的距离</li>
+<li><p>和点击无关<br>如果尝试过默认的behavior就会发现很像系统默认的 behavior. <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 2. 详情 DetailFragment</div><div class="line">1. 文件内容够长才开启滑动</div><div class="line">2. 刚进来时底view显示</div><div class="line">3. 快速滑动才显示/隐藏view</div><div class="line">4. 底view隐藏时, 单击显示/隐藏顶和底view.</div><div class="line">5. 下拉到底放出顶和底view.</div><div class="line"></div><div class="line">#### 3. MainActivity 的底部 TabLayout 再分析</div><div class="line">1. 如果极慢的滑动会发现, 对于同一个动画效果, 底部 TabLayout先于顶部 Toolbar 执行, 可以得出app第一页所看到的顶部和底部不是一个behavior控制的</div><div class="line"></div><div class="line">我们首先用behavior来写一个仿知乎的效果</div><div class="line">## Demo-自定义Behavior, 仿知乎布局</div><div class="line"></div><div class="line">1. 创建 CoordinatorLayout 布局</div></pre></td></tr></table></figure></p>
+<p> <coordinatorlayout></coordinatorlayout></p>
+<pre><code>&lt;RecyclerView/&gt;            
+&lt;LinearLayout
+  app:layout_behavior=&quot;@string/my_behavior&quot;
+  /&gt;          
+</code></pre><p> </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;如果一定要listview, 请判断版本 api21 后再setNestedScrollingEnabled</div></pre></td></tr></table></figure>
+<p> if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</p>
+<pre><code>listView.setNestedScrollingEnabled(true);
+</code></pre><p> }</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">2. 自定义底部隐藏的动画</div><div class="line">    ```java</div><div class="line">    public class MyBehaviorAnim &#123;</div><div class="line"></div><div class="line">        private View mBottomView;</div><div class="line">        private float mOriginalY;</div><div class="line"></div><div class="line">        public BottomBehaviorAnim(View bottomView) &#123;</div><div class="line">            mBottomView = bottomView;</div><div class="line">            mOriginalY = mBottomView.getY();</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        public void show() &#123;</div><div class="line">            ValueAnimator animator = ValueAnimator.ofFloat(mBottomView.getY(), mOriginalY);</div><div class="line">            animator.setDuration(400);</div><div class="line">            animator.setInterpolator(new LinearOutSlowInInterpolator());</div><div class="line">            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onAnimationUpdate(ValueAnimator valueAnimator) &#123;</div><div class="line">                    mBottomView.setY((Float) valueAnimator.getAnimatedValue());</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            animator.start();</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        public void hide() &#123;</div><div class="line">            ValueAnimator animator = ValueAnimator.ofFloat(mBottomView.getY(), mOriginalY + mBottomView.getHeight());</div><div class="line">            animator.setDuration(400);</div><div class="line">            animator.setInterpolator(new LinearOutSlowInInterpolator());</div><div class="line">            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onAnimationUpdate(ValueAnimator valueAnimator) &#123;</div><div class="line">                    mBottomView.setY((Float) valueAnimator.getAnimatedValue());</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            animator.start();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>自定义底部隐藏的Behavior</p>
+<ul>
+<li>判断手势</li>
+<li>计算距离</li>
+<li>触发动画<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBehavior</span> <span class="keyword">extends</span> <span class="title">CoordinatorLayout</span>.<span class="title">Behavior</span>&lt;<span class="title">View</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> BottomBehaviorAnim mBottomAnim;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isHide;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> canScroll = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mTotalScrollY;</div><div class="line">    <span class="keyword">protected</span> <span class="keyword">boolean</span> isInit = <span class="keyword">true</span>; <span class="comment">//防止new Anim导致的parent 和child坐标变化</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mDuration = <span class="number">400</span>;</div><div class="line">    <span class="keyword">private</span> Interpolator mInterpolator = <span class="keyword">new</span> LinearOutSlowInInterpolator();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> minScrollY = <span class="number">5</span>;<span class="comment">//触发滑动动画最小距离</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> scrollYDistance = <span class="number">40</span>;<span class="comment">//设置最小滑动距离</span></div><div class="line"></div><div class="line">    <span class="comment">//1. 必须重写两个参数的构造方法, 因为behavior的实例化是反射这个构造方法实现的</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BottomBehavior</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//2. 关心谁</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.layoutDependsOn(parent, child, dependency);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 触发滑动嵌套滚动之前调用的方法</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> coordinatorLayout coordinatorLayout父布局</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> child             使用Behavior的子View</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> target            触发滑动嵌套的View(实现NestedScrollingChild接口)</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> dx                滑动的X轴距离</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> dy                滑动的Y轴距离</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> consumed          父布局消费的滑动距离，consumed[0]和consumed[1]代表X和Y方向父布局消费的距离，默认为0</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNestedPreScroll</span><span class="params">(CoordinatorLayout coordinatorLayout, View child, View target,</span></span></div><div class="line"><span class="function"><span class="params">                                  <span class="keyword">int</span> dx, <span class="keyword">int</span> dy, <span class="keyword">int</span>[] consumed)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 滑动嵌套滚动时触发的方法</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> coordinatorLayout coordinatorLayout父布局</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> child             使用Behavior的子View</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> target            触发滑动嵌套的View</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> dxConsumed        TargetView消费的X轴距离</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> dyConsumed        TargetView消费的Y轴距离</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> dxUnconsumed      未被TargetView消费的X轴距离</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> dyUnconsumed      未被TargetView消费的Y轴距离(如RecyclerView已经到达顶部或底部，而用户继续滑动，此时dyUnconsumed的值不为0，可处理一些越界事件)</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNestedScroll</span><span class="params">(CoordinatorLayout coordinatorLayout, View child, View target,</span></span></div><div class="line"><span class="function"><span class="params">                               <span class="keyword">int</span> dxConsumed, <span class="keyword">int</span> dyConsumed, <span class="keyword">int</span> dxUnconsumed, <span class="keyword">int</span> dyUnconsumed)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);</div><div class="line">        <span class="keyword">if</span> (canScroll) &#123;</div><div class="line">            mTotalScrollY += dyConsumed;</div><div class="line">            <span class="keyword">if</span> (Math.abs(dyConsumed) &gt; minScrollY || Math.abs(mTotalScrollY) &gt; scrollYDistance) &#123;</div><div class="line">                <span class="keyword">if</span> (dyConsumed &lt; <span class="number">0</span>) &#123;</div><div class="line">                    <span class="keyword">if</span> (isHide) &#123;</div><div class="line">                        mBottomAnim.show();</div><div class="line">                        isHide = <span class="keyword">false</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dyConsumed &gt; <span class="number">0</span>) &#123;</div><div class="line">                    <span class="keyword">if</span> (!isHide) &#123;</div><div class="line">                        mBottomAnim.hide();</div><div class="line">                        isHide = <span class="keyword">true</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                mTotalScrollY = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStartNestedScroll</span><span class="params">(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, <span class="keyword">int</span> nestedScrollAxes)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (isInit) &#123;</div><div class="line">            mBottomAnim = <span class="keyword">new</span> BottomBehaviorAnim(child);</div><div class="line">            isInit = <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> (nestedScrollAxes &amp; ViewCompat.SCROLL_AXIS_VERTICAL) != <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStopNestedScroll</span><span class="params">(CoordinatorLayout coordinatorLayout, View child, <span class="keyword">final</span> View target)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStopNestedScroll(coordinatorLayout, child, target);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>关联xml和behavior<br>先在 string 里添加 behavior, 再在依赖子 view 中添加</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;resources&gt;</div><div class="line">    &lt;string name=&quot;my_behavior&quot;&gt;com.clickdemo.Behavior.MyBehavior&lt;/string&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;LinearLayout</div><div class="line">  app:layout_behavior=&quot;@string/my_behavior&quot;</div><div class="line">  /&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>思考: 自定义behavior确实能做到类似知乎的隐藏 TabView 的效果, 但是知乎真的是这么实现的吗? Activity 和 Fragment 都用上了 CoordinatorLayout?</p>
+</blockquote>
+<h1 id="知乎"><a href="#知乎" class="headerlink" title="知乎"></a>知乎</h1><h2 id="知乎拆包静态分析"><a href="#知乎拆包静态分析" class="headerlink" title="知乎拆包静态分析."></a>知乎拆包静态分析.</h2><ol>
+<li><p><strong>准备</strong></p>
+<ul>
+<li>分析对象: 知乎的首页和回答详情页.</li>
+<li>材料:<ul>
+<li>拆包拿到的xml等文件.（4.1.8包来源于酷安app端的历史版本）</li>
+<li>Luyten (查看.jar文件里的混淆后的java代码)</li>
+<li>Hierarchy View （AndroidStudio视图查看工具)</li>
+</ul>
+</li>
+<li><p>前提: 拆包拿到的activity_main.xml中可以看到, 底部的 com.zhihu.android.base.widget.ZHTabLayout 用到了 layout_behavior.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">com.zhihu.android.app.ui.widget.ZHInsetsFrameLayout</span> <span class="attr">android:id</span>=<span class="string">"@id/content_container"</span> <span class="attr">android:tag</span>=<span class="string">"layout/activity_main_0"</span> <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span></span></div><div class="line"><span class="tag">  <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span> <span class="attr">xmlns:zhihu</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">com.zhihu.android.app.ui.widget.reveal.widget.RevealFrameLayout</span> <span class="attr">android:background</span>=<span class="string">"?zhihu.background.window"</span> <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span> <span class="attr">android:id</span>=<span class="string">"@id/coordinator_layout"</span> <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">com.zhihu.android.base.widget.NonSwipeableViewPager</span> <span class="attr">android:id</span>=<span class="string">"@id/main_pager"</span> <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">android:id</span>=<span class="string">"@android:id/content"</span> <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span> <span class="attr">zhihu:layout_behavior</span>=<span class="string">"com.zhihu.android.base.widget.SnackBarBehavior"</span> <span class="attr">zhihu:layout_anchorGravity</span>=<span class="string">"end|center|bottom"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">com.zhihu.android.base.widget.ZHTabLayout</span> <span class="attr">android:layout_gravity</span>=<span class="string">"end|bottom|center"</span> <span class="attr">android:id</span>=<span class="string">"@id/main_tab"</span> <span class="attr">android:background</span>=<span class="string">"?zhihu.background.navigation.tab.bottom"</span> <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"@dimen/bottom_navigation_height"</span> <span class="attr">zhihu:layout_behavior</span>=<span class="string">"com.zhihu.android.base.widget.FooterBehavior"</span> <span class="attr">zhihu:layout_anchorGravity</span>=<span class="string">"end|center|bottom"</span> <span class="attr">zhihu:tabIndicatorColor</span>=<span class="string">"@android:color/transparent"</span> <span class="attr">zhihu:tabGravity</span>=<span class="string">"fill"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">com.zhihu.android.app.ui.widget.reveal.widget.RevealFrameLayout</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">com.zhihu.android.base.widget.ZHFrameLayout</span> <span class="attr">android:id</span>=<span class="string">"@id/overlay_container"</span> <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span> <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span> /</span></div><div class="line">&lt;/com.zhihu.android.app.ui.widget.ZHInsetsFrameLayout&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>推测: MainActivity 包着四个Fragment, 底部依靠「tabLayout」切换, 然后进入详情页把内容都换一遍, 然后每一页一个 CoordinatorLayout?</p>
+</li>
+<li>目的: <del>查看知乎Fragment页的behavior如何实现的</del> 拿到详情和首页Fragment的xml和java文件</li>
+</ul>
+</li>
+<li><p><strong>用 Hierarchy View 拿到 view 的 id</strong><br>模拟器打开app, 进入首页的一个回答下, 用 Hierarchy View (在Android Studio自带的tool -&gt; Android Device Monitor) 发现是 CoordinatorLayout 包着 NonSwipeableViewPager + +ZHFrameLayout + ZHTabLayout , 之后进入详情页也是替换了 NonSwipeableViewPager 里的 FrameLayout.<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_list.png" alt=""><br>activity_main的效果如上图, 此时的FrameLayout显示的是首页ListFragment<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_detail.png" alt=""><br>上图是FrameLayout显示的是回答详情DetailFragment</p>
+<blockquote>
+<p><strong>疑问1</strong>: 等等, 只有<strong>一个</strong> CoordinatorLayout?<br>之前猜的是有<strong>多个</strong>CoordinatorLayout啊?</p>
+<p>常规使用下, CoordinatorLayout 的子view的子view，只能跟着上一级view整体实现协调, 即使AppBarLayout, 协调的效果也是固定的几种</p>
+</blockquote>
+</li>
+</ol>
+<p>所以知乎 Fragment 里底部的view和头部的toolbar是不依赖 CoordinatorLayout 进行协调的?<br>还是先找到Activity和Fragment.java文件吧</p>
+<ol>
+<li><strong>根据 view 的 id 来找在哪些 xml 用到了它</strong><br>接下来我们用之前反编译好的资源开始寻找, 根据第1步, 我们看到了一个看似根布局的view, FrameInterceptLayout. 那就在res/layout里搜索下. 果然用到 FrameInterceptLayout 的地方不是很多. 而这 fragment_pager 和fragment_pager_2 看起来很可疑.<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/d6707c8c2b90e0af077cb44fbd063ea2c2b987e2/findzhihu_findFrameInterceptLayout.png" alt=""></li>
+<li><p><strong>根据 xml 的 id 来找在哪些 java 文件里用到了它</strong><br>那接下来看下哪些地方用到了「fragment_pager」, 通过<a href="http://www.wjdiankong.cn/android%E9%80%86%E5%90%91%E4%B9%8B%E6%97%85-%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%A9%E5%99%A8apktool%E5%92%8Cjadx%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8A%E9%94%99%E8%AF%AF%E7%BA%A0/" target="_blank" rel="external">Android逆向之旅</a> 可以得出: apk被反编译后会产生一个至关重要的 <strong>public.xml</strong> 文件, 就在res/values/public.xml下, 打开后搜一下, 哈, 找到你了, <del>面码</del>, <strong>0x7f0400be</strong> 和 <strong>0x7f0400bf</strong>.<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/findzhihu_find0x7f0400be.png" alt=""><br>但是这是俩 <strong>十六进制</strong> 的东西啊. 对, <a href="http://www.wjdiankong.cn/android%E9%80%86%E5%90%91%E4%B9%8B%E6%97%85-%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%A9%E5%99%A8apktool%E5%92%8Cjadx%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8A%E9%94%99%E8%AF%AF%E7%BA%A0/" target="_blank" rel="external">Android逆向之旅</a>里也告诉我们怎么看 <strong>0x7f0400be</strong>:</p>
+<blockquote>
+<p>这里可以看到，一个id字段，都有对应的类型，名称，和id值的<br>而这里的id值是一个整型值，8个字节；由三部分组成的：<br>PackageId+TypeId+EntryId<br>PackageId：是包的Id值，Android中如果是第三方应用的话，这个值默认就是0x7F，系统应用的话就是0x01，具体我们可以后面看aapt源码得知，他占用两个字节。<br>TypeId：是资源的类型Id值，一般Android中有这几个类型：attr，drawable，layout，dimen，string，style等，而且这些类型的值是从1开始逐渐递增的，而且顺序不能改变，attr=0x01，drawable=0x02….他占用两个字节。<br>EntryId：是在具体的类型下资源实体的id值，从0开始，依次递增，他占用四个字节。</p>
+</blockquote>
+<p> 那就用计算器转换一下, 拿到十进制的 2130968766 和 2130968767<br> 然后打开Luyten(替代JD_GUI, 有些文件JD_GUI打开后是一片空白). 打开一个jar文件, 先搜索一下 2130968766, 找到了.<br> <img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_find2130968766.png" alt=""></p>
+<blockquote>
+<p>看到databinding感叹下, 原来知乎早就上了databinding.</p>
+</blockquote>
+<p> 不过我们要的是下面这个com/zhihu/app/ui/fragment/b/i.class…<br> 找到了这句话</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public View a(final LayoutInflater layoutInflater, final ViewGroup viewGroup, final Bundle bundle) &#123;</div><div class="line">    this.b = android.databinding.e.a(layoutInflater, 2130968766, viewGroup, false);</div><div class="line">    return this.b.h();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 可以猜到这句话就是 fragment 的 onCreateView 啦<br>这就拿到了主页Fragment的java文件和xml文件了.<br>同理拿到了 详情页的ZHObservableWebView, 首页列表的ZHRecyclerView extends ObservableRecyclerView. 这个频繁出现的ObservableXXXView 根据包名, 可以找到这个项目<a href="https://github.com/ksoichiro/Android-ObservableScrollView" target="_blank" rel="external">ksoichiro/Android-ObservableScrollView</a></p>
+<p>当然了, 如果在第1步的HierarchyView里能找到特殊的id的view可以直接搜索, 比如详情页可以靠fragment_paging_layout搜到.详情页的view是fragment_paging.xml, 如下图<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_fragmentpaging.png" alt=""></p>
+<p>破案了! 结合疑问1, 可以得出:<br>知乎的 Fragment 们的协调不是通过 CoordinatorLayout 的 behavior, 而是使用了观察者模式的开源项目.</p>
+<h5 id="总结一下-省略了过程"><a href="#总结一下-省略了过程" class="headerlink" title="总结一下(省略了过程):"></a>总结一下(省略了过程):</h5><ol>
+<li>MainActivity 的底部 TabLayout 使用的是 CoordinatorLayout 的 layout_behavior</li>
+<li>首页ListFragment 的顶部toolbar可能是 ZHObservableRecyclerView 也可能是 FrameInterceptLayout控制, xml文件是 fragment_paging, Java 文件在</li>
+<li>首页详情DetailFragment 的顶部和底部是 ZHObservableWebView 控制 xml文件是 fragment_pager, Java 文件在com/zhihu/app/ui/fragment/b/i.class</li>
+</ol>
+<p>为啥首页详情页这么肯定是 ZHObservableWebView 控制的呢, 因为在Luyten里查看到的知乎源码中重写了<code>onScrollChange</code> 方法, 多返回了int l, t, oldl, oldt 四个参数, 而我自己在写的时候发现也需要这四个参数才方便实现结果.</p>
+<p>大致效果如图:<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg" alt=""></p>
+</li>
+</ol>
+<h3 id="具体Demo-地址"><a href="#具体Demo-地址" class="headerlink" title="具体Demo 地址"></a>具体Demo <a href="https://github.com/sunxlfred/FindZhihu" target="_blank" rel="external">地址</a></h3><p>核心部分原理描述:<br>从 MainActivity 的 ListFragment 切换到 DetailFragment 时, 把 ListFragment 的 toolbar 和 MainActivity 的 tabLayout 恢复原样(先GONE掉).<br>从 DetailFragment 切换回 ListFragment 时, 直接VISIBLE 底部tabLayout.</p>
+<h3 id="弯路"><a href="#弯路" class="headerlink" title="弯路"></a>弯路</h3><ol>
+<li>如何只在快速下滑时才触发 behavior 的 onNestedScroll(仿知乎详情页)<ul>
+<li><del>原思路</del>: 通过event监听手势Y轴速度. 传给behavior. 又因为「协调」时 onTouchEvent 无法接收到事件, behavior不属于ViewGroup, 无法在 behavior 里调用 dispatchTouchEvent, 只能在Activity里调, 所以采用 activity 监听的dispatchTouchEvent里event的 Y 轴速度, 再回调给behavior.</li>
+<li>现思路: 其实 onNestedScroll 的参数 dyConsumed (Y 轴偏移量的大小)就是速度…</li>
+</ul>
+</li>
+<li>如何判断滑到底<ul>
+<li><del>原思路</del>: 在 「协调」监听 onNestedScroll 里, dyConsumed == 0 时表示滑到边界了, dyUnconsumed &gt; 0 表示滑到边界了还在下拉, 所以通过(dyConsumed == 0 &amp;&amp; dyUnconsumed &gt; 0)来判断</li>
+<li>现思路: boolean view.canScrollVertically(1) 的返回值表示能够下拉, -1的返回值表示上拉</li>
+</ul>
+</li>
+<li>详情Fragment覆盖了本该在前面的TabLayout, 即如何让xml中被TabLayout挡住的ViewPager, 反过来挡住 TabLayout.<ul>
+<li><del>原思路</del>: 看到源代码中 afollestad/material-dialogs, 误以为新开的Fragment都是 DialogFragment</li>
+<li><del>原思路</del>: 通过 View.bringToFront</li>
+<li>现思路:<ol>
+<li>DialogFragment 在Hierarchy View里能看到多开了一个 MainActivity 进程. 里面重新从 DecorView 开始的布局,</li>
+<li>View.bringToFront 即使不开启新的 DecorView, 也改变了原进程, 无法在Hierarchy View上与知乎的布局一样.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>为啥不直接使用 dispatchTouchEvent<ul>
+<li>behavior 里没有重写 dispatchTouchEvent</li>
+</ul>
+</li>
+<li>为啥不 onTouchEvent<ul>
+<li>behavior 里在拿到一段ACTION_MOVE后会拦截掉直接扔给 Behavior 一个 ACTION_CANCEL</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a href="http://www.jianshu.com/p/7caa5f4f49bd" target="_blank" rel="external">app:layout_scrollFlags效果</a></li>
+<li><a href="http://blog.csdn.net/qibin0506/article/details/50290421" target="_blank" rel="external">自定义behavior入门</a></li>
+<li><a href="http://www.jianshu.com/p/2974d8ffc3a5" target="_blank" rel="external">借鉴仿知乎behavior库 LBehavior的动画效果</a></li>
+<li><a href="http://blog.csdn.net/qibin0506/article/details/50377592" target="_blank" rel="external">源码看CoordinatorLayout.Behavior原理</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/CoordinatorLayout/" rel="tag"># CoordinatorLayout</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/07/Day27-Java回调/" rel="next" title="Day27 - 回调">
+                <i class="fa fa-chevron-left"></i> Day27 - 回调
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#「协调员」CoordinatorLayout"><span class="nav-number">1.</span> <span class="nav-text">「协调员」CoordinatorLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#「协调」概念"><span class="nav-number">1.1.</span> <span class="nav-text">「协调」概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Behavior-里的方法"><span class="nav-number">1.2.</span> <span class="nav-text">Behavior 里的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#「协调」Demo-简单Behavior链接"><span class="nav-number">1.3.</span> <span class="nav-text">「协调」Demo-简单Behavior链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#知乎Behavior归纳"><span class="nav-number">1.3.1.</span> <span class="nav-text">知乎Behavior归纳</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-MainActivity-里的-Listfragment-首页"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">1. MainActivity 里的 Listfragment(首页)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#知乎"><span class="nav-number">2.</span> <span class="nav-text">知乎</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#知乎拆包静态分析"><span class="nav-number">2.1.</span> <span class="nav-text">知乎拆包静态分析.</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#总结一下-省略了过程"><span class="nav-number">2.1.0.0.1.</span> <span class="nav-text">总结一下(省略了过程):</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体Demo-地址"><span class="nav-number">2.1.1.</span> <span class="nav-text">具体Demo 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#弯路"><span class="nav-number">2.1.2.</span> <span class="nav-text">弯路</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

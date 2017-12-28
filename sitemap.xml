@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.fredsun.me/2017/12/28/Day34-TODO-%E8%87%AA%E5%AE%9A%E4%B9%89view/</loc>
+    <loc>http://www.fredsun.me/2017/09/18/Day18-Activity+DecorView/</loc>
     
-    <lastmod>2017-12-27T16:00:00.000Z</lastmod>
+    <lastmod>2017-12-28T08:20:48.032Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/12/28/Day32-TODO-Intent/</loc>
+    <loc>http://www.fredsun.me/2017/08/24/Day9-OOM%E4%B8%8EContext/</loc>
     
-    <lastmod>2017-12-27T16:00:00.000Z</lastmod>
+    <lastmod>2017-12-28T08:19:35.563Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/08/23/Day8-Fragment%E6%87%92%E5%8A%A0%E8%BD%BD+ViewPager+TabLayout/</loc>
+    
+    <lastmod>2017-12-28T08:19:28.493Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/08/17/Day6-DialogFrament+AlertDialog/</loc>
+    
+    <lastmod>2017-12-28T08:18:11.641Z</lastmod>
     
   </url>
   
@@ -24,6 +38,13 @@
   
   <url>
     <loc>http://www.fredsun.me/2017/12/28/Day37-TODO-Gesture/</loc>
+    
+    <lastmod>2017-12-27T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/12/28/Day33-TODO-Bitmap/</loc>
     
     <lastmod>2017-12-27T16:00:00.000Z</lastmod>
     
@@ -44,7 +65,14 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/12/28/Day33-TODO-Bitmap/</loc>
+    <loc>http://www.fredsun.me/2017/12/28/Day34-TODO-%E8%87%AA%E5%AE%9A%E4%B9%89view/</loc>
+    
+    <lastmod>2017-12-27T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/12/28/Day32-TODO-Intent/</loc>
     
     <lastmod>2017-12-27T16:00:00.000Z</lastmod>
     
@@ -86,21 +114,14 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/12/05/Day28-find%E7%9F%A5%E4%B9%8ECoordinatorLayout%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
-    
-    <lastmod>2017-12-05T16:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/09/22/Day24-Retrofit&Logger/</loc>
-    
-    <lastmod>2017-12-05T16:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.fredsun.me/2017/09/22/Day24-Retrofit+Logger/</loc>
+    
+    <lastmod>2017-12-05T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/12/05/Day28-find%E7%9F%A5%E4%B9%8ECoordinatorLayout%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2017-12-05T16:00:00.000Z</lastmod>
     
@@ -184,13 +205,6 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/09/18/Day18-Activity&DecorView/</loc>
-    
-    <lastmod>2017-10-20T07:19:29.062Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.fredsun.me/2017/09/13/Day17-Application%E5%92%8CActivity%E7%9A%84onCreate/</loc>
     
     <lastmod>2017-10-20T07:16:14.723Z</lastmod>
@@ -236,27 +250,6 @@
     <loc>http://www.fredsun.me/2017/08/25/Day10-idea,maven,spring%20boot,vim/</loc>
     
     <lastmod>2017-10-20T06:49:32.443Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/08/23/Day8-Fragment%E6%87%92%E5%8A%A0%E8%BD%BD+ViewPager+TabLayout/</loc>
-    
-    <lastmod>2017-10-20T06:46:55.857Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/08/24/Day9-OOM%E4%B8%8EContext/</loc>
-    
-    <lastmod>2017-10-20T06:46:52.254Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/08/17/Day6-DialogFrament&AlertDialog/</loc>
-    
-    <lastmod>2017-10-20T06:39:54.550Z</lastmod>
     
   </url>
   

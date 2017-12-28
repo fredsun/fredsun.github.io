@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Android,静态,static,内存泄漏,STW," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="堆和栈, 内存泄漏的本质, 静态方法区在哪儿, 新生代和老年代, STW">
+<meta name="keywords" content="Java,Android,静态,static,内存泄漏,STW">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day7 - 堆,栈,方法区,GC">
+<meta property="og:url" content="http://www.fredsun.me/Day7-堆,栈,方法区,GC.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="堆和栈, 内存泄漏的本质, 静态方法区在哪儿, 新生代和老年代, STW">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-07T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day7 - 堆,栈,方法区,GC">
+<meta name="twitter:description" content="堆和栈, 内存泄漏的本质, 静态方法区在哪儿, 新生代和老年代, STW">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fredsun.me/Day7-堆,栈,方法区,GC.html"/>
+
+
+
+
+
+  <title>Day7 - 堆,栈,方法区,GC | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fredsun.me/Day7-堆,栈,方法区,GC.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day7 - 堆,栈,方法区,GC</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-23T14:25:00+08:00">
+                2017-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>堆和栈, 内存泄漏的本质, 静态方法区在哪儿, 新生代和老年代, STW<br><a id="more"></a></p>
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><ul>
+<li>只要类持有对外部实力对象的引用, 垃圾回收机制就不会回收该对象</li>
+<li>静态代码块只在虚拟机第一次加载类的时候运行<h1 id="JVM中"><a href="#JVM中" class="headerlink" title="JVM中"></a>JVM中</h1><h2 id="堆和栈对比"><a href="#堆和栈对比" class="headerlink" title="堆和栈对比"></a>堆和栈对比</h2><h3 id="存什么"><a href="#存什么" class="headerlink" title="存什么"></a>存什么</h3></li>
+<li><p>栈内存 存储<strong>基本数据类型</strong>, <strong>局部变量</strong>和<strong>方法调用和形参</strong>,栈分为<strong>java方法栈和native方法栈</strong>,</p>
+<blockquote>
+<p>方法栈主要记录的是方法运行时的栈帧, 每执行一个方法就会添加一个栈帧 ,方法返回后, 栈被清空, 堆等待GC回收<br>为单个函数分配的那部分栈空间叫做<strong>栈帧(StackFrame)</strong><br>正在使用的栈空间叫做<strong>调用栈(CallStack)</strong><br>在内存中，栈是从高地址向低地址延伸的，即栈底对应高地址，栈顶对应低地址。</p>
+</blockquote>
+<p>java线程是不是开两个栈存放不同的栈帧看具体JDK, 比如Oracle JDK和OpenJDK就是一个调用栈存放两种栈帧</p>
+</li>
+<li><p>堆内存 存储Java中的全部对象,this</p>
+</li>
+</ul>
+<figure class="highlight plain"><figcaption><span>a[] </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new int[] 存放在堆, int a[] 存放在栈</div></pre></td></tr></table></figure>
+<p>Double a[] = new Double[10000000];<br>   Double qq = 3.1d;<br>   for (int i = 0; i &lt; a.length; i++) {<br>       a[i] = qq.doubleValue();<br>   }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line">a[i] = qq.doubleValue;</div><div class="line">a[i] = Double.valueOf(qq);</div><div class="line">a[i] = new Double(qq.doubleValue);</div><div class="line">所以此double类的值存在堆</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">### 独有/共享</div><div class="line">* 栈内存归属于线程, 每个线程都会有一个栈内存, 其存储的变量只能在其所属的线程中可见, 栈内存可以理解成线程的私有内存, 所以叫线程栈</div><div class="line"></div><div class="line">* 堆内存的对象, 对所有线程可见, 可以被所有线程访问</div><div class="line"></div><div class="line">### 异常</div><div class="line">* 栈没有空间存储方法调用和局部变量, JVM会抛出Java.lang.StackOverFlowError</div><div class="line">* 堆没有空间存储对象, JVM会抛出java.lang.OutOfMemoryError:java heap space</div><div class="line">* 如果永久区爆了(常量池溢出, 方法区保存的 class 对象没有被及时回收掉或者 class 信息占用的内存超过了我们的配置), JVM会抛出java.lang.OutOfMemoryError:PermGen space</div><div class="line">* 纯java代码无法泄漏栈空间, 它完全被JVM掌控</div><div class="line"></div><div class="line">### 空间大小</div><div class="line">* 栈内存远小于堆内存, 栈可通过jvm参数 -XSS设置, 默认随着虚拟机和操作系统改变</div><div class="line"></div><div class="line">### 执行效率</div><div class="line">* 栈是存取效率灵活, 仅次于寄存器, 栈数据可以共享, 但栈中的数据大小和生命周期固定, 缺乏灵活性</div><div class="line">* 堆是自动分配内存大小, 生存期不用告诉编译器, 等gc回收, 但是因为动态分配内存, 存储效率会比较慢</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"># 方法区 static</div><div class="line">* 方法区存类信息, 静态方法, 常量, 即时编译器编译后的代码</div><div class="line">* 方法区是JVM规范所描述的一个概念, 在实际的JVM实现中, 它不一定是由单一的特殊区域所实现,</div><div class="line">在Oracle JDK7 / OpenJDK7及之后的HotSpot VM里，静态变量存储在java.lang.Class对象末尾的隐藏字段里，而java.lang.Class对象存储在普通的Java heap里（不在PermGen里了）</div><div class="line"></div><div class="line"># GC(Garabage Collection)</div><div class="line">指的是堆中数据的回收, 首先堆可以划分为新生代和老年代</div><div class="line">![](https://raw.githubusercontent.com/sunxlfred/RES/master/generational_garbage_collection.png)</div><div class="line"></div><div class="line">新生代继续划分为 Eden 和 Survivor Space(幸存区), Survivor Space 再被划分成 From 和 To</div><div class="line">![](https://raw.githubusercontent.com/sunxlfred/RES/master/young_generation_memory_areas.png)</div><div class="line">新对象首先被创建在 Eden, (如果对象过大，如数组，则直接放入老年代). 在 GC 中, Eden 会被移入Survivor Space. 直到对象熬过一定的Minor GC的次数, 会被移到老年代, 老年代用Major GC来清理</div><div class="line"></div><div class="line">&gt; 内存抖动就是Young Generation 在短时间内配置大量对象</div><div class="line"></div><div class="line">### 空间占比:</div><div class="line">  * 新生代 : 老年代 =  1:2</div><div class="line">  * Eden : From : To = 8:1:1</div><div class="line">###  分代收集</div><div class="line">新生代使用Minor GC, 老年代使用Major GC</div><div class="line">Minor GC 和 Major GC 统称为 Full GC</div><div class="line">所有的Minor GC 会触发全世界暂停 **STW**(stop-the-world), 停止应用程序的线程, 当然对于大多数应用，停顿的延迟可以忽略不计, 真相是大部分Eden区中的对象都能被认为是垃圾，所以不会存放到Survivor Space.</div><div class="line">现在很多的GC机制都会清理永久代(静态方法区)</div><div class="line"></div><div class="line">* JVM并不强制要求GC实现哪种GC算法</div><div class="line">&gt; 纯java代码无法泄漏栈空间, 它完全被JVM掌控, 但如果有其他资源依附在java对象上, 如native memory(DirectByteBuffer), file(fileInputStream), 那么当然自己关闭最合适</div><div class="line">* 虽然有finalizer, PhantomReference之类的让程序员向GC注册, 请求释放资源,但是GC运行时间不确定(因为是一条单独的线程), 还是自己释放的好</div><div class="line"></div><div class="line">### 可达性检测</div><div class="line">* 引用计数: 一种在jdk1.2之前被使用的垃圾收集算法，我们需要了解其思想。其主要思想就是维护一个counter，当counter为0的时候认为对象没有引用，可以被回收。缺点是无法处理循环引用。目前iOS开发中的一个常见技术ARC（Automatic Reference Counting）也是采用类似的思路。在当前的JVM中应该是没有被使用的。</div><div class="line"></div><div class="line">* 根搜算法: gc root 根据引用关系来便利整个堆, 并标记, 这称之为Mark, 之后回收掉违背Mark的对象, 解决了「孤岛效应」, 这里的gc root 指的是：</div><div class="line">    * 虚拟机栈中引用的对象(栈帧中的本地变量表)</div><div class="line">    * 方法区中的类静态属性引用的对象</div><div class="line">    * 方法区中的常用变量的对象</div><div class="line">    * 本地方法栈中JNI 引用的对象</div><div class="line"></div><div class="line">### java减小GC开销 [from](https://juejin.im/entry/580746885bbb50005b901a54)</div><div class="line">* 不要显示调用System.gc()</div><div class="line">此函数只是建议JVM进行GC, 无法保证立马执行</div><div class="line">* 减小临时对象的使用</div><div class="line">* 对象不用时显示置为null</div><div class="line">* 使用StringBuilder拼接字符串</div><div class="line">String的扩增是新建对象, 多次 + 会多次创建新对象</div><div class="line">* 能用基本类型就不用对象</div><div class="line">* 少用静态</div><div class="line">* 分散对象创建和删除的时间</div><div class="line"></div><div class="line">### 整理策略</div><div class="line">* 复制</div><div class="line">主要在新生代的回收上, 通过from 和 to 区的来回拷贝.对于新生成的对象, 频繁的复制可以很快找到  那些不用的对象.</div><div class="line">* 标记清除和标记整理</div><div class="line">主要在老生代的回收上, 通过根搜的标记清除或者处理掉不用的对象.</div><div class="line">整理的过程</div><div class="line">![](https://raw.githubusercontent.com/sunxlfred/RES/master/compaction_of_the_old_generation.png)</div><div class="line">清除的过程</div><div class="line">![](https://raw.githubusercontent.com/sunxlfred/RES/master/CMS_sweeping_of_old_generation.png)</div><div class="line"></div><div class="line">清除会产生碎片，对内存的利用不是很好, 但是不代表整理比清除好, 毕竟整理慢, 比如CMSGC就是使用清除而不是整理的</div><div class="line">* 具体的垃圾收集器</div><div class="line">  * 新生代收集器：有Serial收集器、ParNew收集器、Parallel Scavenge收集器</div><div class="line">  * 老生代收集器：Serial Old收集器、Parallel Old收集器、CMS收集器、G1收集器</div><div class="line">![](https://raw.githubusercontent.com/sunxlfred/RES/master/GC.png)</div><div class="line"></div><div class="line">&gt; 思考一下复制和标记清除/整理的区别，为什么新生代要用复制？因为对新生代来讲，一次垃圾收集要回收掉绝大部分对象，我们通过冗余空间的办法来加速整理过程（不冗余空间的整理操作要做swap，而冗余只需要做move）。同时可以记录下每个对象的『年龄』从而优化『晋升』操作使得中年对象不被错误放到老年代。而反过来老年代偏稳定，我们哪怕是用清除，也不会产生太多的碎片，并且整理的代价也并不会太大。</div><div class="line"></div><div class="line">作者：纳达丶无忌</div><div class="line">链接：http://www.jianshu.com/p/c9ac99b87d56</div><div class="line">來源：简书</div><div class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div><div class="line"></div><div class="line"></div><div class="line"># 寄存器</div><div class="line">在计算机领域，寄存器是CPU内部的元件，它是有限存贮容量的高速存贮部件，可用来暂存指令、数据和地址。</div><div class="line">寄存器分为通用寄存器和特殊寄存器。通用寄存器有 ax/bx/cx/dx/di/si，在大多数指令中可以任意选用，但也有一些规定某些指令只能用某个特定的「通用」寄存器；特殊寄存器有 bp/sp/ip 等，特殊寄存器均有特定用途。</div><div class="line"></div><div class="line">在 Stack Frame 中，涉及到三种重要的特殊寄存器：</div><div class="line"></div><div class="line">  * bp ( base pointer ) 寄存器</div><div class="line">  * sp ( stack poinger ) 寄存器</div><div class="line">  * ip ( instruction pointer ) 寄存器</div><div class="line"></div><div class="line">需要注意的是，不同架构的CPU，寄存器名称会添加不同的前缀来表示寄存器的大小。例如对于x86架构，字母「e」用作名称前缀，表示寄存器大小为32位；对于x86_64架构，字母「r」用作名称前缀，表示寄存器大小为64位。</div><div class="line"># 举例</div><div class="line">* 下图是linux 中一个进程的虚拟内存分布：</div><div class="line">* 图中0号地址在最下边，越往上内存地址越大。</div><div class="line">以32位地址操作系统为例，一个进程可拥有的虚拟内存地址范围为0-2^32。分为两部分，一部分留给kernel使用(kernel virtual memory)，剩下的是进程本身使用， 即图中的process virtual memory。</div><div class="line">普通Java 程序使用的就是process virtual memory.</div><div class="line">上图中最顶端的一部分内存叫做user stack. 这就是题目问的 stack. 中间有个 runtime heap。就是题目中的heap. 他们的名字和数据结构里的stack 和 heap 几乎每啥关系。</div><div class="line">注意在上图中，stack 是向下生长的; heap是向上生长的。</div><div class="line">当程序进行函数调用时，每个函数都在stack上有一个 call frame。</div><div class="line">比如对于以下程序，</div><div class="line"></div><div class="line">```java</div><div class="line">public void foo()&#123;</div><div class="line">  //do something...</div><div class="line">  println(&quot;haha&quot;); // &lt;&lt;&lt;=== 在这儿设置breakpoint 1</div><div class="line">&#125;</div><div class="line"></div><div class="line">public void bar()&#123;</div><div class="line">  foo();</div><div class="line">&#125;</div><div class="line"></div><div class="line">main()&#123;</div><div class="line">  bar();</div><div class="line">  println(&quot;hahaha&quot;); // &lt;&lt;&lt;=== 在这儿设置 breakpoint 2</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当程序运行到breakponit1时，user stack 里会有三个frame<br>|<br>| main 函数的 frame－－－－－－－－－－－－－－－－－－－<br>|<br>| bar 函数的 frame－－－－－－－－－－－－－－－－－－－&lt;&lt;&lt;=== %ebp<br>|<br>| foo 函数的 frame－－－－－－－－－－－－－－－－－－－ &lt;&lt;&lt;===%esp<br>其中 esp 和 ebp 都是寄存器。 esp 指向stack 的顶（因为stack 向下生长，esp会向下走）; ebp 指向当前frame的边界。<br>当程序继续执行到brekapoing 2的时候stack 大概是这样的:<br>|<br>－－－－－－－－－－－－－－－－－－－&lt;&lt;&lt;=== %ebp<br>|<br>| main 函数的 frame－－－－－－－－－－－－－－－－－－－ &lt;&lt;&lt;===%esp<br>也就是说当一个函数执行结束后，它对应的call frame就被销毁了。(其实就是esp 和 ebp分别以东，但是内存地址中的数据只有在下一次写的时候才被覆盖。)<br>说了这么多，终于该说什么东西放在stack 上什么东西放在heap 上了。<br>最直白的解释：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> i = <span class="number">0</span>; <span class="comment">// &lt;= i 的值存在stack上，foo()的call frame 里。</span></div><div class="line">  Object obj = <span class="keyword">new</span> Object(); <span class="comment">// object 对象本身存在heap 里， foo()的call frame 里存该对象的地址。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>图片引自CMU15-213的课件<br><a href="https://www.cs.cmu.edu/~213/" target="_blank" rel="external">https://www.cs.cmu.edu/~213/</a></p>
+<blockquote>
+<p>作者：雷博<br>链接：<a href="https://www.zhihu.com/question/29833675/answer/45811216" target="_blank" rel="external">https://www.zhihu.com/question/29833675/answer/45811216</a><br>来源：知乎</p>
+<h2 id="著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"><a href="#著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。" class="headerlink" title="著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"></a>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</h2><h1 id="数据结构中"><a href="#数据结构中" class="headerlink" title="数据结构中"></a>数据结构中</h1><h2 id="栈是先进后出的结构"><a href="#栈是先进后出的结构" class="headerlink" title="栈是先进后出的结构"></a>栈是先进后出的结构</h2><p>参考</p>
+<ul>
+<li><a href="https://github.com/pzxwhc/MineKnowContainer/issues/25" target="_blank" rel="external">Java JVM：内存溢出（栈溢出，堆溢出，持久代溢出以及 nable to create native thread</a></li>
+<li><a href="http://eleveneat.com/2015/07/11/Stack-Frame/" target="_blank" rel="external">栈帧 Stack Frame</a></li>
+<li><a href="https://www.zhihu.com/question/29833675" target="_blank" rel="external">知乎 | Java虚拟机的堆、栈、堆栈如何去理解？</a> 以及RednaxelaFX回答下的几个链接</li>
+<li><a href="https://www.zhihu.com/question/29265003/answer/43745406" target="_blank" rel="external">知乎| 为什么Java有GC还需要自己来关闭某些资源？</a></li>
+<li><a href="http://droidyue.com/blog/2014/12/07/differences-between-stack-and-heap-in-java/" target="_blank" rel="external">Java中的堆和栈的区别</a></li>
+<li><a href="http://www.jianshu.com/p/c9ac99b87d56" target="_blank" rel="external">简书 | JVM内存模型你只要看这一篇就够了</a></li>
+<li><a href="http://www.importnew.com/15820.html" target="_blank" rel="external">importnew |  Minor GC、Major GC和Full GC之间的区别</a></li>
+<li><a href="https://juejin.im/entry/580746885bbb50005b901a54" target="_blank" rel="external">掘金 | Java 垃圾回收手记</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/静态/" rel="tag"># 静态</a>
+          
+            <a href="/tags/static/" rel="tag"># static</a>
+          
+            <a href="/tags/内存泄漏/" rel="tag"># 内存泄漏</a>
+          
+            <a href="/tags/STW/" rel="tag"># STW</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Day6-DialogFrament&AlertDialog.html" rel="next" title="Day6 - DialogFragment & AlertDialog">
+                <i class="fa fa-chevron-left"></i> Day6 - DialogFragment & AlertDialog
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Day8-Fragment懒加载+ViewPager+TabLayout.html" rel="prev" title="Day8 - DialogFragment & AlertDialog">
+                Day8 - DialogFragment & AlertDialog <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tips"><span class="nav-number">1.</span> <span class="nav-text">Tips</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM中"><span class="nav-number">2.</span> <span class="nav-text">JVM中</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆和栈对比"><span class="nav-number">2.1.</span> <span class="nav-text">堆和栈对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存什么"><span class="nav-number">2.1.1.</span> <span class="nav-text">存什么</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"><span class="nav-number">2.2.</span> <span class="nav-text">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构中"><span class="nav-number">3.</span> <span class="nav-text">数据结构中</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈是先进后出的结构"><span class="nav-number">3.1.</span> <span class="nav-text">栈是先进后出的结构</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Retrofit,RxJava," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Retrofit 上手">
+<meta name="keywords" content="Android,Retrofit,RxJava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day23 - Retrofit + RxJava + RecyclerView">
+<meta property="og:url" content="http://www.fredsun.me/Day23-RxJava+Retrofit+RecyclerView.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="Retrofit 上手">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-06T09:19:57.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day23 - Retrofit + RxJava + RecyclerView">
+<meta name="twitter:description" content="Retrofit 上手">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fredsun.me/Day23-RxJava+Retrofit+RecyclerView.html"/>
+
+
+
+
+
+  <title>Day23 - Retrofit + RxJava + RecyclerView | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fredsun.me/Day23-RxJava+Retrofit+RecyclerView.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day23 - Retrofit + RxJava + RecyclerView</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-22T14:01:00+08:00">
+                2017-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Retrofit 上手<br><a id="more"></a></p>
+<p>PS:</p>
+<h5 id="如何解决上游速度过快的方式"><a href="#如何解决上游速度过快的方式" class="headerlink" title="如何解决上游速度过快的方式"></a>如何解决上游速度过快的方式</h5><p>rxjava1.x 解决上游速度过快的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Observable.from(stringList).observeOn(Schedulers.io()).subscribe(new Subscriber&lt;String&gt;() &#123;</div><div class="line">@Override</div><div class="line">public void onStart() &#123;</div><div class="line">request(1); // 取出一条新数据</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onCompleted() &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onError(Throwable e) &#123;</div><div class="line">e.printStackTrace();</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onNext(ResourceUpdate resourceUpdate) &#123;</div><div class="line">// TODO 执行下游处理操作</div><div class="line">...</div><div class="line"></div><div class="line">request(1); // 取出一条新数据</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="RxJava"><a href="#RxJava" class="headerlink" title="RxJava"></a>RxJava</h2><h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><h4 id="1-上游-Observable-Flowable"><a href="#1-上游-Observable-Flowable" class="headerlink" title="1. 上游 Observable/Flowable"></a>1. 上游 Observable/Flowable</h4><h4 id="2-下游-多种"><a href="#2-下游-多种" class="headerlink" title="2. 下游 多种"></a>2. 下游 多种</h4><p>无参的subscribe()表示下游不关心数据类型<br>带Cunsumer的表示下游只关心 onNext, 其他的装没看见<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">* public final Disposable subscribe() &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError, Action onComplete) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError, Action onComplete, Consumer&lt;? super Disposable&gt; onSubscribe) &#123;&#125;</div><div class="line">* public final void subscribe(Observer&lt;? super T&gt; observer) &#123;&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上有和下游之间可以添加各种参数</p>
+</blockquote>
+<h4 id="3-水管-subscribe"><a href="#3-水管-subscribe" class="headerlink" title="3. 水管 subscribe"></a>3. 水管 subscribe</h4><h4 id="4-指定上游线程-subscribeOn"><a href="#4-指定上游线程-subscribeOn" class="headerlink" title="4. 指定上游线程 subscribeOn()"></a>4. 指定上游线程 subscribeOn()</h4><p>多次指定上游线程, 只有第一次有效</p>
+<h4 id="5-指定下游线程-observeOn"><a href="#5-指定下游线程-observeOn" class="headerlink" title="5. 指定下游线程 observeOn()"></a>5. 指定下游线程 observeOn()</h4><p>下游线程可以多次指定</p>
+<h5 id="RxJava提供的线程"><a href="#RxJava提供的线程" class="headerlink" title="RxJava提供的线程"></a>RxJava提供的线程</h5><ul>
+<li>Schedulers.io(), 代表io操作线程, 通常用于网络/读写等密集型操作</li>
+<li>Schedulers.computation, 代表CPu密集型计算</li>
+<li>Schedulers.newThread(), 代表一个常规的新线程</li>
+<li>AndroidSchedulers.mainThread(), 代表Android的主线程<br>RxJava内部使用线程池来维护, 所以效率也比较高</li>
+</ul>
+<blockquote>
+<p>AndroidSchedulers.mainThread()是RxAndroid包里的</p>
+</blockquote>
+<h4 id="6-变换操作符"><a href="#6-变换操作符" class="headerlink" title="6.变换操作符"></a>6.变换操作符</h4><h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><p>截获事件水流</p>
+<h5 id="FlatMap"><a href="#FlatMap" class="headerlink" title="FlatMap"></a>FlatMap</h5><p>比Map更复杂, 将上游的Observable转化成多个Observable, 然后将他们发射的事件合并后放进一个单独的Observable里, <strong>但是不保证事件顺序</strong></p>
+<h5 id="concatMap"><a href="#concatMap" class="headerlink" title="concatMap"></a>concatMap</h5><p>保证事件顺序的 FlatMap</p>
+<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><p>将两个不同线程的 Observable 合并成一个 Observable, 短的发完了, 就彻底结束水流<br>用处: 一个数据需要两个接口的参数拼在一起实现</p>
+<h5 id="Backpressure-Observable-做上游时"><a href="#Backpressure-Observable-做上游时" class="headerlink" title="Backpressure(Observable 做上游时)"></a>Backpressure(Observable 做上游时)</h5><p>如果两个线程的两个水管 Observable, 一个不停的发, 另一个速度过慢, 那么会创建一个水缸(队列)积压发的过快的水管1的数据, 但是如果积压过多会OOM, 所以大数据用Flowable, 小数据流用Observable.(同一个线程不会, 因为需要消费完了才能发, 但是异步线程因为线程间无法直接通信, 所以会积压)</p>
+<blockquote>
+<p>背压<br>rxjava1.x 时下游通过背压控制上游流速. 上游会给下游 set 一个 producer, 然后下游通过 producer向上游请求n个数据, 这样上游就有记录下游请求了多少个数据, 然后下游请求了多少个上游就给多少个.<br>一般来说每个节点都有缓存, 但是rxjava1.x有些操作符不支持背压, 也就是说上游不理会下游返回的 producer, 一直向下游丢数据,如果下游的缓存爆了, 就会抛出 MissingBackpressureException, 也就是背压失效.<br>rxjava2.x 里将背压逻辑移到了 Flowable, 所以 Flowable 支持背压.</p>
+</blockquote>
+<h5 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h5><p>过滤上游的内容</p>
+<h5 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h5><p>每隔一定事件取一部分放进水缸</p>
+<blockquote>
+<p>以上两种都以丢失数据为代价减小放进水缸的数据量</p>
+</blockquote>
+<h5 id="睡-线程"><a href="#睡-线程" class="headerlink" title="睡 线程"></a>睡 线程</h5><p>让快的线程睡1秒再发</p>
+<blockquote>
+<p>但是如果下游处理时间过慢(超过1秒), 依然丢失事件</p>
+</blockquote>
+<h5 id="Flowable-amp-request-amp-BackpressureStrategy"><a href="#Flowable-amp-request-amp-BackpressureStrategy" class="headerlink" title="Flowable &amp; request &amp; BackpressureStrategy"></a>Flowable &amp; request &amp; BackpressureStrategy</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">Flowable&lt;Integer&gt; upstream = Flowable.create(<span class="keyword">new</span> FlowableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(FlowableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">          Log.d(TAG, <span class="string">"emit 1"</span>);</div><div class="line">          emitter.onNext(<span class="number">1</span>);</div><div class="line">          Log.d(TAG, <span class="string">"emit 2"</span>);</div><div class="line">          emitter.onNext(<span class="number">2</span>);</div><div class="line">          Log.d(TAG, <span class="string">"emit 3"</span>);</div><div class="line">          emitter.onNext(<span class="number">3</span>);</div><div class="line">          Log.d(TAG, <span class="string">"emit complete"</span>);</div><div class="line">          emitter.onComplete();</div><div class="line">      &#125;</div><div class="line">  &#125;, BackpressureStrategy.ERROR); <span class="comment">//增加了一个参数</span></div><div class="line"></div><div class="line">  Subscriber&lt;Integer&gt; downstream = <span class="keyword">new</span> Subscriber&lt;Integer&gt;() &#123;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Subscription s)</span> </span>&#123;</div><div class="line">          Log.d(TAG, <span class="string">"onSubscribe"</span>);</div><div class="line">          s.request(Long.MAX_VALUE);  <span class="comment">//注意这句代码</span></div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer integer)</span> </span>&#123;</div><div class="line">          Log.d(TAG, <span class="string">"onNext: "</span> + integer);</div><div class="line"></div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</div><div class="line">           Log.w(TAG, <span class="string">"onError: "</span>, t);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">          Log.d(TAG, <span class="string">"onComplete"</span>);</div><div class="line">      &#125;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  upstream.subscribe(downstream);</div></pre></td></tr></table></figure>
+<ul>
+<li><p>下游的request<br>同一线程时, s.request(Long.MAX_VALUE) 告诉上游下游可以接受的消息数量, <strong>如果不写则上游认为下游没有能力接收水流</strong>, 上游直接 MissingBackpressureException.<br>不同线程时, 下游默认带了128大小的水缸缓存, 所以不会报错, 但是下游因为没说自己能接收多少水流, 所以下游也无法消费这个事件, 直到mSubscription.request(x), 下游才消费x个水流</p>
+</li>
+<li><p>BackpressureStrategy</p>
+<ul>
+<li>设为ERROR, 当水缸满了, 直接抛出 MissingBackpressureException</li>
+<li>设为BUFFER, 水缸无限大, 相当于把 Flowable 换成了 Observable</li>
+<li>设为DROP, 如果没执行到最后一个则何时 REQUEST, 执行到第几个</li>
+<li>设为LATEST, 最后一定能执行到最后一个 REQUEST</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>onBackpressure…（当上游无法被我们控制时）</p>
+<ul>
+<li>设为onBackpressureBuffer</li>
+<li>设为onBackpressureDrop</li>
+<li>设为onBackpressureLatest</li>
+</ul>
+</li>
+<li><p>上游的requested - emitter.requested()<br>对下游能接收消息数量的响应, 若发出的消息超过了下游设置的request, 则抛出 MissingBackpressureException. 每次发出96条</p>
+</li>
+</ul>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="Retrofit连续请求-结果用RecyclerView展示参考"><a href="#Retrofit连续请求-结果用RecyclerView展示参考" class="headerlink" title="Retrofit连续请求, 结果用RecyclerView展示参考"></a>Retrofit连续请求, 结果用RecyclerView展示<a href="http://www.jianshu.com/p/83b8f0c308a2" target="_blank" rel="external">参考</a></h2><p>分为两个请求, 第一个请求, 根据经纬度向百度请求, 拿到转换出的城市名, 第二个请求, 请求和风天气, 将城市名转换成城市名对应的天气</p>
+<ol>
+<li><p>准备好百度地图的城市json对应的bean</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div></pre></td><td class="code"><pre><div class="line">public class LocationEntity &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * status : OK</div><div class="line">     * result : &#123;&quot;location&quot;:&#123;&quot;lng&quot;:121.490523,&quot;lat&quot;:31.407452&#125;,&quot;formatted_address&quot;:&quot;上海市宝山区牡丹江路1599号&quot;,&quot;business&quot;:&quot;友谊路,北翼商业街,吴淞&quot;,&quot;addressComponent&quot;:&#123;&quot;city&quot;:&quot;上海市&quot;,&quot;direction&quot;:&quot;near&quot;,&quot;distance&quot;:&quot;0&quot;,&quot;district&quot;:&quot;宝山区&quot;,&quot;province&quot;:&quot;上海市&quot;,&quot;street&quot;:&quot;牡丹江路&quot;,&quot;street_number&quot;:&quot;1599号&quot;&#125;,&quot;cityCode&quot;:289&#125;</div><div class="line">     */</div><div class="line"></div><div class="line">    private String status;</div><div class="line">    private ResultBean result;</div><div class="line"></div><div class="line">    public String getStatus() &#123;</div><div class="line">        return status;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setStatus(String status) &#123;</div><div class="line">        this.status = status;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ResultBean getResult() &#123;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setResult(ResultBean result) &#123;</div><div class="line">        this.result = result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static class ResultBean &#123;</div><div class="line">        /**</div><div class="line">         * location : &#123;&quot;lng&quot;:121.490523,&quot;lat&quot;:31.407452&#125;</div><div class="line">         * formatted_address : 上海市宝山区牡丹江路1599号</div><div class="line">         * business : 友谊路,北翼商业街,吴淞</div><div class="line">         * addressComponent : &#123;&quot;city&quot;:&quot;上海市&quot;,&quot;direction&quot;:&quot;near&quot;,&quot;distance&quot;:&quot;0&quot;,&quot;district&quot;:&quot;宝山区&quot;,&quot;province&quot;:&quot;上海市&quot;,&quot;street&quot;:&quot;牡丹江路&quot;,&quot;street_number&quot;:&quot;1599号&quot;&#125;</div><div class="line">         * cityCode : 289</div><div class="line">         */</div><div class="line"></div><div class="line">        private LocationBean location;</div><div class="line">        private String formatted_address;</div><div class="line">        private String business;</div><div class="line">        private AddressComponentBean addressComponent;</div><div class="line">        private int cityCode;</div><div class="line"></div><div class="line">        public LocationBean getLocation() &#123;</div><div class="line">            return location;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setLocation(LocationBean location) &#123;</div><div class="line">            this.location = location;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public String getFormatted_address() &#123;</div><div class="line">            return formatted_address;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setFormatted_address(String formatted_address) &#123;</div><div class="line">            this.formatted_address = formatted_address;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public String getBusiness() &#123;</div><div class="line">            return business;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setBusiness(String business) &#123;</div><div class="line">            this.business = business;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public AddressComponentBean getAddressComponent() &#123;</div><div class="line">            return addressComponent;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setAddressComponent(AddressComponentBean addressComponent) &#123;</div><div class="line">            this.addressComponent = addressComponent;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public int getCityCode() &#123;</div><div class="line">            return cityCode;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setCityCode(int cityCode) &#123;</div><div class="line">            this.cityCode = cityCode;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public static class LocationBean &#123;</div><div class="line">            /**</div><div class="line">             * lng : 121.490523</div><div class="line">             * lat : 31.407452</div><div class="line">             */</div><div class="line"></div><div class="line">            private double lng;</div><div class="line">            private double lat;</div><div class="line"></div><div class="line">            public double getLng() &#123;</div><div class="line">                return lng;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setLng(double lng) &#123;</div><div class="line">                this.lng = lng;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public double getLat() &#123;</div><div class="line">                return lat;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setLat(double lat) &#123;</div><div class="line">                this.lat = lat;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public static class AddressComponentBean &#123;</div><div class="line">            /**</div><div class="line">             * city : 上海市</div><div class="line">             * direction : near</div><div class="line">             * distance : 0</div><div class="line">             * district : 宝山区</div><div class="line">             * province : 上海市</div><div class="line">             * street : 牡丹江路</div><div class="line">             * street_number : 1599号</div><div class="line">             */</div><div class="line"></div><div class="line">            private String city;</div><div class="line">            private String direction;</div><div class="line">            private String distance;</div><div class="line">            private String district;</div><div class="line">            private String province;</div><div class="line">            private String street;</div><div class="line">            private String street_number;</div><div class="line"></div><div class="line">            public String getCity() &#123;</div><div class="line">                return city;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setCity(String city) &#123;</div><div class="line">                this.city = city;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public String getDirection() &#123;</div><div class="line">                return direction;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setDirection(String direction) &#123;</div><div class="line">                this.direction = direction;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public String getDistance() &#123;</div><div class="line">                return distance;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setDistance(String distance) &#123;</div><div class="line">                this.distance = distance;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public String getDistrict() &#123;</div><div class="line">                return district;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setDistrict(String district) &#123;</div><div class="line">                this.district = district;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public String getProvince() &#123;</div><div class="line">                return province;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setProvince(String province) &#123;</div><div class="line">                this.province = province;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public String getStreet() &#123;</div><div class="line">                return street;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setStreet(String street) &#123;</div><div class="line">                this.street = street;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public String getStreet_number() &#123;</div><div class="line">                return street_number;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            public void setStreet_number(String street_number) &#123;</div><div class="line">                this.street_number = street_number;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>准备 Rxjava 的 interface</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@GET</span>(<span class="string">"weather"</span>)</div><div class="line">    <span class="function">Observable&lt;Weather2&gt; <span class="title">getWeatherRx</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">            @Query(<span class="string">"city"</span>)</span>String city,</span></div><div class="line"><span class="function">            @<span class="title">Query</span><span class="params">(<span class="string">"key"</span>)</span>String key)</span>;</div><div class="line"></div><div class="line">    <span class="meta">@GET</span>(<span class="string">"geocoder"</span>)</div><div class="line">    <span class="function">Observable&lt;LocationEntity&gt; <span class="title">getLoation</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">            @Query(<span class="string">"location"</span>)</span> String location,</span></div><div class="line"><span class="function">            @<span class="title">Query</span><span class="params">(<span class="string">"output"</span>)</span> String output,</span></div><div class="line"><span class="function">            @<span class="title">Query</span><span class="params">(<span class="string">"key"</span>)</span> String key</span></div><div class="line"><span class="function">    )</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建Retrofit</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RetrofitCreater</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Retrofit <span class="title">createWeather</span><span class="params">()</span> </span>&#123;</div><div class="line">        OkHttpClient.Builder builder = <span class="keyword">new</span> OkHttpClient().newBuilder();</div><div class="line">        builder.readTimeout(<span class="number">10</span>, TimeUnit.SECONDS);</div><div class="line">        builder.connectTimeout(<span class="number">9</span>, TimeUnit.SECONDS);</div><div class="line">        builder.retryOnConnectionFailure(<span class="keyword">true</span>);<span class="comment">//错误时重复请求</span></div><div class="line">        builder.connectTimeout(<span class="number">15</span>, TimeUnit.SECONDS);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</div><div class="line">            HttpLoggingInterceptor interceptor = <span class="keyword">new</span> HttpLoggingInterceptor(<span class="keyword">new</span> HttpLogger());</div><div class="line">            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);</div><div class="line">            builder.addNetworkInterceptor(interceptor);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Retrofit.Builder().baseUrl(<span class="string">"https://free-api.heweather.com/v5/"</span>)</div><div class="line">                .client(builder.build())</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Retrofit <span class="title">createLoc</span><span class="params">()</span> </span>&#123;</div><div class="line">        OkHttpClient.Builder builder = <span class="keyword">new</span> OkHttpClient().newBuilder();</div><div class="line">        builder.readTimeout(<span class="number">10</span>, TimeUnit.SECONDS);</div><div class="line">        builder.connectTimeout(<span class="number">9</span>, TimeUnit.SECONDS);</div><div class="line">        builder.retryOnConnectionFailure(<span class="keyword">true</span>);<span class="comment">//错误时重复请求</span></div><div class="line">        builder.connectTimeout(<span class="number">15</span>, TimeUnit.SECONDS);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</div><div class="line">            HttpLoggingInterceptor interceptor = <span class="keyword">new</span> HttpLoggingInterceptor(<span class="keyword">new</span> HttpLogger());</div><div class="line">            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);</div><div class="line">            builder.addNetworkInterceptor(interceptor);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Retrofit.Builder().baseUrl(<span class="string">"http://api.map.baidu.com/"</span>)</div><div class="line">                .client(builder.build())</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>调用Retrofit(无adapter)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">requestRxLocation</span><span class="params">()</span> </span>&#123;</div><div class="line">    Retrofit weatherRetrofit = RetrofitCreater.createWeather();</div><div class="line">    <span class="keyword">final</span> Api weatherApi = weatherRetrofit.create(Api.class);</div><div class="line">    <span class="keyword">final</span> Retrofit retrofitLoc = RetrofitCreater.createLoc();</div><div class="line">    Api locApi = retrofitLoc.create(Api.class);</div><div class="line">    locApi.getLoation(<span class="string">"39.90400,116.39100"</span>, <span class="string">"json"</span>, <span class="string">"6eea93095ae93db2c77be9ac910ff311"</span>)</div><div class="line">            .flatMap(<span class="keyword">new</span> Function&lt;LocationEntity, ObservableSource&lt;Weather2&gt;&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> ObservableSource&lt;Weather2&gt; <span class="title">apply</span><span class="params">(LocationEntity locationEntity)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                    Log.i(tag, locationEntity.getResult().getAddressComponent().getCity()+<span class="string">""</span>);</div><div class="line">                    <span class="keyword">return</span> weatherApi.getWeatherRx(locationEntity.getResult().getAddressComponent().getCity(), <span class="string">"你的和风天气key"</span>); <span class="comment">//拿到城市名, 开始请求天气接口</span></div><div class="line">                &#125;</div><div class="line">            &#125;).map(<span class="keyword">new</span> Function&lt;Weather2, String&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(Weather2 weather2)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                    String text = weather2.getHeWeather5().get(<span class="number">0</span>).getBasic().getCity();</div><div class="line">                    <span class="keyword">return</span> text;</div><div class="line">                &#125;</div><div class="line">            &#125;).subscribeOn(Schedulers.io())</div><div class="line">            .observeOn(AndroidSchedulers.mainThread())</div><div class="line">            .subscribe(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(String s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                    Log.i(tag,<span class="string">"accept"</span>+s);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>— 加入RecyclerView —</p>
+<ol>
+<li><p>创建adapter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">public class WeatherAdapter extends RecyclerView.Adapter&lt;WeatherAdapter.ViewHolder&gt; &#123;</div><div class="line">    private List&lt;Weather2.HeWeather5Bean&gt; mItems;</div><div class="line">    private Context mContext;</div><div class="line">    private PostItemListener mItemListener;</div><div class="line"></div><div class="line">    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener&#123;</div><div class="line"></div><div class="line">        public TextView titleTv;</div><div class="line">        PostItemListener mItemListener;</div><div class="line"></div><div class="line">        public ViewHolder(View itemView, PostItemListener postItemListener) &#123;</div><div class="line">            super(itemView);</div><div class="line">            titleTv = (TextView) itemView.findViewById(android.R.id.text1);</div><div class="line"></div><div class="line">            this.mItemListener = postItemListener;</div><div class="line">            itemView.setOnClickListener(this);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onClick(View view) &#123;</div><div class="line">            Weather2.HeWeather5Bean item = getItem(getAdapterPosition());</div><div class="line">            this.mItemListener.onPostClick(Integer.valueOf(0));</div><div class="line"></div><div class="line">            notifyDataSetChanged();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public WeatherAdapter(Context context, List&lt;Weather2.HeWeather5Bean&gt; posts, PostItemListener itemListener) &#123;</div><div class="line">        mItems = posts;</div><div class="line">        mContext = context;</div><div class="line">        mItemListener = itemListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public WeatherAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) &#123;</div><div class="line"></div><div class="line">        Context context = parent.getContext();</div><div class="line">        LayoutInflater inflater = LayoutInflater.from(context);</div><div class="line"></div><div class="line">        View postView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);</div><div class="line"></div><div class="line">        ViewHolder viewHolder = new ViewHolder(postView, this.mItemListener);</div><div class="line">        return viewHolder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onBindViewHolder(WeatherAdapter.ViewHolder holder, int position) &#123;</div><div class="line"></div><div class="line">        Weather2.HeWeather5Bean item = mItems.get(position);</div><div class="line">        TextView textView = holder.titleTv;</div><div class="line">        textView.setText(item.getBasic().getCity());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getItemCount() &#123;</div><div class="line">        return mItems.size();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void updateAnswers(List&lt;Weather2.HeWeather5Bean&gt; items) &#123;</div><div class="line">        mItems = items;</div><div class="line">        notifyDataSetChanged();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private Weather2.HeWeather5Bean getItem(int adapterPosition) &#123;</div><div class="line">        return mItems.get(adapterPosition);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public interface PostItemListener &#123;</div><div class="line">        void onPostClick(long id);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>main里创建adapter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">mAdapter = new WeatherAdapter(this, new ArrayList&lt;Weather2.HeWeather5Bean&gt;(0), new WeatherAdapter.PostItemListener() &#123;</div><div class="line"></div><div class="line">           @Override</div><div class="line">           public void onPostClick(long id) &#123;</div><div class="line">               Toast.makeText(MainActivity.this, &quot;Post id is&quot; + id, Toast.LENGTH_SHORT).show();</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">       mRecyclerView = (RecyclerView) findViewById(R.id.recycler);</div><div class="line">       RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);</div><div class="line">       mRecyclerView.setLayoutManager(layoutManager);</div><div class="line">       mRecyclerView.setAdapter(mAdapter);</div><div class="line">       mRecyclerView.setHasFixedSize(true);</div><div class="line">       RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);</div><div class="line">       mRecyclerView.addItemDecoration(itemDecoration);</div></pre></td></tr></table></figure>
+</li>
+<li><p>调用retrofit(有adapter)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">Retrofit weatherRetrofit = RetrofitCreater.createWeather();</div><div class="line">final Api weatherApi = weatherRetrofit.create(Api.class);</div><div class="line">final Retrofit retrofitLoc = RetrofitCreater.createLoc();</div><div class="line">Api locApi = retrofitLoc.create(Api.class);</div><div class="line">locApi.getLoation(&quot;39.90400,116.39100&quot;, &quot;json&quot;, &quot;6eea93095ae93db2c77be9ac910ff311&quot;)</div><div class="line">        .flatMap(new Function&lt;LocationEntity, ObservableSource&lt;Weather2&gt;&gt;() &#123;</div><div class="line">            @Override</div><div class="line">            public ObservableSource&lt;Weather2&gt; apply(LocationEntity locationEntity) throws Exception &#123;</div><div class="line">                Log.i(TAG, locationEntity.getResult().getAddressComponent().getCity()+&quot;&quot;);</div><div class="line">                return weatherApi.getWeatherRx(locationEntity.getResult().getAddressComponent().getCity(), &quot;2cad1fb8a48d418faa66cf5f8aba3f7e&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;).map(new Function&lt;Weather2, Weather2&gt;() &#123;</div><div class="line">            @Override</div><div class="line">            public Weather2 apply(Weather2 weather2) throws Exception &#123;</div><div class="line">                String text = weather2.getHeWeather5().get(0).getBasic().getCity();</div><div class="line"></div><div class="line">                return weather2;</div><div class="line">            &#125;</div><div class="line">        &#125;).subscribeOn(Schedulers.io())</div><div class="line">        .observeOn(AndroidSchedulers.mainThread())</div><div class="line">        .subscribe(new Consumer&lt;Weather2&gt;() &#123;</div><div class="line">            @Override</div><div class="line">            public void accept(Weather2 weather2) throws Exception &#123;</div><div class="line">                mAdapter.updateAnswers(weather2.getHeWeather5());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="database"><a href="#database" class="headerlink" title="database"></a>database</h1><blockquote>
+<p>参考<br><a href="http://www.jianshu.com/p/83b8f0c308a2" target="_blank" rel="external">使用RxJava+Retrofit完成同步连续请求</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Retrofit/" rel="tag"># Retrofit</a>
+          
+            <a href="/tags/RxJava/" rel="tag"># RxJava</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Day22-Retrofit.html" rel="next" title="Day22 - Retrofit">
+                <i class="fa fa-chevron-left"></i> Day22 - Retrofit
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Day24-Retrofit&Logger.html" rel="prev" title="Day24 - Retrofit & Logger">
+                Day24 - Retrofit & Logger <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何解决上游速度过快的方式"><span class="nav-number">1.</span> <span class="nav-text">如何解决上游速度过快的方式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJava"><span class="nav-number"></span> <span class="nav-text">RxJava</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组成"><span class="nav-number"></span> <span class="nav-text">组成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-上游-Observable-Flowable"><span class="nav-number"></span> <span class="nav-text">1. 上游 Observable/Flowable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-下游-多种"><span class="nav-number"></span> <span class="nav-text">2. 下游 多种</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-水管-subscribe"><span class="nav-number"></span> <span class="nav-text">3. 水管 subscribe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-指定上游线程-subscribeOn"><span class="nav-number"></span> <span class="nav-text">4. 指定上游线程 subscribeOn()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-指定下游线程-observeOn"><span class="nav-number"></span> <span class="nav-text">5. 指定下游线程 observeOn()</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RxJava提供的线程"><span class="nav-number">1.</span> <span class="nav-text">RxJava提供的线程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-变换操作符"><span class="nav-number"></span> <span class="nav-text">6.变换操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Map"><span class="nav-number">1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FlatMap"><span class="nav-number">2.</span> <span class="nav-text">FlatMap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#concatMap"><span class="nav-number">3.</span> <span class="nav-text">concatMap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zip"><span class="nav-number">4.</span> <span class="nav-text">zip</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Backpressure-Observable-做上游时"><span class="nav-number">5.</span> <span class="nav-text">Backpressure(Observable 做上游时)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#filter"><span class="nav-number">6.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sample"><span class="nav-number">7.</span> <span class="nav-text">sample</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#睡-线程"><span class="nav-number">8.</span> <span class="nav-text">睡 线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Flowable-amp-request-amp-BackpressureStrategy"><span class="nav-number">9.</span> <span class="nav-text">Flowable & request & BackpressureStrategy</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实践"><span class="nav-number"></span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Retrofit连续请求-结果用RecyclerView展示参考"><span class="nav-number"></span> <span class="nav-text">Retrofit连续请求, 结果用RecyclerView展示参考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#database"><span class="nav-number"></span> <span class="nav-text">database</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="动画可以拆分为 Animation, Transition, 以及Material 中的部分效果 #Animation 属性动画 PropertyAnimation (基本都是属性动画)补间动画 ViewAnimation 逐帧动画 FrameAnimation也叫做DrawAnmation 补间动画 TweenAnimation1. 分类 平移动画(Translate) 缩放动画(Scale)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="花花世界">
+<meta property="og:url" content="http://www.fredsun.me/2017/09/07/Day28-动画/index.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="动画可以拆分为 Animation, Transition, 以及Material 中的部分效果 #Animation 属性动画 PropertyAnimation (基本都是属性动画)补间动画 ViewAnimation 逐帧动画 FrameAnimation也叫做DrawAnmation 补间动画 TweenAnimation1. 分类 平移动画(Translate) 缩放动画(Scale)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-08T03:45:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="花花世界">
+<meta name="twitter:description" content="动画可以拆分为 Animation, Transition, 以及Material 中的部分效果 #Animation 属性动画 PropertyAnimation (基本都是属性动画)补间动画 ViewAnimation 逐帧动画 FrameAnimation也叫做DrawAnmation 补间动画 TweenAnimation1. 分类 平移动画(Translate) 缩放动画(Scale)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fredsun.me/2017/09/07/Day28-动画/"/>
+
+
+
+
+
+  <title> | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fredsun.me/2017/09/07/Day28-动画/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T16:03:27+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h1><p>可以拆分为 <strong>Animation, Transition, 以及Material</strong> 中的部分效果</p>
+<p>#Animation</p>
+<h3 id="属性动画-PropertyAnimation-基本都是属性动画"><a href="#属性动画-PropertyAnimation-基本都是属性动画" class="headerlink" title="属性动画 PropertyAnimation (基本都是属性动画)"></a>属性动画 PropertyAnimation (基本都是属性动画)</h3><p>补间动画 ViewAnimation</p>
+<h3 id="逐帧动画-FrameAnimation"><a href="#逐帧动画-FrameAnimation" class="headerlink" title="逐帧动画 FrameAnimation"></a>逐帧动画 FrameAnimation</h3><p>也叫做DrawAnmation</p>
+<h3 id="补间动画-TweenAnimation"><a href="#补间动画-TweenAnimation" class="headerlink" title="补间动画 TweenAnimation"></a>补间动画 TweenAnimation</h3><h4 id="1-分类"><a href="#1-分类" class="headerlink" title="1. 分类"></a>1. 分类</h4><ul>
+<li>平移动画(Translate)</li>
+<li>缩放动画(Scale)</li>
+<li>旋转动画(Rotate)</li>
+<li>透明度动画(Alpha)</li>
+<li>组合动画(set)</li>
+</ul>
+<h4 id="2-属性"><a href="#2-属性" class="headerlink" title="2. 属性"></a>2. 属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">-set</div><div class="line">    |-android:interpolator -&gt; 插值器，影响动画的速度</div><div class="line">        |-默认值 -&gt; @android:anim/accelerate_decelerate_interpolator</div><div class="line">    |-android:shareInterpolator -&gt; 集合所有动画是否使用同一插值器</div><div class="line">    |-android:fillAfter -&gt; 动画结束后View是否停留在结束的位置</div><div class="line">    |-android:startOffset -&gt; 动画多少秒之后执行</div><div class="line">    |-android:repeatMode -&gt; 重复的模式,默认为restart,即重头开始重新运行,reverse即从结束开始向前重新运行</div><div class="line">-TranslateAnimation -&gt; 移动View</div><div class="line">    |-&lt;translate&gt;</div><div class="line">        |-android:fillAfter -&gt;</div><div class="line">        |-android:duration -&gt; 表示动画持续的时间</div><div class="line">        |-android:fromXDelta -&gt; 表示 x 的起始值</div><div class="line">        |-android:toXDelta -&gt; 表示 x 的结束值</div><div class="line">        |-android:fromYDelta -&gt; 表示 y 的起始值</div><div class="line">        |-android:toYDelta -&gt; 表示 y 的结束值</div><div class="line">-scaleAnimation -&gt; 放大或者缩小View</div><div class="line">    |-&lt;scale&gt;</div><div class="line">        |-android:duration -&gt; 表示动画持续的时间</div><div class="line">        |-android:fromXScale -&gt; 表示水平方向缩放的起始值</div><div class="line">        |-android:fromYScale -&gt; 表示竖直方向缩放的起始值</div><div class="line">        |-android:pivotX -&gt; 表示缩放中心点的 X 坐标</div><div class="line">        |-android:pivotY -&gt; 表示缩放中心点的 Y 坐标</div><div class="line">        |-android:toXScale -&gt; 表示水平方向缩放的结束值</div><div class="line">        |-android:toYScale -&gt; 表示竖直方向缩放的结束值</div><div class="line">-RotateAnimation -&gt; 旋转View</div><div class="line">    |-&lt;rotate&gt;</div><div class="line">        |-android:duration -&gt; 表示动画持续的时间</div><div class="line">        |-android:fromDegrees -&gt; 旋转开始的角度</div><div class="line">        |-android:toDegrees -&gt; 旋转结束的角度</div><div class="line">        |-android:pivotX -&gt; 旋转中心点的 X 坐标</div><div class="line">        |-android:pivotY -&gt; 旋转中心点的 Y 坐标</div><div class="line">-AlphaAnimation -&gt; 改变View的透明度</div><div class="line">    |-&lt;alpha&gt;</div><div class="line">        |-android:duration -&gt; 表示动画持续的时间</div><div class="line">        |-android:fromAlpha -&gt; 透明度的起始值</div><div class="line">        |-android:toAlpha -&gt; 透明度的结束值</div><div class="line">-自定义View动画 -&gt; (不会,待实践中学习)</div><div class="line"></div><div class="line">作者：Shaun白一辰</div><div class="line">链接：http://www.jianshu.com/p/b7aa2a4a9787</div><div class="line">來源：简书</div><div class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div></pre></td></tr></table></figure>
+<h4 id="3-缺点"><a href="#3-缺点" class="headerlink" title="3.缺点:"></a>3.缺点:</h4><ul>
+<li>只能对View操作, 如果需要对View中的某个对象, 无法操作</li>
+<li>如果需要改变View的背景色, 没提供方法所以无法实现了</li>
+<li>致命缺点是只是改变了显示效果, 属性没变, 如果一个button通过补间动画改变位置, 在新的位置点击没有点击效果.</li>
+</ul>
+<h1 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h1><p>4.4加入, 多用于5.0的Activity动画</p>
+<h1 id="Material"><a href="#Material" class="headerlink" title="Material"></a>Material</h1><ul>
+<li><p>触摸反馈(波纹效果)</p>
+<ol>
+<li><p>xml中对view添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//按钮内波纹</div><div class="line">android:background=&quot;?android:attr/selectableItemBackground&quot;</div><div class="line">//超出按钮的波纹</div><div class="line">android:background=&quot;?android:attr/selectableItemBackgroundBorderless&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改波纹颜色,主题里设置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    &gt; 也可直接使用RippleDrawable</div><div class="line"></div><div class="line">* 使用揭露效果</div></pre></td></tr></table></figure></p>
+<p>iv_click.post(new Runnable() {</p>
+<pre><code>@Override
+public void run() {
+    Animator animator = ViewAnimationUtils.createCircularReveal(
+            iv_click,
+            iv_click.getWidth() / 2,
+            iv_click.getHeight() / 2,
+            iv_click.getWidth(),
+            0
+    );
+    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+    animator.setDuration(2000);
+    animator.start();
+    animator.addListener(new AnimatorListenerAdapter() {
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            super.onAnimationEnd(animation);
+            iv_click.setVisibility(View.GONE);
+        }
+    });
+}
+</code></pre><p> });<br>```</p>
+<blockquote>
+<p>报错: java.lang.IllegalStateException: Cannot start this animator on a detached view!<br>因为view开启动画效果需要view.post(new Thread), 不能直接在onCreate里进行</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/07/Day14-Activity动画/" rel="next" title="Day14 - Activity 动画">
+                <i class="fa fa-chevron-left"></i> Day14 - Activity 动画
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/11/Day15-View/" rel="prev" title="Day15 - Activity 动画">
+                Day15 - Activity 动画 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#动画"><span class="nav-number">1.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性动画-PropertyAnimation-基本都是属性动画"><span class="nav-number">1.0.1.</span> <span class="nav-text">属性动画 PropertyAnimation (基本都是属性动画)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逐帧动画-FrameAnimation"><span class="nav-number">1.0.2.</span> <span class="nav-text">逐帧动画 FrameAnimation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补间动画-TweenAnimation"><span class="nav-number">1.0.3.</span> <span class="nav-text">补间动画 TweenAnimation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-分类"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">1. 分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-属性"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">2. 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-缺点"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">3.缺点:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transition"><span class="nav-number">2.</span> <span class="nav-text">Transition</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Material"><span class="nav-number">3.</span> <span class="nav-text">Material</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

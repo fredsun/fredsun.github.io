@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Java,Lambda,泛型," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="值传递和引用传递, String可再次赋值? Lambda">
+<meta name="keywords" content="Android,Java,Lambda,泛型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day12 - Java">
+<meta property="og:url" content="http://www.fredsun.me/2017/09/04/Day12-Java/index.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="值传递和引用传递, String可再次赋值? Lambda">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png">
+<meta property="og:updated_time" content="2017-10-20T06:53:04.437Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day12 - Java">
+<meta name="twitter:description" content="值传递和引用传递, String可再次赋值? Lambda">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fredsun.me/2017/09/04/Day12-Java/"/>
+
+
+
+
+
+  <title>Day12 - Java | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fredsun.me/2017/09/04/Day12-Java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day12 - Java</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T23:50:00+08:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>值传递和引用传递, String可再次赋值? Lambda<br><a id="more"></a></p>
+<h3 id="值传递和引用传递"><a href="#值传递和引用传递" class="headerlink" title="值传递和引用传递"></a>值传递和引用传递</h3><ul>
+<li>值传递是值的拷贝, 引用传递是引用的拷贝<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    String x = <span class="keyword">new</span> String(<span class="string">"goeasyway"</span>);</div><div class="line">    change(x);</div><div class="line">    System.out.println(x);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">(String x)</span> </span>&#123;</div><div class="line">    x = <span class="string">"even"</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">作者：goeasyway</div><div class="line">链接：http:<span class="comment">//www.jianshu.com/p/c0c5e0540928</span></div><div class="line">來源：简书</div><div class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>String 类型是引用类型, new String 创建了数据在堆, 把这堆数据的首地址存在了栈<br>change(x) 方法传递参数时, 将首地址传进来<br>x = “even”; 对 String 改变, 但是无法被记录, 因为源码里 <strong>String 是 final 类型</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public final class String</div><div class="line">    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence &#123;</div></pre></td></tr></table></figure></p>
+<p>而如果是 int a = 2 来进行 change, 也无法改变, 但是因为其他原因:<strong>基本类型在方法传递时是值传递</strong>, 结果不会影响到原来的值;<br>如果希望字符串可以改变, 那么使用StringBuilder就可以了, 因为<strong>引用类型是首地址传递</strong>, 结果会影响到原来的值.</p>
+<h3 id="字节Byte-位bit"><a href="#字节Byte-位bit" class="headerlink" title="字节Byte, 位bit"></a>字节Byte, 位bit</h3><p>1字节(Byte) = 8位(bit)<br>bit是数据存储的最小单位,也叫做比特<br>文字: ASCII码中一个英文字母占一个字节, 一个中文占两个字节<br>标点: 英文标点占一个字节, 中文标点占两个字节<br>1KB = 1024B(Byte)<br>CPU的位指CPU一次能处理的最大位数, 比如32位计算机的CPU一次最多能处理32位数据</p>
+<h3 id="基本数据类型的取值范围"><a href="#基本数据类型的取值范围" class="headerlink" title="基本数据类型的取值范围"></a>基本数据类型的取值范围</h3><p>boolean 8bit<br>char 16bit<br>int 32bit<br>long 64bit<br>float 32bit<br>double 64bit</p>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>不是基本类型, 但是希望把它作为基本类型来用(基本类型传值, 对象传引用)<br>简单的说是希望让String能像基本类型一样传递值(不会因为引用指向了同一个内存地址而在传递的过程中改变值.)</p>
+<ul>
+<li>特点: String 的内容不会变.</li>
+<li>原因:  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//JDK源码中:</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span></span></div><div class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span> </span>&#123;</div><div class="line">    <span class="comment">/** The value is used for character storage. */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">char</span> value[]; <span class="comment">//String 的本质是final的数组</span></div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>单靠 final 修饰 String 只是让 String 不可继承,</li>
+<li><p>而数组 value 被final修饰, 也只是防止数组的引用地址被改, 如果使用</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="keyword">int</span>[] value = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,&#125;;</div><div class="line">value[<span class="number">2</span>]=<span class="number">100</span>; <span class="comment">//数组被改成&#123;1,2,100&#125;</span></div><div class="line"></div><div class="line">或者</div><div class="line"><span class="keyword">final</span> <span class="keyword">int</span>[] value = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,&#125;;</div><div class="line">Array.set(value, <span class="number">2</span>,<span class="number">100</span>); <span class="comment">//数组还是被改成&#123;1,2,100&#125;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>所以还有个 private 让 value[] 只允许自己修改, 并在写 String 时不暴露出操作 value[]的方法.</p>
+</li>
+</ol>
+<h3 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h3><p>静态内部类和非静态内部类<br>静态内部类是个独立的类, 比如A,B两个类, B有点特殊, 虽然独立存在, 只可以被A使用. 这时候, 如果把B并入A里, 复杂度提高, 搞得A违反了单一职责, 又可能被其他类(同一个包下的C)依赖, 不符合设计的本意, 所以不如将其变成A.B, 等于加个注释, 告诉其他类别使用B了, 它只跟A玩.<br>非静态内部类才是真正的内部类, 持有外部类的引用.<br>静态内部类英文名static nested classes(静态嵌套类)</p>
+<h3 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h3><ol>
+<li><p>gralde中替换编译器为jack</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">defualtConfig&#123;</div><div class="line">    useJack(true)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>引用Java8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">compileOptions &#123;</div><div class="line">    sourceCompatibility JavaVersion.VERSION_1_8</div><div class="line">    targetCompatibility JavaVersion.VERSION_1_8</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>范例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">btnHandler.setOnClickListener(v -&gt; &#123;</div><div class="line">    Log.i(&quot;a&quot;,&quot;a&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="泛型-参考自Link"><a href="#泛型-参考自Link" class="headerlink" title="泛型 参考自Link"></a>泛型 参考自<a href="https://www.zhihu.com/question/20400700/answer/117464182" target="_blank" rel="external">Link</a></h3><ul>
+<li><figure class="highlight plain"><figcaption><span>extends T>```：是指 “上界通配符（Upper Bounds Wildcards）”</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">* ```&lt;? super T&gt;```：是指 “下界通配符（Lower Bounds Wildcards）”</div><div class="line">1. 为什么要用通配符和边界？</div><div class="line">使用泛型的过程中，经常出现一种很别扭的情况。我们有Fruit类，和它的派生类Apple类</div><div class="line">    ```java</div><div class="line">    class Fruit &#123;&#125;</div><div class="line">    class Apple extends Fruit &#123;&#125;</div></pre></td></tr></table></figure>
+<p>  然后有一个最简单的容器：Plate类。盘子里可以放一个泛型的“东西”。我们可以对这个东西做最简单的“放”和“取”的动作：set( )和get( )方法。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plate</span>&lt;<span class="title">T</span>&gt;</span>&#123;</div><div class="line">    <span class="keyword">private</span> T item;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Plate</span><span class="params">(T t)</span></span>&#123;item=t;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T t)</span></span>&#123;item=t;</div><div class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> item;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  现在定义一个盘子, 逻辑上”水果盘子”可以装水果, 也可以装苹果</p>
+  <figure class="highlight plain"><figcaption><span>p </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">    但实际上Java编译器不允许这个操作,</div><div class="line">    error: incompatible types: Plate&lt;Apple&gt; cannotbe converted to Plate&lt;Fruit&gt;</div><div class="line">    编译器的逻辑:</div><div class="line">    苹果 IS-A 水果</div><div class="line">    装苹果的盘子 NOT-IS-A 装水果的盘子</div><div class="line">    所以就算容器里装的东西有继承关系, 但容器之间没有继承关系, 所以我们不可以把Plate&lt;Apple&gt;的引用传递给Plate&lt;Fruit&gt;</div><div class="line">    而通配符就是用来让水果盘子和苹果盘子之间发生关系</div><div class="line"></div><div class="line">2. 上界通配符</div></pre></td></tr></table></figure>
+<p>  Plate&lt;? extends Fruit&gt;</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">一个能放水果以及一切水果派生类的盘子.它和```Plate&lt;Apple&gt;```的区别就是</div><div class="line">```Plate&lt;? extends Fruit&gt;``` 是 ```Plate&lt;Apple&gt;``` 和 ```Plate&lt;Fruit&gt;```的基类</div><div class="line">直接好处是可以用苹果盘子给水果盘子赋值了</div><div class="line">```Plate&lt;? extends Fruit&gt; = Plate&lt;Apple&gt;(new Apple());</div></pre></td></tr></table></figure>
+<p>  如果把Fruit和Apple的例子扩展一下,</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Food&#123;&#125;;</div><div class="line"></div><div class="line">class Fruit extends Food&#123;&#125;</div><div class="line">class Meat extends Food&#123;&#125;</div><div class="line"></div><div class="line">class Apple extends Fruit&#123;&#125;</div><div class="line">class Apple extends Fruit&#123;&#125;</div><div class="line">class Pork extends Meat&#123;&#125;</div><div class="line">class Beef extends Meat&#123;&#125;</div><div class="line"></div><div class="line">class RedApple extends Apple&#123;&#125;</div><div class="line">class GreenApple extends Apple&#123;&#125;</div></pre></td></tr></table></figure>
+<p>  上界通配符的范围是<br>  <img src="https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png" alt=""></p>
+</li>
+</ul>
+<ol>
+<li><p>下界通配符</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Plate&lt;? super Fruit&gt;</div></pre></td></tr></table></figure>
+<p> 一个能放水果以及一切水果基类的盘子, <figure class="highlight plain"><figcaption><span>super Fruit>``` 是 ```Plate<fruit>```的基类, 但不是 ```Plate<apple>``` 的基类,</apple></fruit></span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    下界通配符的范围是</div><div class="line">    ![](https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fsuper.png)</div><div class="line"></div><div class="line">4. 副作用</div><div class="line">    容器的部分功能会失效</div><div class="line">    盘子容器具有get和set的方法</div></pre></td></tr></table></figure></p>
+<p> class Plate<t>{<br>   private T item;<br>   public Plate(T t){item = t;}<br>   public void set(T t){item = t;}<br>   public T get(){return item;}<br> }  </t></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* 4.1 上界&lt;? extends T&gt;不能往里存, 只能往外取</div><div class="line">    set 方法会失效, 但 get 方法有效</div></pre></td></tr></table></figure>
+<p> Plate&lt;? extends Fruit&gt; p = new Plate<apple>(new Apple());<br> //不能存入元素<br> p.set(new Fruit()); //ERROR<br> p.set(new Apple()); //ERROR</apple></p>
+<p> //读取出来的东西只能存放在Fruit和它的基类<br> Fruit fruit = p.get();<br> Object object = p.get();<br> Apple apple = p.get();//ERROR</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">编译器在看到 Plate&lt;Apple&gt; 后, 盘子没有被标上&quot;苹果&quot;, 而是标上一个占位符 CAP#1, 来表示捕获一个 Fruit 或 Fruit 的子类, 具体是什么类, 不知道, 所以以后想往里插入Apple 或者 Meat / Fruit, 编译器都不知道能不能和 CAP#1 匹配, 所以就都不允许.</div><div class="line">所以 通配符&lt;?&gt; 和 类型参数&lt;T&gt; 的区别在于, 对于编译器来说, 所有的T, 都代表同一种类型</div></pre></td></tr></table></figure>
+<p> public <t> List<t> fill(T…t);</t></t></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">    这里T要么都是String, 要么都是Integer, 反正保持一致</div><div class="line">    而Plate&lt;?&gt;表示, 盘子里放的是什么, 我不知道</div><div class="line">* 4.2 下界&lt;? super T&gt; 可以往里存, 但是取出来时只能放在 Object;</div></pre></td></tr></table></figure>
+<p>Plate&lt;? super Fruit&gt; p = new Plate<fruit>(new Fruit());</fruit></p>
+<p>//存入元素正常<br>p.set(new Fruit());<br>p.set(new Apple());</p>
+<p>//读取出来的东西只能存放在Object<br>Apple apple = p.get(); //ERROR<br>Fruit fruit = p.get(); //ERROR<br>Object object = p.get();<br>```</p>
+</li>
+<li><p>PESC原则<br>Producer Extends Consumer Super</p>
+<ol>
+<li>频繁往外读取内容, 适合用上界Extends</li>
+<li>经常往里插入内容, 适合用下界Super</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a href="http://www.jianshu.com/p/c0c5e0540928" target="_blank" rel="external">Android面试一天一题（7 Day）</a></li>
+<li><a href="https://www.zhihu.com/question/20400700/answer/117464182" target="_blank" rel="external">知乎 | Java 泛型 &lt;? super T&gt; 中 super 怎么 理解？与 extends 有何不同？| 胖胖的回答</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Lambda/" rel="tag"># Lambda</a>
+          
+            <a href="/tags/泛型/" rel="tag"># 泛型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/31/Day11-Activity/" rel="next" title="Day11 - Activity">
+                <i class="fa fa-chevron-left"></i> Day11 - Activity
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/05/Day13-进程间通信IPC/" rel="prev" title="Day13 - 进程间通信">
+                Day13 - 进程间通信 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#值传递和引用传递"><span class="nav-number">1.</span> <span class="nav-text">值传递和引用传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节Byte-位bit"><span class="nav-number">2.</span> <span class="nav-text">字节Byte, 位bit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据类型的取值范围"><span class="nav-number">3.</span> <span class="nav-text">基本数据类型的取值范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">4.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内部类"><span class="nav-number">5.</span> <span class="nav-text">静态内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda"><span class="nav-number">6.</span> <span class="nav-text">Lambda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型-参考自Link"><span class="nav-number">7.</span> <span class="nav-text">泛型 参考自Link</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

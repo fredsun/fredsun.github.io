@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,动画," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Activity上了动画后黑屏">
+<meta name="keywords" content="Android,动画">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day14 - Activity 动画">
+<meta property="og:url" content="http://www.fredsun.me/2017/09/07/Day14-Activity动画/index.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="Activity上了动画后黑屏">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-20T07:00:51.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day14 - Activity 动画">
+<meta name="twitter:description" content="Activity上了动画后黑屏">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fredsun.me/2017/09/07/Day14-Activity动画/"/>
+
+
+
+
+
+  <title>Day14 - Activity 动画 | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fredsun.me/2017/09/07/Day14-Activity动画/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day14 - Activity 动画</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T16:03:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Activity上了动画后黑屏<br><a id="more"></a></p>
+<h2 id="Activity动画-Transition"><a href="#Activity动画-Transition" class="headerlink" title="Activity动画(Transition)"></a>Activity动画(Transition)</h2><p>分为两种,</p>
+<ul>
+<li>overridePendingTransition</li>
+<li>ActivityOption</li>
+</ul>
+<h3 id="overridePendingTransition-enterAnim-exitAnim"><a href="#overridePendingTransition-enterAnim-exitAnim" class="headerlink" title="overridePendingTransition(enterAnim, exitAnim);"></a>overridePendingTransition(enterAnim, exitAnim);</h3><p>紧跟在 startActivity()／finish（）之后</p>
+<h4 id="黑屏"><a href="#黑屏" class="headerlink" title="黑屏"></a>黑屏</h4><p>当使用 overridePendingTransition(R.anim.right_to_current,0); 容易黑屏<br>解决： overridePendingTransition(R.anim.activity_open,R.anim.activity_stay);将activity的退出设置透明度从 1 到 1.</p>
+<p>activity_stay.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;set  xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line">    &lt;alpha</div><div class="line">        android:fromAlpha=&quot;1&quot;</div><div class="line">        android:toAlpha=&quot;1&quot;</div><div class="line">        android:duration=&quot;300&quot;</div><div class="line">        /&gt;</div><div class="line">&lt;/set&gt;</div></pre></td></tr></table></figure>
+<h3 id="ActivityOption"><a href="#ActivityOption" class="headerlink" title="ActivityOption"></a>ActivityOption</h3><ol>
+<li><p>在theme添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat&quot;&gt;</div><div class="line">    &lt;item name=&quot;android:windowContentTransitions&quot;&gt;true&lt;/item&gt;</div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过 startActivity(intent, bundle); 的 bundle 设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, <span class="number">0</span>, <span class="number">0</span>, view.getWidth(), view.getHeight());</div><div class="line"><span class="comment">//ActivityOptionsCompat optionCompat = ActivityOptionsCompat.makeScaleUpAnimation(view,0,0,view.getWidth(),view.getHeight());</span></div><div class="line">intent.putExtra(<span class="string">"myserializabledata"</span>, persion);</div><div class="line">startActivity(intent, optionCompat.toBundle());</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="五种静态方法创建动画"><a href="#五种静态方法创建动画" class="headerlink" title="五种静态方法创建动画"></a>五种静态方法创建动画</h4><ol>
+<li><p>makeCustomAnimation(Context context, int enterResId, int exitResId)<br>效果: 与普通的overridePendingTransition差不多</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ActivityOptions options = ActivityOptions.makeCustomAnimation(</div><div class="line">        MainActivity.this,  //传入的activity的上下文</div><div class="line">        android.R.anim.slide_in_left,  //A Activity退出的效果</div><div class="line">        android.R.anim.slide_out_right //B Activity进入的效果</div><div class="line">        );</div></pre></td></tr></table></figure>
+</li>
+<li><p>makeScaleUpAnimation(View source,int startX, int startY, int startWidth, int startHeight)<br>效果: 看到 B Activity 从相对于指定控件原点的指定位置, 按照指定大小不断扩大B Activity</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ActivityOptions options = ActivityOptions.makeScaleUpAnimation(</div><div class="line">        iv_click,  //从A控件</div><div class="line">        0,  //从A控件的宽度为0</div><div class="line">        0,  //从A控件的高度为0</div><div class="line">        iv_click.getWidth(), //打开的Activity最开始是多宽</div><div class="line">        iv_click.getHeight() //打开的Activity最开始是多高</div><div class="line">        );</div></pre></td></tr></table></figure>
+</li>
+<li><p>makeThumbnailScaleUpAnimation(View source,Bitmap thumbnail, int startX, int startY)<br>效果: 和 2 相似, 只是放大的过程是指定的View放大, 最后才换成显示 B Activity</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ActivityOptions options = ActivityOptions.makeThumbnailScaleUpAnimation(</div><div class="line">                       iv_click,</div><div class="line">                       bitmap,</div><div class="line">                       0,</div><div class="line">                       iv_click.getHeight()</div><div class="line">               );</div></pre></td></tr></table></figure>
+</li>
+<li><p>makeSceneTransitionAnimation(Activity activity, View sharedElement, String sharedElementName)<br>效果: 用于单个元素共享</p>
+<ul>
+<li>回退的时候如果还需要效果, 用 finishAfterTransition(); 替代finish();</li>
+<li>目标 Activity 可以是 SingleTask 但是不能指定 taskAffinity, 否则点击时闪屏, 但锁屏后再开, 却显示已经跳转到了B Activity.</li>
+<li>手机版本需要 Lolipop/5.0以上</li>
+<li>控件需要在Activity布局内,不能 listview 再 addHeadView <a href="http://blog.csdn.net/u013268154/article/details/50855026#实现最终的效果" target="_blank" rel="external">Link</a></li>
+<li><p>Theme 需要设置为android:Theme.Material 或者AppCompat</p>
+<blockquote>
+<p>注意: 报错 <figure class="highlight plain"><figcaption><span>need to use a Theme.AppCompat theme (or descendant) with this activity.```如果你的Theme原来是 AppCompatActivity, 此时需要修改为Activity, 或者 如果有v4包的Fragment, 那就得设置成 FragmentActivity 　[Link](http://blog.csdn.net/ouyang_peng/article/details/51334761)</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(</p>
+<pre><code>MainActivity.this,
+iv_click,
+getString(R.string.MainToSecond)
+);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">5. makeSceneTransitionAnimation(Activity activity,Pair&lt;View, String&gt;… sharedElements)</div><div class="line">效果: 用于多个元素共享</div><div class="line">    * Pair里的view别强转成TextView, ImageView</div></pre></td></tr></table></figure>
+<p>ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(</p>
+<pre><code>        MainActivity.this,
+        Pair.create(findViewById(R.id.iv_click), getString(R.string.MainToSecond)), //这里是View, 不能是ImageView, TextView之类的
+        Pair.create(findViewById(R.id.tv_click), getString(R.string.MainToSecondText)));
+startActivity(intent,options.toBundle());
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 动画效果</div><div class="line">提供了5种.</div><div class="line">* changeBounds -  改变目标视图的布局边界</div><div class="line">* changeClipBounds - 裁剪目标视图边界</div><div class="line">* changeTransform - 改变目标视图的缩放比例和旋转角度</div><div class="line">* changeImageTransform - 改变目标图片的大小和缩放比例</div><div class="line">* changeScroll -</div><div class="line"></div><div class="line">#### 添加方法</div><div class="line">#####1. style 设置</div><div class="line">右键res, new -&gt; Android resource directory -&gt; transition</div><div class="line">&gt; 新建的文件根标记需要设置为&lt;transitionSet&gt;, 如果是&lt;transitionManager&gt; 会导致 ``` &lt;item name=&quot;android:windowSharedElementEnterTransition&quot;&gt;@transition/change_bounds&lt;/item&gt;```不能识别</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p>//是否允许过渡动画</p>
+<p><item name="android:windowContentTransitions">true</item><br>//A Activity 动画效果是否显示</p>
+<p><item name="android:windowAllowEnterTransitionOverlap">true</item><br>//B Activity 动画效果是否显示</p>
+<p><item name="android:windowAllowReturnTransitionOverlap">true</item><br>//指定普通进入动画</p>
+<p><item name="android:windowEnterTransition">@android:transition/slide_bottom</item><br>//指定普通退出动画</p>
+<p><item name="android:windowExitTransition">@android:transition/slide_bottom</item><br>//自定义进入的transition动画</p>
+<p><item name="android:windowSharedElementEnterTransition">@transition/change_bounds</item><br>//自定义退出的transition动画</p>
+<p><item name="android:windowSharedElementExitTransition">@transition/change_bounds</item><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#####2.代码设置</div><div class="line">```java</div><div class="line">// 允许使用transitions  </div><div class="line">getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);  </div><div class="line"></div><div class="line">// 设置一个exit transition  </div><div class="line">getWindow().setExitTransition(new Explode());//new Slide()  new Fade()</div></pre></td></tr></table></figure></p>
+<p>Window.setEnterTransition()：设置进入动画<br>Window.setExitTransition()：设置退出效果<br>Window.setSharedElementEnterTransition()：设置共享元素的进入动画<br>Window.setSharedElementExitTransition()：设置共享元素的退出动画</p>
+<h4 id="兼容低版本-不挂，还是没效果"><a href="#兼容低版本-不挂，还是没效果" class="headerlink" title="兼容低版本(不挂，还是没效果)"></a>兼容低版本(不挂，还是没效果)</h4><blockquote>
+<p><strong>注意: Pair类也要是V4包的</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(</div><div class="line">                       MainActivity.this,</div><div class="line">                       android.support.v4.util.Pair.create(findViewById(R.id.iv_click), getString(R.string.MainToSecond)),</div><div class="line">                       android.support.v4.util.Pair.create(findViewById(R.id.tv_click), getString(R.string.MainToSecondText)));</div></pre></td></tr></table></figure></p>
+<p>参考<br><a href="http://blog.csdn.net/u013268154/article/details/50855026" target="_blank" rel="external">CSDN | 关于activity转场动画makeSceneTransitionAnimation没效果的问题的解决办法</a><br><a href="https://developer.android.com/training/material/animations.html#Transitions" target="_blank" rel="external">Google | 定制操作行为转换 </a><br><a href="http://blog.csdn.net/qibin0506/article/details/48129139/" target="_blank" rel="external">CSDN | 你所不知道的Activity转场动画——ActivityOptions</a><br><a href="http://blog.csdn.net/cym492224103/article/details/41761267" target="_blank" rel="external">ym—— Android 5.0学习之Activity过渡动画</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/动画/" rel="tag"># 动画</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/05/Day13-进程间通信IPC/" rel="next" title="Day13 - 进程间通信">
+                <i class="fa fa-chevron-left"></i> Day13 - 进程间通信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/07/Day28-动画/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity动画-Transition"><span class="nav-number">1.</span> <span class="nav-text">Activity动画(Transition)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#overridePendingTransition-enterAnim-exitAnim"><span class="nav-number">1.1.</span> <span class="nav-text">overridePendingTransition(enterAnim, exitAnim);</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#黑屏"><span class="nav-number">1.1.1.</span> <span class="nav-text">黑屏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ActivityOption"><span class="nav-number">1.2.</span> <span class="nav-text">ActivityOption</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#五种静态方法创建动画"><span class="nav-number">1.2.1.</span> <span class="nav-text">五种静态方法创建动画</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兼容低版本-不挂，还是没效果"><span class="nav-number">1.2.2.</span> <span class="nav-text">兼容低版本(不挂，还是没效果)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

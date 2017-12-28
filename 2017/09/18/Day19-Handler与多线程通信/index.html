@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Handler,线程间通信," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="据说Handler是最该读的源码..结果到现在才开始看">
+<meta name="keywords" content="Android,Handler,线程间通信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day19 - Handler 和 线程间通信">
+<meta property="og:url" content="http://www.fredsun.me/2017/09/18/Day19-Handler与多线程通信/index.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="据说Handler是最该读的源码..结果到现在才开始看">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-20T07:22:32.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day19 - Handler 和 线程间通信">
+<meta name="twitter:description" content="据说Handler是最该读的源码..结果到现在才开始看">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fredsun.me/2017/09/18/Day19-Handler与多线程通信/"/>
+
+
+
+
+
+  <title>Day19 - Handler 和 线程间通信 | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fredsun.me/2017/09/18/Day19-Handler与多线程通信/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day19 - Handler 和 线程间通信</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T14:57:00+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>据说Handler是最该读的源码..结果到现在才开始看<br><a id="more"></a></p>
+<h2 id="Handler-的使用"><a href="#Handler-的使用" class="headerlink" title="Handler 的使用"></a>Handler 的使用</h2><p>创建对象 -&gt; 获取消息对象 -&gt; 发送消息 -&gt; 处理消息</p>
+</blockquote>
+<ol>
+<li><p>子线程的 run 当主线程执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Handler handler = <span class="keyword">new</span> Handler();<span class="comment">//主线程创建Handler</span></div><div class="line">...</div><div class="line">handler.post(Runnable...);<span class="comment">//子线程用 Handler 来处理 Runnable</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>子线程发送消息到主线程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Handler mHandler = <span class="keyword">new</span> Handler()&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handlerMessage</span><span class="params">(Message msg)</span></span>&#123;</div><div class="line">    <span class="keyword">switch</span>(msg.what)&#123;</div><div class="line">      <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">....</div><div class="line"><span class="comment">//子线程</span></div><div class="line">Message msg = <span class="keyword">new</span> Message();</div><div class="line"><span class="comment">//Message msg = mHandler.obtain(1);</span></div><div class="line"><span class="comment">//Message msg = mHandler.obtainMessage();</span></div><div class="line">msg.what = <span class="number">1</span>;<span class="comment">//识别码</span></div><div class="line">msg.arg1 = <span class="number">123</span>;</div><div class="line">msg.arg2 = <span class="number">321</span>;</div><div class="line">msg.obj = <span class="string">"222"</span>;<span class="comment">//msg可以加入obj</span></div><div class="line">Bundle data = <span class="keyword">new</span> Bundle();</div><div class="line">msg.setData(data);<span class="comment">//msg也可以加入bundle</span></div><div class="line">mHandler.sendMessage(msg);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Handler的创建"><a href="#Handler的创建" class="headerlink" title="Handler的创建"></a>Handler的创建</h2><p>Handler.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Looper looper, Callback callback, <span class="keyword">boolean</span> async)</span> </span>&#123;</div><div class="line">    mLooper = looper;</div><div class="line">    mQueue = looper.mQueue;</div><div class="line">    mCallback = callback;</div><div class="line">    mAsynchronous = async;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="looper"><a href="#looper" class="headerlink" title="looper"></a>looper</h3><ul>
+<li><p>构造方法looper绑定了当前线程<br>looper.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">private Looper(boolean quitAllowed) &#123;</div><div class="line">    mQueue = new MessageQueue(quitAllowed);</div><div class="line">    mThread = Thread.currentThread();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Lopper的真正创建是通过prepare(), 并且一个线程只能创建一个looper<br>looper.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public static void prepare() &#123;</div><div class="line">    prepare(true);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 目前quitAllowed应该仅在主线程中被设置成false，自定义线程中均为true</div><div class="line">private static void prepare(boolean quitAllowed) &#123;</div><div class="line">    if (sThreadLocal.get() != null) &#123;</div><div class="line">        throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</div><div class="line">    &#125;</div><div class="line">    sThreadLocal.set(new Looper(quitAllowed));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>PS: 主线程的 Looper 是在 ActivityThread的main()里创建的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) &#123;</div><div class="line">    //···</div><div class="line">    Looper.prepareMainLooper();</div><div class="line">    //···</div><div class="line">    Looper.loop();</div><div class="line">    //···</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="MessageQueue"><a href="#MessageQueue" class="headerlink" title="MessageQueue"></a>MessageQueue</h3><ul>
+<li>构造函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">MessageQueue(boolean quitAllowed) &#123;</div><div class="line">    mQuitAllowed = quitAllowed;</div><div class="line">    mPtr = nativeInit();</div><div class="line">&#125;</div><div class="line"></div><div class="line">private native static long nativeInit();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>具体实现在C++<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">作者：SparkInLee</div><div class="line">链接：http://www.jianshu.com/p/8a344dbd17f0</div><div class="line">來源：简书</div><div class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div><div class="line"></div><div class="line">### Looper.loop()</div><div class="line">loop()主要是一个无限for循环</div><div class="line">looper.java</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>public static void loop() {<br>    final Looper me = myLooper();<br>    if (me == null) {<br>        throw new RuntimeException(“Looper.prepare() wasn’t called on this thread.”);<br>    }<br>    final MessageQueue queue = me.mQueue;<br>    //···省略无关代码<br>    for (;;) {<br>        Message msg = queue.next(); // might block<br>        if (msg == null) {<br>            // No message indicates that the message queue is quitting.<br>            return;<br>        }<br>        //···省略无关代码<br>        msg.target.dispatchMessage(msg);<br>        //···省略无关代码<br>        msg.recycleUnchecked();<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">循环着从MessageQueue.next里拿到消息</div><div class="line">MessageQueue.java</div></pre></td></tr></table></figure></p>
+<p>Message next() {<br>    // 在Looper#loop()中我们知道返回空消息会退出loop()中的无限循环<br>    // 当调用MessageQueue#quit(boolean)时会调用nativeDestory()销毁MessageQueue，将ptr置为0<br>    final long ptr = mPtr;<br>    if (ptr == 0) {<br>        return null;<br>    }</p>
+<pre><code>int pendingIdleHandlerCount = -1; // 仅在第一次调用时为-1
+int nextPollTimeoutMillis = 0;
+for (;;) {
+    if (nextPollTimeoutMillis != 0) {
+        Binder.flushPendingCommands();
+    }
+
+    /**
+    * 这个调用跟上面提到native层中Looper的epoll机制相关，用于等待可处理的消息
+    * nextPollTimeoutMillis &lt; 0 : 进入无限空闲等待，直到有新消息唤醒
+    * nextPollTimeoutMillis = 0 : 不等待
+    * nextPollTimeoutMillis &gt; 0 : 进入空闲等待，直到有新消息唤醒或者nextPollTimeoutMillis超时
+    **/
+    nativePollOnce(ptr, nextPollTimeoutMillis);
+
+    synchronized (this) {
+        final long now = SystemClock.uptimeMillis();
+        Message prevMsg = null;
+        Message msg = mMessages;
+        // 注：MessageQueue管理的消息是一个消息链表，后续Message中会详细分析
+        if (msg != null &amp;&amp; msg.target == null) {
+            /**
+            * msg.target为空是一类特殊消息（栅栏消息），用于阻塞所有同步消息，但是对异步消息没有影响，
+            * 后续会详细分析。在这个前提下，当头部是特殊消息时需要往后找是否有异步消息
+            */
+            do {
+                prevMsg = msg;
+                msg = msg.next;
+            } while (msg != null &amp;&amp; !msg.isAsynchronous());
+        }
+        if (msg != null) {
+            // 找到消息
+            if (now &lt; msg.when) {
+                // 消息的触发时间在当前时间之后，于是计算出需要等待的时间，准备进入有限空闲等待
+                nextPollTimeoutMillis = (int) Math.min(msg.when - now, Integer.MAX_VALUE);
+            } else {
+                // 找到可处理的消息，更新消息链表数据，返回可处理消息
+                mBlocked = false;
+                if (prevMsg != null) {
+                    prevMsg.next = msg.next;
+                } else {
+                    mMessages = msg.next;
+                }
+                msg.next = null;
+                if (false) Log.v(&quot;MessageQueue&quot;, &quot;Returning message: &quot; + msg);
+                return msg;
+            }
+        } else {
+            // 没找到消息，准备进入无限空闲等待
+            nextPollTimeoutMillis = -1;
+        }
+
+        // 没有可处理的消息，并且消息队列已经退出，则返回空消息让loop退出
+        if (mQuitting) {
+            dispose();
+            return null;
+        }
+
+        // 当mMessages为空或者mMessages的处理时间在当前时间之后（注意栅栏消息的特殊情况）时，
+        // 并且pendingIdleHandlerCount没有在此处初始化过，
+        // 则设置pendingIdleHandlerCount为IdleHandler的数量，IdleHandler后续详细说明。
+        if (pendingIdleHandlerCount &lt; 0
+                &amp;&amp; (mMessages == null || now &lt; mMessages.when)) {
+            pendingIdleHandlerCount = mIdleHandlers.size();
+        }
+        if (pendingIdleHandlerCount &lt;= 0) {
+            // 无空闲处理器，阻塞队列，进入空闲等待
+            mBlocked = true;
+            continue;
+        }
+
+        if (mPendingIdleHandlers == null) {
+            mPendingIdleHandlers = new IdleHandler[Math.max(pendingIdleHandlerCount, 4)];
+        }
+        mPendingIdleHandlers = mIdleHandlers.toArray(mPendingIdleHandlers);
+    }
+
+    // 调用空闲处理器逻辑，此处代码仅调用一次
+    for (int i = 0; i &lt; pendingIdleHandlerCount; i++) {
+        final IdleHandler idler = mPendingIdleHandlers[i];
+        mPendingIdleHandlers[i] = null; // release the reference to the handler
+
+        boolean keep = false;
+        try {
+            keep = idler.queueIdle();
+        } catch (Throwable t) {
+            Log.wtf(&quot;MessageQueue&quot;, &quot;IdleHandler threw exception&quot;, t);
+        }
+
+        if (!keep) {
+            synchronized (this) {
+                mIdleHandlers.remove(idler);
+            }
+        }
+    }
+
+    // 设置为0保证空闲处理器代码仅调用一次
+    pendingIdleHandlerCount = 0;
+
+    // 在处理空闲处理器的时候可能已经有可处理的消息，因此无需等待
+    nextPollTimeoutMillis = 0;
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">### Message的创建</div><div class="line">1. mHandler.obtainMessage()</div><div class="line">    Handler.java</div></pre></td></tr></table></figure></p>
+<pre><code>public final Message obtainMessage(){
+    return Message.obtain(this);
+}
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2. Message.obtain()</div><div class="line">    Message.java</div></pre></td></tr></table></figure>
+
+public static Message obtain(Handler h) {
+    Message m = obtain();
+    m.target = h;
+    return m;
+}
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">obtain()方法, 回收池sPool就是一个静态Message, obtain 就是取出一个next是null, what是0 的 Message</div></pre></td></tr></table></figure>
+
+public static Message obtain() {
+    synchronized (sPoolSync) {
+        if (sPool != null) {
+            Message m = sPool;
+            sPool = m.next;
+            m.next = null;
+            m.flags = 0; // clear in-use flag
+            sPoolSize--;
+            return m;
+        }
+    }
+    return new Message();
+}
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3. 消息的结构</div></pre></td></tr></table></figure>
+
+  public int what;    // 消息码，带Handler命名空间，因此不同Handler中相同消息码不冲突
+    public int arg1;    // 整数数据
+    public int arg2;    // 整数数据
+    public Object obj;    // 任意对象，当利用Messenger进行跨进程传递时需要继承自Parcelable
+
+    public Messenger replyTo;    // Messenger对象实现跨进程消息传递
+    public int sendingUid = -1;    // 跨进程是标记消息来源的Uid
+
+    /**
+    * flags可设置消息是否在使用以及是否异步
+    * FLAG_IN_USE = 1 &lt;&lt; 0，该标记只有在创建或obtain时才会清除，此时方可修改消息的相关数据及进行发送
+    * FLAG_ASYNCHRONOUS = 1 &lt;&lt; 1，标记该消息为异步消息，不受栅栏消息的影响
+    **/
+        /*package*/ int flags;
+
+        /*package*/ long when;    // 消息执行时间，采用SystemClock#uptimeMillis()时间base
+        /*package*/ Bundle data;    // 消息的数据
+        /*package*/ Handler target;    // 消息对应的Handler
+        /*package*/ Runnable callback; // 消息对应的回调，具体参看下文中消息处理一节
+
+        /*package*/ Message next; // 形成消息链表，以在MessageQueue以及消息回收池中使用
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">### Message 放入 MessageQueue</div><div class="line">Handler 除了 sendMessageAtFrontOfQueue(Message) 外其余均会调用 sendMessageAtTime(Message), 而这两个接口最终调用了 enqueueMessage(MessageQueue, Message, long)</div></pre></td></tr></table></figure>
+</code></pre><p>private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis) {<br>    msg.target = this;<br>    if (mAsynchronous) {<br>        msg.setAsynchronous(true);<br>    }<br>    return queue.enqueueMessage(msg, uptimeMillis);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&gt; Handler 在构造时可以通过 boolean async 给 Handler 设置是否异步</div><div class="line"></div><div class="line">最后调用 enqueueMessage</div><div class="line">MessageQueue.java</div></pre></td></tr></table></figure></p>
+<p>// 插入成功返回true，否则返回false<br>boolean enqueueMessage(Message msg, long when) {<br>    // Handler中不允许发送target为空的消息，空消息为特殊消息（栅栏消息）<br>    if (msg.target == null) {<br>        throw new IllegalArgumentException(“Message must have a target.”);<br>    }<br>    // 不允许发送状态为使用中的消息<br>    if (msg.isInUse()) {<br>        throw new IllegalStateException(msg + “ This message is already in use.”);<br>    }</p>
+<pre><code>synchronized (this) {
+    if (mQuitting) {
+        // 不允许发送消息给已退出的消息队列
+        IllegalStateException e = new IllegalStateException(
+                msg.target + &quot; sending message to a Handler on a dead thread&quot;);
+        Log.w(&quot;MessageQueue&quot;, e.getMessage(), e);
+        msg.recycle();
+        return false;
+    }
+
+    msg.markInUse();
+    msg.when = when;
+    Message p = mMessages;
+    boolean needWake;
+    if (p == null || when == 0 || when &lt; p.when) {
+        // 消息触发时间最早，直接插在链表头部，如果当前队列阻塞则唤醒消息队列的等待，见MessageQueue#next
+        msg.next = p;
+        mMessages = msg;
+        needWake = mBlocked;
+    } else {
+        // 将消息插入到链表中间，如果链表头是栅栏消息并且该消息是触发时间最早的异步消息则需要进行唤醒
+        needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();
+        Message prev;
+        for (;;) {
+            prev = p;
+            p = p.next;
+            if (p == null || when &lt; p.when) {
+                break;
+            }
+            if (needWake &amp;&amp; p.isAsynchronous()) {
+                needWake = false;
+            }
+        }
+        msg.next = p;
+        prev.next = msg;
+    }
+
+    if (needWake) {
+        nativeWake(mPtr);
+    }
+}
+return true;
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### Message 处理和回收</div></pre></td></tr></table></figure></p>
+<p>msg.target.dispatchMessage(msg);<br>msg.recycleUnchecked();<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>public void dispatchMessage(Message msg) {<br>        if (msg.callback != null) {<br>            handleCallback(msg);<br>        } else {<br>            if (mCallback != null) {<br>                if (mCallback.handleMessage(msg)) {<br>                    return;<br>                }<br>            }<br>            handleMessage(msg);<br>        }<br>    }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">消息先由消息自身的callback处理, 如果自身回调为空, 就用Handler的回调mCallback处理, 否则用Handler 的 handlerMessage()处理</div><div class="line"></div><div class="line">### 栅栏消息</div><div class="line">target = null; 用于延迟指定时间之后所有的同步消息, 异步照常进行. 发送和移除栅栏消息必须成对, 否则容易导致MessageQueue被挂起</div><div class="line">发送和移除接口在 Looper.java 中</div></pre></td></tr></table></figure></p>
+<p>public int postSyncBarrier() {<br>    return mQueue.enqueueSyncBarrier(SystemClock.uptimeMillis());//返回的int 用于移除栅栏信息<br>}</p>
+<p>public void removeSyncBarrier(int token) {<br>    mQueue.removeSyncBarrier(token);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">调用了 MessageQueue 的 enqueueSyncBarrier(long)</div></pre></td></tr></table></figure></p>
+<p>int enqueueSyncBarrier(long when) {<br>    // 创建一个target为空的特殊消息，并根据when插入MessageQueue中合适的位置<br>    // 无需唤醒因为栅栏消息的目的在于阻塞消息的执行<br>    synchronized (this) {<br>        final int token = mNextBarrierToken++;<br>        final Message msg = Message.obtain();<br>        msg.markInUse();<br>        msg.when = when;<br>        msg.arg1 = token;</p>
+<pre><code>    Message prev = null;
+    Message p = mMessages;
+    if (when != 0) {
+        while (p != null &amp;&amp; p.when &lt;= when) {
+            prev = p;
+            p = p.next;
+        }
+    }
+    if (prev != null) {
+        msg.next = p;
+        prev.next = msg;
+    } else {
+        msg.next = p;
+        mMessages = msg;
+    }
+    return token;
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">返回的 int 用于移除栅栏信息</div></pre></td></tr></table></figure></p>
+<p>void removeSyncBarrier(int token) {<br>    // 移除token对应的栅栏消息，并在必要的时候进行唤醒<br>    synchronized (this) {<br>        Message prev = null;<br>        Message p = mMessages;<br>        while (p != null &amp;&amp; (p.target != null || p.arg1 != token)) {<br>            prev = p;<br>            p = p.next;<br>        }<br>        if (p == null) {<br>            throw new IllegalStateException(“The specified message queue synchronization “</p>
+<pre><code>                + &quot; barrier token has not been posted or has already been removed.&quot;);
+    }
+    final boolean needWake;
+    if (prev != null) {
+        prev.next = p.next;
+        needWake = false;
+    } else {
+        mMessages = p.next;
+        needWake = mMessages == null || mMessages.target != null;
+    }
+    p.recycleUnchecked();
+
+    if (needWake &amp;&amp; !mQuitting) {
+        nativeWake(mPtr);
+    }
+}
+</code></pre><p>}<br>```</p>
+<h3 id="TODO-http-www-jianshu-com-p-8a344dbd17f0"><a href="#TODO-http-www-jianshu-com-p-8a344dbd17f0" class="headerlink" title="TODO http://www.jianshu.com/p/8a344dbd17f0"></a>TODO <a href="http://www.jianshu.com/p/8a344dbd17f0" target="_blank" rel="external">http://www.jianshu.com/p/8a344dbd17f0</a></h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Handler/" rel="tag"># Handler</a>
+          
+            <a href="/tags/线程间通信/" rel="tag"># 线程间通信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/13/Day17-Application和Activity的onCreate/" rel="next" title="Day17 Application 和 Actiity启动过程">
+                <i class="fa fa-chevron-left"></i> Day17 Application 和 Actiity启动过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/18/Day18-Activity&DecorView/" rel="prev" title="Day18 - Activity & DecorView">
+                Day18 - Activity & DecorView <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Handler-的使用"><span class="nav-number">1.</span> <span class="nav-text">Handler 的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handler的创建"><span class="nav-number">2.</span> <span class="nav-text">Handler的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#looper"><span class="nav-number">2.1.</span> <span class="nav-text">looper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageQueue"><span class="nav-number">2.2.</span> <span class="nav-text">MessageQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO-http-www-jianshu-com-p-8a344dbd17f0"><span class="nav-number">2.3.</span> <span class="nav-text">TODO http://www.jianshu.com/p/8a344dbd17f0</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="Fragment 的使用和生命周期">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-20T06:16:43.535Z">
+<meta property="og:updated_time" content="2017-11-09T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day4 - Fragment">
 <meta name="twitter:description" content="Fragment 的使用和生命周期">
@@ -435,7 +435,7 @@
 <h2 id="DialogFragment-替代-Dialog和AlertDialog"><a href="#DialogFragment-替代-Dialog和AlertDialog" class="headerlink" title="DialogFragment 替代 Dialog和AlertDialog"></a>DialogFragment 替代 Dialog和AlertDialog</h2><p>Dialog和继承的AlertDialog无法在横竖屏切换时保存数据, DialogFragment依靠FragmentManager自动重建并恢复数据</p>
 <ul>
 <li><p>自定义view 的 DialogFragment 创建</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EditDialogFragment</span> <span class="keyword">extends</span> <span class="title">DialogFragment</span> </span>&#123;</div><div class="line">   <span class="meta">@Nullable</span></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">       View inflate = inflater.inflate(R.layout.fragment_dialog, container);</div><div class="line">       getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);</div><div class="line">       <span class="keyword">return</span> inflate;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EditDialogFragment</span> <span class="keyword">extends</span> <span class="title">DialogFragment</span> </span>&#123;</div><div class="line">   <span class="meta">@Nullable</span></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">       View inflate = inflater.inflate(R.layout.fragment_dialog, container);</div><div class="line">       getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);</div><div class="line">       <span class="keyword">return</span> inflate;</div><div class="line">   &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>AlertDialog 的 DialogFragment 创建</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">        AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder(getActivity());</div><div class="line"></div><div class="line">        LayoutInflater layoutInflater = getActivity().getLayoutInflater();</div><div class="line">        View view = layoutInflater.inflate(R.layout.fragment_dialog, <span class="keyword">null</span>);</div><div class="line"><span class="comment">//        editName = (EditText) view.findViewById(R.id.id_txt_your_name);</span></div><div class="line">        builder.setView(view)</div><div class="line">                .setNegativeButton(<span class="string">"sign"</span>,</div><div class="line">                        <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">                            <span class="meta">@Override</span></div><div class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</div><div class="line">                                Toast.makeText(getContext(),<span class="string">"test"</span>,Toast.LENGTH_SHORT).show();</div><div class="line"><span class="comment">//                                LoginCompleteListener loginCompleteListener = (LoginCompleteListener) getActivity();</span></div><div class="line"><span class="comment">//                                loginCompleteListener.onLoginComplete(editName.getText().toString(), "123");</span></div><div class="line">                            &#125;</div><div class="line">                        &#125;).setPositiveButton(<span class="string">"Cancel"</span>, <span class="keyword">null</span>);</div><div class="line">        <span class="keyword">return</span> builder.create();</div></pre></td></tr></table></figure>
@@ -471,7 +471,15 @@
 </ul>
 </li>
 </ul>
-<h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><h5 id="WTFs-min-2-fragment-count"><a href="#WTFs-min-2-fragment-count" class="headerlink" title="WTFs/min = 2^fragment count"></a>WTFs/min = 2^fragment count</h5><blockquote>
+<h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><h5 id="WTFs-min-2-fragment-count"><a href="#WTFs-min-2-fragment-count" class="headerlink" title="WTFs/min = 2^fragment count"></a>WTFs/min = 2^fragment count</h5><h4 id="findViewByTag"><a href="#findViewByTag" class="headerlink" title="findViewByTag"></a>findViewByTag</h4><ul>
+<li>findViewById 是xml用了Fragment的查找方法, 如果我们是 findViewByTag 可以通过三种方式获取到Fragment<br>*<ol>
+<li>官方推荐, 在没有使用ViewPager的前提下 - 在创建时添加.<a href="#系统帮助数据恢复">摸我</a></li>
+<li>如果上了viewpager. 根据源码里查询 Fragment 的方法自己拼接 <a href="http://blog.csdn.net/runing_programmer/article/details/50609381" target="_blank" rel="external">Link</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Fragment f = fragmentManager.findFragmentByTag(&quot;android:switcher:&quot; + R.id.mViewpager+ &quot;:&quot;+ mViewPager.getCurrentItem());</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
 <p>参考</p>
 <ul>
 <li><a href="http://www.jianshu.com/p/caa5d6568faa" target="_blank" rel="external">简书 | EP38-Fragment单例和内存泄露</a></li>
@@ -536,8 +544,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/14/面试/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/14/Day5单例/" rel="prev" title="Day5 - 单例">
+                Day5 - 单例 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -619,7 +627,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -641,7 +649,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -684,7 +692,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态加载"><span class="nav-number">1.0.1.</span> <span class="nav-text">动态加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment-ActionBar-ToolBar"><span class="nav-number">2.</span> <span class="nav-text">Fragment+ActionBar(ToolBar)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fragment自己实现"><span class="nav-number">2.0.1.</span> <span class="nav-text">Fragment自己实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity实现"><span class="nav-number">2.0.2.</span> <span class="nav-text">Activity实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PS-Activity自身ToolBar"><span class="nav-number">2.0.3.</span> <span class="nav-text">PS: Activity自身ToolBar</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FragmentPagerAdapter-和-FragmentStatePagerAdapter"><span class="nav-number">3.</span> <span class="nav-text">FragmentPagerAdapter 和 FragmentStatePagerAdapter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DialogFragment-替代-Dialog和AlertDialog"><span class="nav-number">4.</span> <span class="nav-text">DialogFragment 替代 Dialog和AlertDialog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment来保存数据"><span class="nav-number">5.</span> <span class="nav-text">Fragment来保存数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#系统帮助数据恢复"><span class="nav-number">5.0.1.</span> <span class="nav-text">系统帮助数据恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自行处理数据变更（activity不重走生命周期-不推荐"><span class="nav-number">5.0.2.</span> <span class="nav-text">自行处理数据变更（activity不重走生命周期, 不推荐)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进阶-Fragment保存AsyncTask"><span class="nav-number">5.0.3.</span> <span class="nav-text">进阶-Fragment保存AsyncTask</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BUGS"><span class="nav-number">6.</span> <span class="nav-text">BUGS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套"><span class="nav-number">7.</span> <span class="nav-text">嵌套</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#WTFs-min-2-fragment-count"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">WTFs/min = 2^fragment count</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态加载"><span class="nav-number">1.0.1.</span> <span class="nav-text">动态加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment-ActionBar-ToolBar"><span class="nav-number">2.</span> <span class="nav-text">Fragment+ActionBar(ToolBar)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fragment自己实现"><span class="nav-number">2.0.1.</span> <span class="nav-text">Fragment自己实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity实现"><span class="nav-number">2.0.2.</span> <span class="nav-text">Activity实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PS-Activity自身ToolBar"><span class="nav-number">2.0.3.</span> <span class="nav-text">PS: Activity自身ToolBar</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FragmentPagerAdapter-和-FragmentStatePagerAdapter"><span class="nav-number">3.</span> <span class="nav-text">FragmentPagerAdapter 和 FragmentStatePagerAdapter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DialogFragment-替代-Dialog和AlertDialog"><span class="nav-number">4.</span> <span class="nav-text">DialogFragment 替代 Dialog和AlertDialog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment来保存数据"><span class="nav-number">5.</span> <span class="nav-text">Fragment来保存数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#系统帮助数据恢复"><span class="nav-number">5.0.1.</span> <span class="nav-text">系统帮助数据恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自行处理数据变更（activity不重走生命周期-不推荐"><span class="nav-number">5.0.2.</span> <span class="nav-text">自行处理数据变更（activity不重走生命周期, 不推荐)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进阶-Fragment保存AsyncTask"><span class="nav-number">5.0.3.</span> <span class="nav-text">进阶-Fragment保存AsyncTask</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BUGS"><span class="nav-number">6.</span> <span class="nav-text">BUGS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套"><span class="nav-number">7.</span> <span class="nav-text">嵌套</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#WTFs-min-2-fragment-count"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">WTFs/min = 2^fragment count</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#findViewByTag"><span class="nav-number">7.0.1.</span> <span class="nav-text">findViewByTag</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="建远程库时最好有 README .md, 别空空荡荡的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-31T16:00:00.000Z">
+<meta property="og:updated_time" content="2017-11-15T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day26 - Git">
 <meta name="twitter:description" content="建远程库时最好有 README .md, 别空空荡荡的">
@@ -354,7 +354,7 @@
 <blockquote>
 <p>区别其他版本控制<br>git 分为工作区, 版本库的暂存区和版本库的分支<br>git 操作的是文件的修改, 而不是文件. 我们在工作区修改过的文件 add 后进入暂存区, 再接着第二次修改后, 如果不 add, 直接 commit, 提交到分支里的是暂存区里的第一次修改</p>
 </blockquote>
-<h3 id="HTTPS-和-SSH"><a href="#HTTPS-和-SSH" class="headerlink" title="HTTPS 和 SSH"></a>HTTPS 和 SSH</h3><p>TODO</p>
+<h2 id="HTTPS-和-SSH"><a href="#HTTPS-和-SSH" class="headerlink" title="HTTPS 和 SSH"></a>HTTPS 和 SSH</h2><p>TODO</p>
 <p>###1. 建库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd [localUrl]   进入本地目录</div><div class="line">git init    初始化git</div><div class="line">git remote add origin [remoteUrl]    关联远程仓库, origin 是远程库的默认代称.</div></pre></td></tr></table></figure></p>
 <p>###2. 拉取<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git pull origin master    拉取master分支里的仓库. master是默认主分支名称</div><div class="line">或者</div><div class="line">git clones [remoteUrl]    直接拉取全部仓库到本地</div></pre></td></tr></table></figure></p>
 <p>###3. 提交<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add xxx</div><div class="line">git commit -m &quot;提交信息&quot;</div><div class="line">git push -u origin master   将本地的master分支推送到origin主机, 同时指定origin为默认主机</div><div class="line">之后的提交不用-u, 直接 git push origin master就行</div></pre></td></tr></table></figure></p>
@@ -366,12 +366,58 @@
 <p>###9. 临时保存现场<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git stash    保存现场</div><div class="line">git stash pop    恢复现场.并删除stash</div><div class="line">或</div><div class="line">git stash apply    恢复现场, 删除需要自己 git stash drop</div><div class="line">git stash list    查看stash列表</div><div class="line">git stash apply stash@&#123;0&#125;    恢复指定stash</div></pre></td></tr></table></figure></p>
 <p>###10. 给提交打 tag<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git tag v1.0    打tag, 默认给最新的commit</div><div class="line">git tag vx 622222    给指定commit 打tag</div><div class="line">git tag    查看tag</div><div class="line">git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164    用 -a 指定 tag 创建说明文字 -m</div><div class="line">git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a    给tag上密钥</div><div class="line">git -d tag v0.1    删除tag</div></pre></td></tr></table></figure></p>
 <p>###11. tag 推送到远程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git push origin v1.0</div><div class="line">git push origin --tags    推送全部 tag</div><div class="line">如果已经推送到远程, 删除tag会麻烦一点</div><div class="line">git tag -d v0.9    先删除本地tag</div><div class="line">git push origin :refs/tags/v0.9    在删除远程tag</div></pre></td></tr></table></figure></p>
-<h4 id="拉取单个文件夹参考"><a href="#拉取单个文件夹参考" class="headerlink" title="拉取单个文件夹参考"></a>拉取单个文件夹<a href="http://jasonkarns.com/blog/subdirectory-checkouts-with-git-sparse-checkout/" target="_blank" rel="external">参考</a></h4><ol>
-<li>初始化新仓库<br>git init <repo><br>cd <repo><br>git remote add –f <name> <url></url></name></repo></repo></li>
-<li>打开 sparse-checkout 特性<br>git config core.sparsecheckout true</li>
-<li>配置.git/info/sparse-checkout, 列出你想要的 checkout 目录<br>echo some/dir/ &gt;&gt; .git/info/sparse-checkout<br>echo another/sub/tree &gt;&gt; .git/info/sparse-checkout</li>
-<li>拉取.(remote == name, branch 通常为 master)<br>git pull <remote> <branch></branch></remote></li>
+<h2 id="拉取单个文件夹参考"><a href="#拉取单个文件夹参考" class="headerlink" title="拉取单个文件夹参考"></a>拉取单个文件夹<a href="http://jasonkarns.com/blog/subdirectory-checkouts-with-git-sparse-checkout/" target="_blank" rel="external">参考</a></h2><ol>
+<li><p>初始化新仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir &lt;repo&gt;</div><div class="line">cd &lt;repo&gt;</div><div class="line">git init   </div><div class="line">git remote add origin &lt;name&gt; &lt;url&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开 sparse-checkout 特性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config core.sparsecheckout true</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置.git/info/sparse-checkout, 列出你想要的 checkout 目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo some/dir/ &gt;&gt; .git/info/sparse-checkout</div><div class="line">echo another/sub/tree &gt;&gt; .git/info/sparse-checkout</div></pre></td></tr></table></figure>
+</li>
+<li><p>拉取.(remote == name, branch 通常为 master)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git pull &lt;remote&gt; &lt;branch&gt;</div></pre></td></tr></table></figure>
+</li>
 </ol>
+<h2 id="Could-not-read-from-remote-repository"><a href="#Could-not-read-from-remote-repository" class="headerlink" title="Could not read from remote repository"></a>Could not read from remote repository</h2><p>两周前还还好的, 今天就不让我push了.<br>原因: 没有匹配正确 ssh 公钥密钥对。</p>
+<ol>
+<li>要么是你没有生成对应的公钥密钥对并将公钥部署在 github 上的对应项目，</li>
+<li>要么就是生成了密钥对并将公钥部署在了 github 上之后，你的本地目录没有将私钥配置上或者是之前有配置，但是过期了。</li>
+</ol>
+<blockquote>
+<p>好像我之前确实只是拉了 但是没有好好配置.</p>
+</blockquote>
+<p>解决: 重新生成ssh密钥</p>
+<ol>
+<li><p>首先，生成一个公钥密钥对：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C “youemail@example.com” -f ~/.ssh/id_rsa</div></pre></td></tr></table></figure>
+<p>此命令可创建 SSH 公钥密钥对，”youemail@example.com”为你自己的邮箱地址，”id_rsa”为公钥密钥名，可修改。 创建后的公钥密钥对存放在本地目录C:\Users[UserName].ssh\文件夹中，mac在用户/xxx/.ssh/, 需要打开finder查看隐藏文件的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 显示隐藏文件</div><div class="line">defaults write com.apple.finder AppleShowAllFiles Yes &amp;&amp; killall Finder</div><div class="line"></div><div class="line"># 不显示隐藏文件</div><div class="line">defaults write com.apple.finder AppleShowAllFiles No &amp;&amp; killall Finder</div></pre></td></tr></table></figure>
+</li>
+<li><p>将公钥部署上github，将（1）中生成的id_rsa.pub文件用文本编辑器打开，复制其中内容。在对应的github项目的“setting”中的“SSH and GPG keys”选择“new SSH key“，将公钥内容粘贴上去，新建一个SSH key。</p>
+</li>
+<li>查看私钥列表的命令为：<figure class="highlight plain"><figcaption><span>-l```，如果输出以上命令出现Could not open a connection to your authentication agent.，(mac跳过这步)则再输入```ssh-agent bash```，即可进入SSH bash。添加私钥的命令：```ssh-add ~/.ssh/id_rsa```，此时再查看私钥列表，若已经成功添加，则可以正常地使用 git push 进行对远程仓库的更新了。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## The agent has no identities.[GithubLink](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#adding-your-ssh-key-to-the-ssh-agent)</div><div class="line">ssh-add 后没config, 又重启了或者多用户了.</div><div class="line">1. 查看系统目前的key</div></pre></td></tr></table></figure></li>
+</ol>
+<p>ssh-add -l<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">如果输出The agent has no identities. 则表示没有代理. 如果有代理则清除之</div></pre></td></tr></table></figure></p>
+<p>ssh-add -D<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2. 给不同的用户添加进代理</div></pre></td></tr></table></figure></p>
+<p>ssh-add ~/.ssh/id_rsa<br>ssh-add ~/.ssh/another # 如果你有多个用户的话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">正确的提示:</div></pre></td></tr></table></figure></p>
+<p>2048 8e:71:ad:88:78:80:b2:d9:e1:2d:1d:e4:be:6b:db:8e /Users/aysee/.ssh/id_rsa (RSA)<br>2048 a7:f4:0d:f1:b1:76:0b:bf:ed:9f:53:8c:3f:4c:f4:d6 /Users/aysee/.ssh/another (RSA)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">如果使用 ssh-add ~/.ssh/id_rsa的时候报如下错误，则需要先运行一下 ssh-agent bash 命令后再执行 ssh-add ...等命令</div></pre></td></tr></table></figure></p>
+<p>Could not open a connection to your authentication agent.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">3. 配置 ~/.ssh/config 文件</div><div class="line"></div><div class="line">如果只有一个账号,就用github官方的解决方案</div></pre></td></tr></table></figure></p>
+<p>Host *<br> AddKeysToAgent yes<br> UseKeychain yes<br> IdentityFile ~/.ssh/id_rsa<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">如果github有多个账号, 如下</div></pre></td></tr></table></figure></p>
+<p>Host github.com<br>HostName github.com<br>User git<br>IdentityFile C:/Users/username/.ssh/id_rsa</p>
+<h1 id="another-company-email-mail-com"><a href="#another-company-email-mail-com" class="headerlink" title="another (company_email@mail.com)"></a>another (company_email@mail.com)</h1><p>Host github-another<br>HostName github.com<br>User git<br>IdentityFile C:/Users/username/.ssh/another<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#### confi文件中常用的字段:</div><div class="line">Host	指定一个别名（alias）</div><div class="line">HostName	服务器主机名</div><div class="line">Port	连接端口</div><div class="line">User	用户名</div><div class="line">IdentityFile	指定密钥文件</div><div class="line">PreferredAuthentications	指定认证方式，通常为 publickey</div><div class="line"></div><div class="line">4. 把私钥加进代理</div></pre></td></tr></table></figure></p>
+<p>ssh-add -K ~/.ssh/id_rsa<br>```</p>
+<h2 id="Use-in-AndroidStudio参考"><a href="#Use-in-AndroidStudio参考" class="headerlink" title="Use in AndroidStudio参考"></a>Use in AndroidStudio<a href="https://as.quanke.name/git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80.html" target="_blank" rel="external">参考</a></h2><p>回退commit: VSC -&gt; Git -&gt; Reset HEAD.<br>其中:</p>
+<ul>
+<li>Reset Type:<ul>
+<li>Mixed: 代码和commit一起回退, 文件都需要再重新add</li>
+<li>Soft: 只是commit回退</li>
+<li>Hard: 撤销清除整个tree. 别怕, 只是 vsc 被换成了 svn, 去 Preference 里改回来就好</li>
+</ul>
+</li>
+<li>To Commit中的直接写”HEAD”是回退到上一个版本, 撤销上一个commit, 需要”HEAD^”.</li>
+</ul>
 <h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><h4 id="Everything-up-to-date"><a href="#Everything-up-to-date" class="headerlink" title="Everything up-to-date"></a>Everything up-to-date</h4><ol>
 <li>没有 git add.</li>
 <li>没有 git commit -m “提交信息”</li>
@@ -384,6 +430,10 @@
 <ul>
 <li><a href="http://www.cnblogs.com/kevingrace/p/6259905.html" target="_blank" rel="external">Everything up-to-date</a></li>
 <li><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013743858312764dca7ad6d0754f76aa562e3789478044000" target="_blank" rel="external">廖雪峰的git</a></li>
+<li><a href="https://doubleray.win/2017/02/21/git-connect/" target="_blank" rel="external">could not read from remote repository </a></li>
+<li><a href="http://www.cnblogs.com/ayseeing/p/4445194.html" target="_blank" rel="external">ssh多用户</a></li>
+<li><a href="http://yysfire.github.io/linux/create-ssh-alias.html" target="_blank" rel="external">ssh配置config</a></li>
+<li><a href="http://yysfire.github.io/linux/create-ssh-alias.html" target="_blank" rel="external">两个ssh账户</a></li>
 </ul>
 </blockquote>
 
@@ -428,8 +478,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/07/Day27-Java回调/" rel="prev" title="Day27 - 回调">
-                Day27 - 回调 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/31/Day28-RecyclerView/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -511,7 +561,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -533,7 +583,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -576,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS-和-SSH"><span class="nav-number">1.</span> <span class="nav-text">HTTPS 和 SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拉取单个文件夹参考"><span class="nav-number">1.1.</span> <span class="nav-text">拉取单个文件夹参考</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#报错"><span class="nav-number"></span> <span class="nav-text">报错</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Everything-up-to-date"><span class="nav-number">0.1.</span> <span class="nav-text">Everything up-to-date</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Couldn’t-find-remote-ref-master"><span class="nav-number">0.2.</span> <span class="nav-text">Couldn’t find remote ref master</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-和-SSH"><span class="nav-number">1.</span> <span class="nav-text">HTTPS 和 SSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉取单个文件夹参考"><span class="nav-number">2.</span> <span class="nav-text">拉取单个文件夹参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Could-not-read-from-remote-repository"><span class="nav-number">3.</span> <span class="nav-text">Could not read from remote repository</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#another-company-email-mail-com"><span class="nav-number"></span> <span class="nav-text">another (company_email@mail.com)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-in-AndroidStudio参考"><span class="nav-number">1.</span> <span class="nav-text">Use in AndroidStudio参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#报错"><span class="nav-number">2.</span> <span class="nav-text">报错</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Everything-up-to-date"><span class="nav-number">2.0.1.</span> <span class="nav-text">Everything up-to-date</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Couldn’t-find-remote-ref-master"><span class="nav-number">2.0.2.</span> <span class="nav-text">Couldn’t find remote ref master</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

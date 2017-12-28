@@ -87,7 +87,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/activity_lifecycle.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/b761a9c324ffc934e11d4132df1a18d2387e6065/Serializable%26Parcelable.png">
-<meta property="og:updated_time" content="2017-10-20T06:51:02.350Z">
+<meta property="og:updated_time" content="2017-12-26T06:33:09.753Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day11 - Activity">
 <meta name="twitter:description" content="Activity 生命周期, 启动模式, Activity栈">
@@ -506,7 +506,7 @@
 <h4 id="Intent-Flag"><a href="#Intent-Flag" class="headerlink" title="Intent.Flag"></a>Intent.Flag</h4><ul>
 <li>Intent.FLAG_ACTIVITY_NEW_TASK<br>单独使用无效果, 需和 taskAffinity 一起使用, 当使用 Intent.FLAG_ACTIVITY_NEW_TASK + taskAffinity 指定非包名的任务站名 == android:launchMode=”singleInstance”</li>
 <li>Intent.FLAG_ACTIVITY_SINGLE_TOP == android:launchMode=”singleTop”</li>
-<li>Intent.FLAG_ACTIVITY_CLEAR_TOP 与 android:launchMode=”singleTask”类似, 但是如果栈顶是自身, 会毁旧建新, 重走生命周期, 而不是 onNewIntent</li>
+<li>Intent.FLAG_ACTIVITY_CLEAR_TOP 与 android:launchMode=”singleTask”类似, 但是如果栈顶是自身, 会毁旧建新, 重走生命周期, 而不是 onNewIntent. 当目标activity已经存在的时候才会干掉其他activity</li>
 <li>Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS<br>具有这个标记的Activity不会出现在Activity的历史列表中.<br>他等同于在xml里面设定 android:excludeFromRecents=”true” 。</li>
 </ul>
 <h3 id="打开其他APP-Link"><a href="#打开其他APP-Link" class="headerlink" title="打开其他APP Link"></a>打开其他APP <a href="http://www.jianshu.com/p/42ae7066f8f3" target="_blank" rel="external">Link</a></h3><h4 id="通过-APP-打开一个-APP"><a href="#通过-APP-打开一个-APP" class="headerlink" title="通过 APP 打开一个 APP"></a>通过 APP 打开一个 APP</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">PackageManager packageManager = getPackageManager();</div><div class="line">    if (checkPackInfo(packname)) &#123;</div><div class="line">        Intent intent = packageManager.getLaunchIntentForPackage(packname);</div><div class="line">        startActivity(intent);</div><div class="line">    &#125; else &#123;</div><div class="line">        Toast.makeText(MainActivity.this, &quot;没有安装&quot; + packname, 1).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 检查包是否存在</div><div class="line">     *</div><div class="line">     * @param packname</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private boolean checkPackInfo(String packname) &#123;</div><div class="line">        PackageInfo packageInfo = null;</div><div class="line">        try &#123;</div><div class="line">            packageInfo = getPackageManager().getPackageInfo(packname, 0);</div><div class="line">        &#125; catch (PackageManager.NameNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return packageInfo != null;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
@@ -669,7 +669,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -691,7 +691,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

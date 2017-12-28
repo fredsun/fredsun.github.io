@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Android,Java," />
+  <meta name="keywords" content="Java,Android," />
 
 
 
@@ -78,7 +78,7 @@
 
 
 <meta name="description" content="回调的简单demo">
-<meta name="keywords" content="Android,Java">
+<meta name="keywords" content="Java,Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day27 - 回调">
 <meta property="og:url" content="http://yoursite.com/2017/11/07/Day27-Java回调/index.html">
@@ -354,7 +354,7 @@
 <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>A类让”有能力”的B类去完成某些事情, A类只负责命令, B类负责具体实施.</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
 <li><p>需要返回值的类创建接口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class A&#123;</div><div class="line">    //1. 创建接口</div><div class="line">    public interface Callback&#123;</div><div class="line">        boolean doSomething();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //2. 创建接口实例</div><div class="line">    private Callback mCallback;</div><div class="line"></div><div class="line">    //3. 给接口实例赋值的方法</div><div class="line">    public void setCallback(Callback callback)&#123;</div><div class="line">        this.mCallback = callback;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //4. 正常使用接口的回调值的地方</div><div class="line">    public void execute()&#123;</div><div class="line">        Log.i(tag, mCallback.doSomething()+&quot;&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class A&#123;</div><div class="line">    //1. 创建接口</div><div class="line">    public interface Callback&#123;</div><div class="line">        boolean doSomething();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //2. 创建接口实例</div><div class="line">    private Callback mCallback;</div><div class="line"></div><div class="line">    //3. 给接口实例赋值的方法</div><div class="line">    //注意: 这句set只会被调用一次, 之后的mCallback都不走这, 所以在这获取值没用</div><div class="line">    public void setCallback(Callback callback)&#123;</div><div class="line">        this.mCallback = callback;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //4. 正常使用接口的回调值的地方</div><div class="line">    public void execute()&#123;</div><div class="line">        Log.i(tag, mCallback.doSomething()+&quot;&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>返回数值的类.<br>创建需要值的类, 并实现接口, 重写接口方法.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class B extends AppCompatActivity implements A.Callback &#123;</div><div class="line">    //1. 创建A的实例</div><div class="line">    private A mA;</div><div class="line">    //2. 实现A里的接口</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        ...</div><div class="line">        A mA = new A();</div><div class="line">        //3. B发起回调, 通过A的实例</div><div class="line">        mA.setCallback(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //4. 实现接口 &amp; 重写方法</div><div class="line">    @Override</div><div class="line">    public boolean doSomething() &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -380,9 +380,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
             <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
         </div>
       
@@ -395,8 +395,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/27/Day26-Git/" rel="next" title="Day26 - Git">
-                <i class="fa fa-chevron-left"></i> Day26 - Git
+              <a href="/2017/10/31/Day28-RecyclerView/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -488,7 +488,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -510,7 +510,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

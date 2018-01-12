@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Preference,onBackPressed()," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="两种创建 PreferenceActivity 的方案">
+<meta name="keywords" content="Android,Preference,onBackPressed()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day29 - Preference">
+<meta property="og:url" content="http://www.fredsun.me/2018/01/12/Day29-Preference/index.html">
+<meta property="og:site_name" content="花花世界">
+<meta property="og:description" content="两种创建 PreferenceActivity 的方案">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-12T09:56:49.433Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Day29 - Preference">
+<meta name="twitter:description" content="两种创建 PreferenceActivity 的方案">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fredsun.me/2018/01/12/Day29-Preference/"/>
+
+
+
+
+
+  <title>Day29 - Preference | 花花世界</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4f019e7db67954cb48d8455dec751768";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花花世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">fred的blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fredsun.me/2018/01/12/Day29-Preference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FredSun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花花世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Day29 - Preference</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T11:56:00+08:00">
+                2018-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/100DaysOfAndroid/" itemprop="url" rel="index">
+                    <span itemprop="name">100DaysOfAndroid</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>两种创建 PreferenceActivity 的方案<br><a id="more"></a></p>
+<h3 id="两种创建-PreferenceActivity-的方案"><a href="#两种创建-PreferenceActivity-的方案" class="headerlink" title="两种创建 PreferenceActivity 的方案"></a>两种创建 PreferenceActivity 的方案</h3><p>简述:</p>
+<ul>
+<li>第一种方案 来自 Android Studio new 出来的 demo.<br>activity 和 fragment 布局都来自R.xml.<br>监听通过 OnPreferenceChangeListener, 对表单选项单独注册监听</li>
+<li><p>第二种方案 来自 github 上的 <a href="https://github.com/TwidereProject/Twidere-Android" target="_blank" rel="external">Twidere</a><br>首先谷歌官方对于PreferenceActivity的<a href="https://developer.android.com/guide/topics/ui/settings.html#Fragment" target="_blank" rel="external">建议</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">如果您在开发针对 Android 3.0（API 级别 11）及更高版本的应用，则应使用 PreferenceFragment 显示 Preference 对象的列表。您可以将 PreferenceFragment 添加到任何 Activity，而不必使用 PreferenceActivity。</div></pre></td></tr></table></figure>
+<p>所以用的 activity 是普通的 xml, 用 listview 实现了列表,<br>fragment布局使用第一种方案的R.xml</p>
+</li>
+</ul>
+<p>先来看第一种</p>
+<p>##第一种方案<br><strong>完全是Android Studio的Demo，只需知道第二种方案用了第一种方案，也就是官方Demo里自带的 R.xml.xxx 的 preference 布局文, 其余可跳过</strong></p>
+<ol>
+<li>资源下新建 xml 文件夹, 新建布局<br>activity的布局:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;preference-headers&gt;</div><div class="line">  &lt;header/&gt;</div><div class="line">  &lt;header/&gt;</div><div class="line">&lt;/preference-headers&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>fragment 的布局框架:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;PreferenceScreen&gt;</div><div class="line">  &lt;PreferenceCategory/&gt;分类标题</div><div class="line">  &lt;Preference 条目</div><div class="line">    title 条目名</div><div class="line">    summary 条目内容/&gt;</div><div class="line">  &lt;Preference/&gt;</div></pre></td></tr></table></figure></p>
+<p>一个具体的 fragment 布局,添加了 key, 用于监听<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;PreferenceScreen xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line">    &lt;SwitchPreference android:title=&quot;节省流量&quot;</div><div class="line">        android:key=&quot;save_data&quot;</div><div class="line">        android:summary=&quot;在使用收费网络时，禁用媒体预览&quot; /&gt;</div><div class="line"></div><div class="line">&lt;/PreferenceScreen&gt;</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>新建Activity(基本)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public class SettingActivity extends PreferenceActivity &#123;</div><div class="line">  //内部嵌套Fragment1</div><div class="line">  public static class NetWorkPreferenceFragment extends PreferenceFragment&#123;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">            super.onCreate(savedInstanceState);</div><div class="line">            addPreferencesFromResource(R.xml.pref_network);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">  //内部嵌套Fragment2</div><div class="line">  public static class AboutMePreferenceFragment extends PreferenceFragment&#123;</div><div class="line">      @Override</div><div class="line">      public void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">          super.onCreate(savedInstanceState);</div><div class="line">          addPreferencesFromResource(R.xml.pref_me);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">  //加入布局</div><div class="line">  @Override</div><div class="line">   public void onBuildHeaders(List&lt;Header&gt; target) &#123;</div><div class="line">       super.onBuildHeaders(target);</div><div class="line">       loadHeadersFromResource(R.xml.pref_headers, target);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   //加入Fragment</div><div class="line">   @Override</div><div class="line">    protected boolean isValidFragment(String fragmentName) &#123;</div><div class="line">        return PreferenceFragment.class.getName().equals(fragmentName)||</div><div class="line">                NetWorkPreferenceFragment.class.getName().equals(fragmentName)||</div><div class="line">                AboutMePreferenceFragment.class.getName().equals(fragmentName);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>加入对偏好修改的监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">//原registerOnSharedPreferenceChangeListener是弱引用注册，会被回收，所以全局变量</div><div class="line">    static Preference.OnPreferenceChangeListener bindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener()&#123;</div><div class="line"></div><div class="line">        //ListPreference 和 RingtonePreference 的 summary 过多，分开处理</div><div class="line">        //stolen from AndroidStudio Sample Project</div><div class="line">        @Override</div><div class="line">        public boolean onPreferenceChange(Preference preference, Object value) &#123;</div><div class="line">            String stringValue = value.toString();</div><div class="line">            if (preference instanceof ListPreference)&#123;</div><div class="line">                // For list preferences, look up the correct display value in</div><div class="line">                // the preference&apos;s &apos;entries&apos; list.</div><div class="line">                ListPreference listPreference = (ListPreference) preference;</div><div class="line">                int index = listPreference.findIndexOfValue(stringValue);</div><div class="line"></div><div class="line">                // Set the summary to reflect the new value.</div><div class="line">                preference.setSummary(</div><div class="line">                        index &gt;= 0</div><div class="line">                                ? listPreference.getEntries()[index]</div><div class="line">                                : null);</div><div class="line">            &#125;else if (preference instanceof RingtonePreference)&#123;</div><div class="line">                // For ringtone preferences, look up the correct display value</div><div class="line">                // using RingtoneManager.</div><div class="line">                if (TextUtils.isEmpty(stringValue)) &#123;</div><div class="line">                    // Empty values correspond to &apos;silent&apos; (no ringtone).</div><div class="line">                    preference.setSummary(R.string.pref_ringtone_silent);</div><div class="line"></div><div class="line">                &#125; else &#123;</div><div class="line">                    Ringtone ringtone = RingtoneManager.getRingtone(</div><div class="line">                            preference.getContext(), Uri.parse(stringValue));</div><div class="line"></div><div class="line">                    if (ringtone == null) &#123;</div><div class="line">                        // Clear the summary if there was a lookup error.</div><div class="line">                        preference.setSummary(null);</div><div class="line">                    &#125; else &#123;</div><div class="line">                        // Set the summary to reflect the new ringtone display</div><div class="line">                        // name.</div><div class="line">                        String name = ringtone.getTitle(preference.getContext());</div><div class="line">                        preference.setSummary(name);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;else &#123;</div><div class="line">                // For all other preferences, set the summary to the value&apos;s</div><div class="line">                // simple string representation.</div><div class="line">                preference.setSummary(stringValue);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>抽出添加监听操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">private static void bindPreferenceSummaryToValue(Preference preference, Boolean isBoolean)&#123;</div><div class="line">        //绑定listener</div><div class="line">        preference.setOnPreferenceChangeListener(bindPreferenceSummaryToValueListener);</div><div class="line">        if (isBoolean)&#123;</div><div class="line">            bindPreferenceSummaryToValueListener.onPreferenceChange(preference,</div><div class="line">                    PreferenceManager</div><div class="line">                            .getDefaultSharedPreferences(preference.getContext())</div><div class="line">                            .getBoolean(preference.getKey(),false));</div><div class="line">        &#125;else &#123;</div><div class="line">            bindPreferenceSummaryToValueListener.onPreferenceChange(preference,</div><div class="line">                    PreferenceManager</div><div class="line">                            .getDefaultSharedPreferences(preference.getContext())</div><div class="line">                            .getString(preference.getKey(),&quot;&quot;));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>给Fragment里的具体key添加监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public static class NetWorkPreferenceFragment extends PreferenceFragment&#123;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">            super.onCreate(savedInstanceState);</div><div class="line">            addPreferencesFromResource(R.xml.pref_network);</div><div class="line">            bindPreferenceSummaryToValue(findPreference(&quot;test_key&quot;), false);</div><div class="line">            bindPreferenceSummaryToValue(findPreference(&quot;save_data&quot;), true);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>接着来看第二种</p>
+<h2 id="第二种方案"><a href="#第二种方案" class="headerlink" title="第二种方案"></a>第二种方案</h2><p>首先致敬 <a href="https://github.com/TwidereProject/Twidere-Android" target="_blank" rel="external">Twidere</a> 项目的完全开源.才得以看到源码, 虽然是kotlin的。。= =<br>以及被我删了部分后转成的java项目<a href="https://github.com/sunxlfred/SettingsDemo" target="_blank" rel="external">Github</a></p>
+<ol>
+<li>构建左侧 listview 的条目 item 的类</li>
+<li>创建左侧 listview 的条目 item 的 xml, 以及点击效果的 selector</li>
+<li>构建 adapter, 把 xml 和创建的 item 类的实体关联起来</li>
+<li>开始 onCreate, 初始化 listview 和条目 item</li>
+<li>构建右侧详细条目Fragment</li>
+<li>补充 onCreate, intent 中如果没指定具体条目, 打开的是第一个详细条目, 并添加左侧 listview的点击监听</li>
+<li>切记!, style 里补充<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;item name=&quot;preferenceTheme&quot;&gt;@style/PreferenceThemeOverlay.v14.Material&lt;/item&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>否则报错 Must specify preferenceTheme in theme</p>
+<ol>
+<li>监听back, log打印sp里存储的设置参数</li>
+<li>进阶 右侧详细条目还需要二次跳转, 重写 onPreferenceStartFragment(注意v7包还是v14包, 和Fragment里的preference一致就行)</li>
+<li>进阶2 back键时判断是 activity 还是 fragment 跳出</li>
+</ol>
+<h4 id="Must-specify-preferenceTheme-in-theme"><a href="#Must-specify-preferenceTheme-in-theme" class="headerlink" title="Must specify preferenceTheme in theme"></a>Must specify preferenceTheme in theme</h4><p>在style里新建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;item name=&quot;preferenceTheme&quot;&gt;@style/PreferenceThemeOverlay.v14.Material&lt;/item&gt;</div></pre></td></tr></table></figure></p>
+<p>针对4.4以下的可能还需另外配置</p>
+<h2 id="关于SharePreference"><a href="#关于SharePreference" class="headerlink" title="关于SharePreference"></a>关于SharePreference</h2><h4 id="getSharedPreferences-name-mode"><a href="#getSharedPreferences-name-mode" class="headerlink" title="getSharedPreferences(name , mode)"></a>getSharedPreferences(name , mode)</h4><p>mode的选择:</p>
+<ol>
+<li>Context.MODE_PRIVATE:</li>
+<li>Context.MODE_WORLD_READABLE: API17后不建议使用, 全局可读文件很危险</li>
+<li>Context.MODE_MULTI_PROCESS: 不要用来跨进程, 还是用ContentProvider</li>
+</ol>
+<h4 id="SharedPreference-的使用-tips参考"><a href="#SharedPreference-的使用-tips参考" class="headerlink" title="SharedPreference 的使用 tips参考"></a>SharedPreference 的使用 tips<a href="http://weishu.me/2016/10/13/sharedpreference-advices/" target="_blank" rel="external">参考</a></h4><ol>
+<li>别存大 key 和 value(一口气加载时会卡住)</li>
+<li>commit在当前线程别在主线程</li>
+<li>别用来跨进程</li>
+<li>不要存放JSON(特殊符号解析浪费时间)</li>
+<li>edit和apply尽量一次搞定</li>
+<li>apply还是commit. 异步commit.</li>
+<li>如何命名一个独立的sp: <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getPreferenceManager().setSharedPreferencesName(&quot;preference&quot;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="OnSharedPreferenceChangeListener"><a href="#OnSharedPreferenceChangeListener" class="headerlink" title="OnSharedPreferenceChangeListener"></a>OnSharedPreferenceChangeListener</h4><ol>
+<li>OnSharedPreferenceChangeListener 和 OnPreferenceChangeListener比较, 前者是 preference 有变化就收到，后者只针对用 onPreferenceChange 绑定过的 key.<a href="https://stackoverflow.com/questions/13321637/whats-different-between-onpreferencechangelistener-and-onsharedpreferencechange" target="_blank" rel="external">参考</a></li>
+<li>OnSharedPreferenceChangeListener 是弱引用, 需要在生命周期里注册监听<a href="http://droidyue.com/blog/2014/11/29/why-onsharedpreferencechangelistener-was-not-called/" target="_blank" rel="external">参考</a></li>
+</ol>
+<h4 id="提交用apply还是commit参考"><a href="#提交用apply还是commit参考" class="headerlink" title="提交用apply还是commit参考"></a>提交用apply还是commit<a href="http://www.cloudchou.com/android/post-988.html" target="_blank" rel="external">参考</a></h4><p>apply 调用 QueuedWork.add(awaitCommit), 如果任务过多, 等待时间过久, 且开始了onPause, 会导致onPause 因为 QueuedWork.waitToFinish()被apply过久而ANR. 最优方案是开启一个线程去 commit.<br>且 commit 有返回值, 可以补救</p>
+<h4 id="Preference-中-inflate-xml-使用-addPreferencesFromResource-redId-还是-setPreferencesFromResource-redId-rootkey"><a href="#Preference-中-inflate-xml-使用-addPreferencesFromResource-redId-还是-setPreferencesFromResource-redId-rootkey" class="headerlink" title="Preference 中 inflate xml 使用 addPreferencesFromResource(redId) 还是 setPreferencesFromResource(redId, rootkey)"></a>Preference 中 inflate xml 使用 addPreferencesFromResource(redId) 还是 setPreferencesFromResource(redId, rootkey)</h4><p>其实没有太大的差别, 虽然官方的PreferenceFragment 是在 onCreate 中调用了 addPreferencesFromResource<a href="https://developer.android.com/reference/android/preference/PreferenceFragment.html" target="_blank" rel="external">链接</a>, 而PreferenceFragmentCompat的demo中, onCreatePreferences 里用的是 setPreferencesFromResource <a href="https://developer.android.com/reference/android/support/v7/preference/PreferenceFragmentCompat.html" target="_blank" rel="external">链接</a>,<br>来看 setPreferencesFromResource 的源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">   super.onCreate(savedInstanceState);</div><div class="line">   final TypedValue tv = new TypedValue();</div><div class="line">   getActivity().getTheme().resolveAttribute(R.attr.preferenceTheme, tv, true);</div><div class="line">   final int theme = tv.resourceId;</div><div class="line">   if (theme == 0) &#123;</div><div class="line">       throw new IllegalStateException(&quot;Must specify preferenceTheme in theme&quot;);</div><div class="line">   &#125;</div><div class="line">   mStyledContext = new ContextThemeWrapper(getActivity(), theme);</div><div class="line">   mPreferenceManager = new PreferenceManager(mStyledContext);</div><div class="line">   mPreferenceManager.setOnNavigateToScreenListener(this);</div><div class="line">   final Bundle args = getArguments();</div><div class="line">   final String rootKey;</div><div class="line">   if (args != null) &#123;</div><div class="line">       rootKey = getArguments().getString(ARG_PREFERENCE_ROOT);</div><div class="line">   &#125; else &#123;</div><div class="line">       rootKey = null;</div><div class="line">   &#125;</div><div class="line">   onCreatePreferences(savedInstanceState, rootKey);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到 rootKey 是根据 oncreate 时传进来的 Bundle 设置的</p>
+<p>那么问题来了, 怎么传进来了, 再来看谷歌的一个例子<a href="https://developer.android.com/reference/android/support/v17/preference/LeanbackPreferenceFragment.html" target="_blank" rel="external">LeanbackPreferenceFragment</a><br>其中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public boolean onPreferenceStartScreen(PreferenceFragment caller, PreferenceScreen pref) &#123;</div><div class="line">    final Fragment f = new PrefsFragment();</div><div class="line">    final Bundle args = new Bundle(1);</div><div class="line">    args.putString(PreferenceFragment.ARG_PREFERENCE_ROOT, pref.getKey());</div><div class="line">    f.setArguments(args);</div><div class="line">    startPreferenceFragment(f);</div><div class="line">    return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过重写 onPreferenceStartScreen 方法, 自己配置了bundle.</p>
+<p><strong>结论:</strong> 从 intent 里传进来 PreferenceFragment.ARG_PREFERENCE_ROOT. 不然就重写 onPreferenceStartScreen</p>
+<p>LeanbackSettingsFragment</p>
+<blockquote>
+<p>参考<br><a href="https://github.com/TwidereProject/Twidere-Android" target="_blank" rel="external">github-Twidere项目</a><br><a href="http://droidyue.com/blog/2014/11/29/why-onsharedpreferencechangelistener-was-not-called/" target="_blank" rel="external">OnSharedPreferenceChangeListeners设计-弱引用</a><br><a href="http://weishu.me/2016/10/13/sharedpreference-advices/" target="_blank" rel="external">SharedPreference使用tips</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Preference/" rel="tag"># Preference</a>
+          
+            <a href="/tags/onBackPressed/" rel="tag"># onBackPressed()</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/05/Day28-find知乎CoordinatorLayout的实现/" rel="next" title="Day28 - find知乎CoordinatorLayout">
+                <i class="fa fa-chevron-left"></i> Day28 - find知乎CoordinatorLayout
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/9950351?s=460&v=4"
+                alt="FredSun" />
+            
+              <p class="site-author-name" itemprop="name">FredSun</p>
+              <p class="site-description motion-element" itemprop="description">上进的懒狗</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/sunxlfred" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#两种创建-PreferenceActivity-的方案"><span class="nav-number">1.</span> <span class="nav-text">两种创建 PreferenceActivity 的方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二种方案"><span class="nav-number"></span> <span class="nav-text">第二种方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Must-specify-preferenceTheme-in-theme"><span class="nav-number">0.1.</span> <span class="nav-text">Must specify preferenceTheme in theme</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于SharePreference"><span class="nav-number"></span> <span class="nav-text">关于SharePreference</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getSharedPreferences-name-mode"><span class="nav-number">0.1.</span> <span class="nav-text">getSharedPreferences(name , mode)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SharedPreference-的使用-tips参考"><span class="nav-number">0.2.</span> <span class="nav-text">SharedPreference 的使用 tips参考</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OnSharedPreferenceChangeListener"><span class="nav-number">0.3.</span> <span class="nav-text">OnSharedPreferenceChangeListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提交用apply还是commit参考"><span class="nav-number">0.4.</span> <span class="nav-text">提交用apply还是commit参考</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Preference-中-inflate-xml-使用-addPreferencesFromResource-redId-还是-setPreferencesFromResource-redId-rootkey"><span class="nav-number">0.5.</span> <span class="nav-text">Preference 中 inflate xml 使用 addPreferencesFromResource(redId) 还是 setPreferencesFromResource(redId, rootkey)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredSun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

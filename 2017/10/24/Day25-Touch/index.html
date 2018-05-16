@@ -86,7 +86,7 @@
 <meta property="og:description" content="TODO View.onTouchEvent的分析.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/c5c84dc629252ce859d95e03bc1caf4fcc80c789/dispatchTouch.png">
-<meta property="og:updated_time" content="2017-11-12T16:00:00.000Z">
+<meta property="og:updated_time" content="2018-04-18T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day25 - Touch">
 <meta name="twitter:description" content="TODO View.onTouchEvent的分析.">
@@ -572,7 +572,17 @@ return false;
 </ol>
 </li>
 </ul>
-<blockquote>
+<h3 id="举🌰"><a href="#举🌰" class="headerlink" title="举🌰:"></a>举🌰:</h3><p>RecyclerView 的 item 中包含自定义 view, 自定义 view 重写了 onTouchEvent 方法.</p>
+<ul>
+<li>手指按下后, 左右滑出多大无影响, <strong>上下滑出自定义 view 自身的宽度时 ACTION_MOVE 被 Recyclerview 拦截.  自定义 View 被触发 ACTION_CANCEL, RecyclerView 之后随手指滑动.</strong></li>
+<li>在给 item 添加了 addOnItemTouchListener, 其中重写了 onItemClick 后</li>
+<li>冲突: 手指快速点击时先触发 OnItemTouchListener. 停在自定义 view 不动后才触发 view 里的onTouchEvent.</li>
+<li>解决:<ul>
+<li><del>方案1</del>: 在自定义 view 里的 DOWN, UP, CANCEL 添加 getParent().requestDisallowInterceptTouchEvent(true/false);<ul>
+<li>缺点: requestDisallowInterceptTouchEvent 同样不仅防止了 OnItemTouchListener, 同样影响了滑出自定义 View 后 Recyclerview 的事件获取, 导致滑出View后RecyclerView滚动的效果不能实现, 需要在 MOVE 里也添加滑出边界时 requestDisallowInterceptTouchEvent(false)</li>
+</ul>
+</li>
+<li>方案2: 不使用 addOnItemTouchListener, 只在内部无监听时才用, 当子 View 需要监听时, 自定义listener, 并通过 Adapter 传给 ViewHolder, 最后给子 View 的onClickListener 进行监听<blockquote>
 <p>参考</p>
 <ul>
 <li><a href="http://blog.csdn.net/chaihuasong/article/details/17499799" target="_blank" rel="external">事件分发系统简述</a></li>
@@ -584,6 +594,10 @@ return false;
 <li><a href="http://www.jianshu.com/p/e99b5e8bd67b" target="_blank" rel="external">图解</a></li>
 </ul>
 </blockquote>
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -626,8 +640,8 @@ return false;
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/27/Day26-Git/" rel="prev" title="Day26 - Git">
-                Day26 - Git <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/07/Day27-Java回调/" rel="prev" title="Day27 - 回调">
+                Day27 - 回调 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -709,7 +723,7 @@ return false;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -731,7 +745,7 @@ return false;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -774,7 +788,7 @@ return false;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件传递图解from"><span class="nav-number">3.</span> <span class="nav-text">事件传递图解from</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件传递简述from"><span class="nav-number">4.</span> <span class="nav-text">事件传递简述from</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#分析1-ViewGroup-onInterceptTouchEvent"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">分析1 ViewGroup.onInterceptTouchEvent</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分析2-ViewGroup-dispatchTransformedTouchEvent"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">分析2 ViewGroup.dispatchTransformedTouchEvent</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-在-view-中的-dispatchTouchEvent"><span class="nav-number">4.0.1.</span> <span class="nav-text">4. 在 view 中的 dispatchTouchEvent</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-number">4.1.</span> <span class="nav-text">注意点:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-from"><span class="nav-number">4.2.</span> <span class="nav-text">总结: from</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-amp-A-from"><span class="nav-number">4.3.</span> <span class="nav-text">Q&A: from</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件传递图解from"><span class="nav-number">3.</span> <span class="nav-text">事件传递图解from</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件传递简述from"><span class="nav-number">4.</span> <span class="nav-text">事件传递简述from</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#分析1-ViewGroup-onInterceptTouchEvent"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">分析1 ViewGroup.onInterceptTouchEvent</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分析2-ViewGroup-dispatchTransformedTouchEvent"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">分析2 ViewGroup.dispatchTransformedTouchEvent</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-在-view-中的-dispatchTouchEvent"><span class="nav-number">4.0.1.</span> <span class="nav-text">4. 在 view 中的 dispatchTouchEvent</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-number">4.1.</span> <span class="nav-text">注意点:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-from"><span class="nav-number">4.2.</span> <span class="nav-text">总结: from</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-amp-A-from"><span class="nav-number">4.3.</span> <span class="nav-text">Q&A: from</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举🌰"><span class="nav-number">4.4.</span> <span class="nav-text">举🌰:</span></a></li></ol></li></ol></div>
             
 
           </div>

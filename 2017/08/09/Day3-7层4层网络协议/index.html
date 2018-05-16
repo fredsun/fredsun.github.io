@@ -87,7 +87,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/%E4%B8%83%E5%B1%82%E7%BD%91%E7%BB%9COSI.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/tcp_ip%E5%8D%8F%E8%AE%AE%E6%A8%A1%E5%9E%8B.png">
-<meta property="og:updated_time" content="2017-10-20T06:14:55.423Z">
+<meta property="og:updated_time" content="2018-04-25T07:18:24.644Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day3 - 7层&#x2F;4层网络协议">
 <meta name="twitter:description" content="现在已经都说四层网络结构了">
@@ -366,6 +366,29 @@
 </ul>
 </li>
 </ul>
+<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><p>作用就是域名解析, 把域名对应到 ip</p>
+<h4 id="Hosts"><a href="#Hosts" class="headerlink" title="Hosts"></a>Hosts</h4><p>保存域名和ip的对应关系</p>
+<h4 id="域名解析链接"><a href="#域名解析链接" class="headerlink" title="域名解析链接"></a>域名解析<a href="http://beginman.cn/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/2016/12/07/dns/" target="_blank" rel="external">链接</a></h4><ul>
+<li>A记录: IP指向, 对于泛域名解析即将该域名所有未指定的子域名都指向一个空间。在“主机名”中填入*，类型为A.</li>
+<li>CNAME: 别名指向,为一个主机设置别名, 比如用github page 来写博客，那么在CNAME文件中写你的域名，如beginman.cn， 然后取解析。那么就问 github.beginman.io 设定了一个叫 beginman.cn的别名，也就是绑定了自己的域名。注意，<strong>CNAME</strong> 的目标主机地址只能使用 <strong>主机名</strong>，不能使用IP地址；主机名前不能有任何其他前缀，如：<a href="http://等是不被允许的；**A记录优先于CNAME记录**。即如果一个主机地址同时存在A记录和CNAME记录，则CNAME记录不生效。" target="_blank" rel="external">http://等是不被允许的；**A记录优先于CNAME记录**。即如果一个主机地址同时存在A记录和CNAME记录，则CNAME记录不生效。</a></li>
+<li>NS记录: 解析服务器列表.<strong>用来表明由哪台服务器对该域名进行解析</strong>。这里的NS记录 <strong>只对子域名</strong> 生效。如用户希望由IP为 xx.xx.xx.xxx 或域名为 ns.mydomain.com 这台服务器来解析 xx.mydomain.com，则需要设置xx.mydomain.com的NS记录。<strong>NS记录优先于A记录。</strong></li>
+</ul>
+<h4 id="请求过程"><a href="#请求过程" class="headerlink" title="请求过程"></a>请求过程</h4><p>1. 用域名请求, 属于 DNS 请求, 在进行 DNS 请求前, 系统会先检查自己的 Hosts 文件中(客户端则是okhttp/volley里的hosts)是否有这个地址的映射关系. 如果有则直接调用这个 IP 地址, 如果没有再向已知的 DNS 服务器提出域名解析. 也就是说 Hosts 解析级别比 DNS 高, 当你的 Hosts 文件里有对应的 IP 时, 它就会直接访问那个 IP, 而不是通过 DNS.<br>当我们直接将谷歌,twiter等网站的ip放入hosts文件后, 就跳过了 DNS 的解析这一步, 不受 GFW 的 DNS 污染了.</p>
+<p>通常的本地 IP 地址是 127.0.0.1</p>
+<h4 id="模拟器无法联网"><a href="#模拟器无法联网" class="headerlink" title="模拟器无法联网"></a>模拟器无法联网</h4><p><strong>重启!!!!</strong><br><a href="http://www.111cn.net/sj/android/89429.htm" target="_blank" rel="external">参考</a><br>浏览器打不开百度, 打得开百度的ip地址的话, 说明DNS解析错误</p>
+<ol>
+<li>查一下:<ul>
+<li>mac 查 ip : 网络 -&gt; 高级 -&gt; TCP/IP 或者 terminal -&gt; ifconfig 中的 inet</li>
+<li>mac 查 DNS: terminal -&gt; cat /etc/resolv.conf</li>
+<li>模拟器: adb shell -&gt; getprop<br>PC机的解析地址一般为192.168.1.1(很可能不是), 模拟器为10.0.2.3</li>
+</ul>
+</li>
+<li>改一下:<ul>
+<li>adb shell 后 -&gt; setprop net.dns</li>
+<li>(然而我自己一直setprop fail….)</li>
+</ul>
+</li>
+</ol>
 
       
     </div>
@@ -491,7 +514,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -513,7 +536,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -556,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#学会了"><span class="nav-number">1.</span> <span class="nav-text">学会了</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#学会了"><span class="nav-number">1.</span> <span class="nav-text">学会了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS"><span class="nav-number">2.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hosts"><span class="nav-number">3.</span> <span class="nav-text">Hosts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#域名解析链接"><span class="nav-number">4.</span> <span class="nav-text">域名解析链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求过程"><span class="nav-number">5.</span> <span class="nav-text">请求过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模拟器无法联网"><span class="nav-number">6.</span> <span class="nav-text">模拟器无法联网</span></a></li></ol></div>
             
 
           </div>

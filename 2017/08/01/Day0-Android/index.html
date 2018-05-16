@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Java,Android," />
+  <meta name="keywords" content="Android,Java," />
 
 
 
@@ -78,7 +78,7 @@
 
 
 <meta name="description" content="版本号/HAL层/UML/抽象/内部类/闭包/AndroidStudioBug">
-<meta name="keywords" content="Java,Android">
+<meta name="keywords" content="Android,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day0 - Android">
 <meta property="og:url" content="http://www.fredsun.me/2017/08/01/Day0-Android/index.html">
@@ -378,7 +378,7 @@
 </tr>
 <tr>
 <td>4.0.3 - 4.0.4</td>
-<td>Ice Cream Sandwich</td>
+<td>Ice Cream Sandwich(推出AndroidDesign)</td>
 <td>15</td>
 <td>0.3%</td>
 </tr>
@@ -408,9 +408,9 @@
 </tr>
 <tr>
 <td>5.0</td>
-<td>Lollipop</td>
+<td>Lollipop(开始MaterialDesign, 14年)</td>
 <td>21</td>
-<td>6.7%</td>
+<td>6.7% </td>
 </tr>
 <tr>
 <td>5.1</td>
@@ -466,8 +466,15 @@
 <td>8</td>
 <td>-</td>
 </tr>
+<tr>
+<td>3.0</td>
+<td>HONEYCOMB</td>
+<td>11</td>
+<td>-</td>
+</tr>
 </tbody>
 </table>
+<h2 id="v4-v7-v13参考"><a href="#v4-v7-v13参考" class="headerlink" title="v4 v7 v13参考"></a>v4 v7 v13<a href="http://stormzhang.com/android/2015/03/29/android-support-library/" target="_blank" rel="external">参考</a></h2><p>让低版本能适应高版本的代码, 向后兼容, v是level, 即level4, level7, level13.<br>完整名字是support-v4.<br>v4: 照顾1.6<br>v7: 照顾2.1, 引入v7就不必引入v4, v7包含v4<br>v13: 照顾3.2, 平板用到</p>
 <h2 id="获取版本号"><a href="#获取版本号" class="headerlink" title="获取版本号"></a>获取版本号</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">   * 获取Android发布的版本</div><div class="line">   */</div><div class="line">  public static String getVersion() &#123;</div><div class="line">      return android.os.Build.VERSION.RELEASE;</div><div class="line">  &#125;</div><div class="line">  /**</div><div class="line">   * 获取SDK的API Level</div><div class="line">   * @return</div><div class="line">   */</div><div class="line">  public static int getSDK() &#123;</div><div class="line">      return android.os.Build.VERSION.SDK_INT;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
 <h2 id="版本号适配"><a href="#版本号适配" class="headerlink" title="版本号适配"></a>版本号适配</h2><p>TODO <a href="http://blog.csdn.net/haovip123/article/details/54618642" target="_blank" rel="external">http://blog.csdn.net/haovip123/article/details/54618642</a></p>
 <h2 id="Android-几层"><a href="#Android-几层" class="headerlink" title="Android 几层"></a>Android 几层</h2><ul>
@@ -529,6 +536,7 @@
 <li>gradle/wrapper/gradle-wrapper.properties 里的 distributionUrl 改成目前项目已有的, 再导入</li>
 </ul>
 </li>
+<li>误删option + center<br> <a href="https://blog.csdn.net/Pioneer_Chang/article/details/77513454" target="_blank" rel="external">参考</a></li>
 </ol>
 <h4 id="Logo"><a href="#Logo" class="headerlink" title="Logo"></a>Logo</h4><ol>
 <li>xxxhdpi 192x192</li>
@@ -536,6 +544,10 @@
 <li>xhdpi 96x96</li>
 <li>hdpi 72x72</li>
 <li>mdpi 48x48</li>
+</ol>
+<h4 id="equals"><a href="#equals" class="headerlink" title="equals"></a>equals</h4><ol>
+<li>null equals ==.<br>== 比较对象时看引用地址.<br>equals()是交给开发者去覆写的, String.equals()覆写了object的equals(), 先 this == obj, 再类型, 转成数组后的大小, 数组中每个字符的判断<br>所以.字符串和对象比较用equals(), 但要注意equals()前的变量是否为空</li>
+<li>TextUtils.isEmpty<br>TextUtils.isEmpty(): if (str == null || str.length() == 0)<br>String.isEmpty(): return count == 0</li>
 </ol>
 <blockquote>
 <p>参考<br><a href="https://developer.android.com/about/dashboards/index.html?hl=zh-cn" target="_blank" rel="external">Google | 信息中心</a><br><a href="http://www.jianshu.com/p/830d0eb44a56" target="_blank" rel="external">简书 | Android-SDK版本号表格</a><br><a href="http://blog.csdn.net/qq_31655965/article/details/54645220" target="_blank" rel="external">CSDN | 重新认识java（四） — 组合、聚合与继承的爱恨情仇</a><br><a href="http://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html" target="_blank" rel="external">CSDN | 看懂UML类图和时序图</a><br><a href="http://www.cnblogs.com/olvo/archive/2012/05/03/2481014.html" target="_blank" rel="external">cnblogs | UML类图关系（泛化 、继承、实现、依赖、关联、聚合、组合）</a></p>
@@ -557,9 +569,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
-          
             <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -661,7 +673,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -683,7 +695,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -726,7 +738,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号latest-10-30-2017-from"><span class="nav-number">1.</span> <span class="nav-text">版本号latest 10/30/2017 from</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取版本号"><span class="nav-number">2.</span> <span class="nav-text">获取版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号适配"><span class="nav-number">3.</span> <span class="nav-text">版本号适配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-几层"><span class="nav-number">4.</span> <span class="nav-text">Android 几层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1的-NestedScrollingParent-外部监听滑动事件"><span class="nav-number">4.0.1.</span> <span class="nav-text">5.1的 NestedScrollingParent(外部监听滑动事件)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-0的权限"><span class="nav-number">4.0.2.</span> <span class="nav-text">6.0的权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知的副标题-API-LEVEL16才能使用"><span class="nav-number">4.0.3.</span> <span class="nav-text">通知的副标题 API LEVEL16才能使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-0-分屏多任务"><span class="nav-number">4.0.4.</span> <span class="nav-text">7.0 分屏多任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-0-api-24-2-0-拆v4库-MotioneventCompat-被-Motionevent-替换"><span class="nav-number">4.0.5.</span> <span class="nav-text">7.0 api-24.2.0 拆v4库, MotioneventCompat 被 Motionevent 替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML图"><span class="nav-number">4.0.6.</span> <span class="nav-text">UML图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#泛化-generalization"><span class="nav-number">4.0.6.1.</span> <span class="nav-text">泛化(generalization)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现-realize"><span class="nav-number">4.0.6.2.</span> <span class="nav-text">实现(realize)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖-dependency"><span class="nav-number">4.0.6.3.</span> <span class="nav-text">依赖(dependency)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关联-association"><span class="nav-number">4.0.6.4.</span> <span class="nav-text">关联(association)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#聚合-aggregation"><span class="nav-number">4.0.6.5.</span> <span class="nav-text">聚合(aggregation)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组合-composition"><span class="nav-number">4.0.6.6.</span> <span class="nav-text">组合(composition)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类和接口"><span class="nav-number">4.0.7.</span> <span class="nav-text">抽象类和接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类"><span class="nav-number">4.0.8.</span> <span class="nav-text">内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包From"><span class="nav-number">4.0.9.</span> <span class="nav-text">闭包From</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AndroidStudio"><span class="nav-number">4.0.10.</span> <span class="nav-text">AndroidStudio</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Logo"><span class="nav-number">4.0.11.</span> <span class="nav-text">Logo</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号latest-10-30-2017-from"><span class="nav-number">1.</span> <span class="nav-text">版本号latest 10/30/2017 from</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v4-v7-v13参考"><span class="nav-number">2.</span> <span class="nav-text">v4 v7 v13参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取版本号"><span class="nav-number">3.</span> <span class="nav-text">获取版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本号适配"><span class="nav-number">4.</span> <span class="nav-text">版本号适配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-几层"><span class="nav-number">5.</span> <span class="nav-text">Android 几层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1的-NestedScrollingParent-外部监听滑动事件"><span class="nav-number">5.0.1.</span> <span class="nav-text">5.1的 NestedScrollingParent(外部监听滑动事件)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-0的权限"><span class="nav-number">5.0.2.</span> <span class="nav-text">6.0的权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知的副标题-API-LEVEL16才能使用"><span class="nav-number">5.0.3.</span> <span class="nav-text">通知的副标题 API LEVEL16才能使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-0-分屏多任务"><span class="nav-number">5.0.4.</span> <span class="nav-text">7.0 分屏多任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-0-api-24-2-0-拆v4库-MotioneventCompat-被-Motionevent-替换"><span class="nav-number">5.0.5.</span> <span class="nav-text">7.0 api-24.2.0 拆v4库, MotioneventCompat 被 Motionevent 替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML图"><span class="nav-number">5.0.6.</span> <span class="nav-text">UML图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#泛化-generalization"><span class="nav-number">5.0.6.1.</span> <span class="nav-text">泛化(generalization)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现-realize"><span class="nav-number">5.0.6.2.</span> <span class="nav-text">实现(realize)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖-dependency"><span class="nav-number">5.0.6.3.</span> <span class="nav-text">依赖(dependency)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关联-association"><span class="nav-number">5.0.6.4.</span> <span class="nav-text">关联(association)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#聚合-aggregation"><span class="nav-number">5.0.6.5.</span> <span class="nav-text">聚合(aggregation)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组合-composition"><span class="nav-number">5.0.6.6.</span> <span class="nav-text">组合(composition)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类和接口"><span class="nav-number">5.0.7.</span> <span class="nav-text">抽象类和接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部类"><span class="nav-number">5.0.8.</span> <span class="nav-text">内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包From"><span class="nav-number">5.0.9.</span> <span class="nav-text">闭包From</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AndroidStudio"><span class="nav-number">5.0.10.</span> <span class="nav-text">AndroidStudio</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Logo"><span class="nav-number">5.0.11.</span> <span class="nav-text">Logo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#equals"><span class="nav-number">5.0.12.</span> <span class="nav-text">equals</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

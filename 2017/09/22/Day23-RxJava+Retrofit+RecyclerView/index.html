@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="Retrofit 上手">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-06T09:19:57.836Z">
+<meta property="og:updated_time" content="2018-04-23T14:40:03.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day23 - Retrofit + RxJava + RecyclerView">
 <meta name="twitter:description" content="Retrofit 上手">
@@ -353,7 +353,10 @@
         <p>Retrofit 上手<br><a id="more"></a></p>
 <p>PS:</p>
 <h5 id="如何解决上游速度过快的方式"><a href="#如何解决上游速度过快的方式" class="headerlink" title="如何解决上游速度过快的方式"></a>如何解决上游速度过快的方式</h5><p>rxjava1.x 解决上游速度过快的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Observable.from(stringList).observeOn(Schedulers.io()).subscribe(new Subscriber&lt;String&gt;() &#123;</div><div class="line">@Override</div><div class="line">public void onStart() &#123;</div><div class="line">request(1); // 取出一条新数据</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onCompleted() &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onError(Throwable e) &#123;</div><div class="line">e.printStackTrace();</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onNext(ResourceUpdate resourceUpdate) &#123;</div><div class="line">// TODO 执行下游处理操作</div><div class="line">...</div><div class="line"></div><div class="line">request(1); // 取出一条新数据</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<h2 id="RxJava"><a href="#RxJava" class="headerlink" title="RxJava"></a>RxJava</h2><h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><h4 id="1-上游-Observable-Flowable"><a href="#1-上游-Observable-Flowable" class="headerlink" title="1. 上游 Observable/Flowable"></a>1. 上游 Observable/Flowable</h4><h4 id="2-下游-多种"><a href="#2-下游-多种" class="headerlink" title="2. 下游 多种"></a>2. 下游 多种</h4><p>无参的subscribe()表示下游不关心数据类型<br>带Cunsumer的表示下游只关心 onNext, 其他的装没看见<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">* public final Disposable subscribe() &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError, Action onComplete) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError, Action onComplete, Consumer&lt;? super Disposable&gt; onSubscribe) &#123;&#125;</div><div class="line">* public final void subscribe(Observer&lt;? super T&gt; observer) &#123;&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="RxJava"><a href="#RxJava" class="headerlink" title="RxJava"></a>RxJava</h2><blockquote>
+<p>单词解释<br>Observable -&gt; 能看到的 / 被观察者<br>Observer 观察者<br>Subscribe 订购/报名参加<br>Flowable 流动性<br>Consumer 消费者<br>Emitter 发射器</p>
+</blockquote>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><h4 id="1-上游-Observable-Flowable"><a href="#1-上游-Observable-Flowable" class="headerlink" title="1. 上游 Observable/Flowable"></a>1. 上游 Observable/Flowable</h4><h4 id="2-下游-多种"><a href="#2-下游-多种" class="headerlink" title="2. 下游 多种"></a>2. 下游 多种</h4><p>无参的subscribe()表示下游不关心数据类型<br>带Cunsumer的表示下游只关心 onNext, 其他的装没看见<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">* public final Disposable subscribe() &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError, Action onComplete) &#123;&#125;</div><div class="line">* public final Disposable subscribe(Consumer&lt;? super T&gt; onNext, Consumer&lt;? super Throwable&gt; onError, Action onComplete, Consumer&lt;? super Disposable&gt; onSubscribe) &#123;&#125;</div><div class="line">* public final void subscribe(Observer&lt;? super T&gt; observer) &#123;&#125;</div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>上有和下游之间可以添加各种参数</p>
 </blockquote>
@@ -566,7 +569,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -588,7 +591,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

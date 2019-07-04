@@ -85,20 +85,20 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布  仿知乎CoordinatorLayout的完整实现">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/showRelationship.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2470338-40a68daa8057e683.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_list.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_detail.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/d6707c8c2b90e0af077cb44fbd063ea2c2b987e2/findzhihu_findFrameInterceptLayout.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/findzhihu_find0x7f0400be.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_find2130968766.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_fragmentpaging.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/find_zhihu_list.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/find_zhihu_detail.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/d6707c8c2b90e0af077cb44fbd063ea2c2b987e2/findzhihu_findFrameInterceptLayout.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/findzhihu_find0x7f0400be.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/find_find2130968766.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/find_zhihu_fragmentpaging.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/showRelationship.jpg">
 <meta property="og:updated_time" content="2017-12-05T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day28 - find知乎CoordinatorLayout">
 <meta name="twitter:description" content="本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布  仿知乎CoordinatorLayout的完整实现">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fredsun/RES/master/showRelationship.jpg">
 
 
 
@@ -363,7 +363,7 @@
         <ul>
 <li>本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布</li>
 </ul>
-<p>仿知乎CoordinatorLayout的完整实现<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg" alt=""><br><a id="more"></a></p>
+<p>仿知乎CoordinatorLayout的完整实现<br><img src="https://raw.githubusercontent.com/fredsun/RES/master/showRelationship.jpg" alt=""><br><a id="more"></a></p>
 <blockquote>
 <p>tips:<br>CoordinatorLayout(协调员布局)能实现一种类似协调视图之间改变效果的布局</p>
 </blockquote>
@@ -448,7 +448,7 @@
 <li>目的: <del>查看知乎Fragment页的behavior如何实现的</del> 拿到详情和首页Fragment的xml和java文件</li>
 </ul>
 </li>
-<li><p><strong>用 Hierarchy View 拿到 view 的 id</strong><br>模拟器打开app, 进入首页的一个回答下, 用 Hierarchy View (在Android Studio自带的tool -&gt; Android Device Monitor) 发现是 CoordinatorLayout 包着 NonSwipeableViewPager + +ZHFrameLayout + ZHTabLayout , 之后进入详情页也是替换了 NonSwipeableViewPager 里的 FrameLayout.<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_list.png" alt=""><br>activity_main的效果如上图, 此时的FrameLayout显示的是首页ListFragment<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_detail.png" alt=""><br>上图是FrameLayout显示的是回答详情DetailFragment</p>
+<li><p><strong>用 Hierarchy View 拿到 view 的 id</strong><br>模拟器打开app, 进入首页的一个回答下, 用 Hierarchy View (在Android Studio自带的tool -&gt; Android Device Monitor) 发现是 CoordinatorLayout 包着 NonSwipeableViewPager + +ZHFrameLayout + ZHTabLayout , 之后进入详情页也是替换了 NonSwipeableViewPager 里的 FrameLayout.<br><img src="https://raw.githubusercontent.com/fredsun/RES/master/find_zhihu_list.png" alt=""><br>activity_main的效果如上图, 此时的FrameLayout显示的是首页ListFragment<br><img src="https://raw.githubusercontent.com/fredsun/RES/master/find_zhihu_detail.png" alt=""><br>上图是FrameLayout显示的是回答详情DetailFragment</p>
 <blockquote>
 <p><strong>疑问1</strong>: 等等, 只有<strong>一个</strong> CoordinatorLayout?<br>之前猜的是有<strong>多个</strong>CoordinatorLayout啊?</p>
 <p>常规使用下, CoordinatorLayout 的子view的子view，只能跟着上一级view整体实现协调, 即使AppBarLayout, 协调的效果也是固定的几种</p>
@@ -457,19 +457,19 @@
 </ol>
 <p>所以知乎 Fragment 里底部的view和头部的toolbar是不依赖 CoordinatorLayout 进行协调的?<br>还是先找到Activity和Fragment.java文件吧</p>
 <ol>
-<li><strong>根据 view 的 id 来找在哪些 xml 用到了它</strong><br>接下来我们用之前反编译好的资源开始寻找, 根据第1步, 我们看到了一个看似根布局的view, FrameInterceptLayout. 那就在res/layout里搜索下. 果然用到 FrameInterceptLayout 的地方不是很多. 而这 fragment_pager 和fragment_pager_2 看起来很可疑.<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/d6707c8c2b90e0af077cb44fbd063ea2c2b987e2/findzhihu_findFrameInterceptLayout.png" alt=""></li>
-<li><p><strong>根据 xml 的 id 来找在哪些 java 文件里用到了它</strong><br>那接下来看下哪些地方用到了「fragment_pager」, 通过<a href="http://www.wjdiankong.cn/android%E9%80%86%E5%90%91%E4%B9%8B%E6%97%85-%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%A9%E5%99%A8apktool%E5%92%8Cjadx%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8A%E9%94%99%E8%AF%AF%E7%BA%A0/" target="_blank" rel="external">Android逆向之旅</a> 可以得出: apk被反编译后会产生一个至关重要的 <strong>public.xml</strong> 文件, 就在res/values/public.xml下, 打开后搜一下, 哈, 找到你了, <del>面码</del>, <strong>0x7f0400be</strong> 和 <strong>0x7f0400bf</strong>.<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/findzhihu_find0x7f0400be.png" alt=""><br>但是这是俩 <strong>十六进制</strong> 的东西啊. 对, <a href="http://www.wjdiankong.cn/android%E9%80%86%E5%90%91%E4%B9%8B%E6%97%85-%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%A9%E5%99%A8apktool%E5%92%8Cjadx%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8A%E9%94%99%E8%AF%AF%E7%BA%A0/" target="_blank" rel="external">Android逆向之旅</a>里也告诉我们怎么看 <strong>0x7f0400be</strong>:</p>
+<li><strong>根据 view 的 id 来找在哪些 xml 用到了它</strong><br>接下来我们用之前反编译好的资源开始寻找, 根据第1步, 我们看到了一个看似根布局的view, FrameInterceptLayout. 那就在res/layout里搜索下. 果然用到 FrameInterceptLayout 的地方不是很多. 而这 fragment_pager 和fragment_pager_2 看起来很可疑.<br><img src="https://raw.githubusercontent.com/fredsun/RES/d6707c8c2b90e0af077cb44fbd063ea2c2b987e2/findzhihu_findFrameInterceptLayout.png" alt=""></li>
+<li><p><strong>根据 xml 的 id 来找在哪些 java 文件里用到了它</strong><br>那接下来看下哪些地方用到了「fragment_pager」, 通过<a href="http://www.wjdiankong.cn/android%E9%80%86%E5%90%91%E4%B9%8B%E6%97%85-%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%A9%E5%99%A8apktool%E5%92%8Cjadx%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8A%E9%94%99%E8%AF%AF%E7%BA%A0/" target="_blank" rel="external">Android逆向之旅</a> 可以得出: apk被反编译后会产生一个至关重要的 <strong>public.xml</strong> 文件, 就在res/values/public.xml下, 打开后搜一下, 哈, 找到你了, <del>面码</del>, <strong>0x7f0400be</strong> 和 <strong>0x7f0400bf</strong>.<br><img src="https://raw.githubusercontent.com/fredsun/RES/master/findzhihu_find0x7f0400be.png" alt=""><br>但是这是俩 <strong>十六进制</strong> 的东西啊. 对, <a href="http://www.wjdiankong.cn/android%E9%80%86%E5%90%91%E4%B9%8B%E6%97%85-%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%A9%E5%99%A8apktool%E5%92%8Cjadx%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8A%E9%94%99%E8%AF%AF%E7%BA%A0/" target="_blank" rel="external">Android逆向之旅</a>里也告诉我们怎么看 <strong>0x7f0400be</strong>:</p>
 <blockquote>
 <p>这里可以看到，一个id字段，都有对应的类型，名称，和id值的<br>而这里的id值是一个整型值，8个字节；由三部分组成的：<br>PackageId+TypeId+EntryId<br>PackageId：是包的Id值，Android中如果是第三方应用的话，这个值默认就是0x7F，系统应用的话就是0x01，具体我们可以后面看aapt源码得知，他占用两个字节。<br>TypeId：是资源的类型Id值，一般Android中有这几个类型：attr，drawable，layout，dimen，string，style等，而且这些类型的值是从1开始逐渐递增的，而且顺序不能改变，attr=0x01，drawable=0x02….他占用两个字节。<br>EntryId：是在具体的类型下资源实体的id值，从0开始，依次递增，他占用四个字节。</p>
 </blockquote>
-<p> 那就用计算器转换一下, 拿到十进制的 2130968766 和 2130968767<br> 然后打开Luyten(替代JD_GUI, 有些文件JD_GUI打开后是一片空白). 打开一个jar文件, 先搜索一下 2130968766, 找到了.<br> <img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_find2130968766.png" alt=""></p>
+<p> 那就用计算器转换一下, 拿到十进制的 2130968766 和 2130968767<br> 然后打开Luyten(替代JD_GUI, 有些文件JD_GUI打开后是一片空白). 打开一个jar文件, 先搜索一下 2130968766, 找到了.<br> <img src="https://raw.githubusercontent.com/fredsun/RES/master/find_find2130968766.png" alt=""></p>
 <blockquote>
 <p>看到databinding感叹下, 原来知乎早就上了databinding.</p>
 </blockquote>
 <p> 不过我们要的是下面这个com/zhihu/app/ui/fragment/b/i.class…<br> 找到了这句话</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public View a(final LayoutInflater layoutInflater, final ViewGroup viewGroup, final Bundle bundle) &#123;</div><div class="line">    this.b = android.databinding.e.a(layoutInflater, 2130968766, viewGroup, false);</div><div class="line">    return this.b.h();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p> 可以猜到这句话就是 fragment 的 onCreateView 啦<br>这就拿到了主页Fragment的java文件和xml文件了.<br>同理拿到了 详情页的ZHObservableWebView, 首页列表的ZHRecyclerView extends ObservableRecyclerView. 这个频繁出现的ObservableXXXView 根据包名, 可以找到这个项目<a href="https://github.com/ksoichiro/Android-ObservableScrollView" target="_blank" rel="external">ksoichiro/Android-ObservableScrollView</a></p>
-<p>当然了, 如果在第1步的HierarchyView里能找到特殊的id的view可以直接搜索, 比如详情页可以靠fragment_paging_layout搜到.详情页的view是fragment_paging.xml, 如下图<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/find_zhihu_fragmentpaging.png" alt=""></p>
+<p>当然了, 如果在第1步的HierarchyView里能找到特殊的id的view可以直接搜索, 比如详情页可以靠fragment_paging_layout搜到.详情页的view是fragment_paging.xml, 如下图<br><img src="https://raw.githubusercontent.com/fredsun/RES/master/find_zhihu_fragmentpaging.png" alt=""></p>
 <p>破案了! 结合疑问1, 可以得出:<br>知乎的 Fragment 们的协调不是通过 CoordinatorLayout 的 behavior, 而是使用了观察者模式的开源项目.</p>
 <h5 id="总结一下-省略了过程"><a href="#总结一下-省略了过程" class="headerlink" title="总结一下(省略了过程):"></a>总结一下(省略了过程):</h5><ol>
 <li>MainActivity 的底部 TabLayout 使用的是 CoordinatorLayout 的 layout_behavior</li>
@@ -477,7 +477,7 @@
 <li>首页详情DetailFragment 的顶部和底部是 ZHObservableWebView 控制 xml文件是 fragment_pager, Java 文件在com/zhihu/app/ui/fragment/b/i.class</li>
 </ol>
 <p>为啥首页详情页这么肯定是 ZHObservableWebView 控制的呢, 因为在Luyten里查看到的知乎源码中重写了<code>onScrollChange</code> 方法, 多返回了int l, t, oldl, oldt 四个参数, 而我自己在写的时候发现也需要这四个参数才方便实现结果.</p>
-<p>大致效果如图:<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/showRelationship.jpg" alt=""></p>
+<p>大致效果如图:<br><img src="https://raw.githubusercontent.com/fredsun/RES/master/showRelationship.jpg" alt=""></p>
 </li>
 </ol>
 <h3 id="具体Demo-地址"><a href="#具体Demo-地址" class="headerlink" title="具体Demo 地址"></a>具体Demo <a href="https://github.com/sunxlfred/FindZhihu" target="_blank" rel="external">地址</a></h3><p>核心部分原理描述:<br>从 MainActivity 的 ListFragment 切换到 DetailFragment 时, 把 ListFragment 的 toolbar 和 MainActivity 的 tabLayout 恢复原样(先GONE掉).<br>从 DetailFragment 切换回 ListFragment 时, 直接VISIBLE 底部tabLayout.</p>
@@ -730,7 +730,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

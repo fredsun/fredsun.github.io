@@ -85,12 +85,12 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="Retrofit 初探">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/0e2ef92b1884ee5e6f798a9efdc2572817c7bc30/retrofit_request.png">
-<meta property="og:updated_time" content="2017-10-20T07:28:28.589Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/0e2ef92b1884ee5e6f798a9efdc2572817c7bc30/retrofit_request.png">
+<meta property="og:updated_time" content="2019-07-04T07:57:29.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day22 - Retrofit">
 <meta name="twitter:description" content="Retrofit 初探">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/0e2ef92b1884ee5e6f798a9efdc2572817c7bc30/retrofit_request.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fredsun/RES/0e2ef92b1884ee5e6f798a9efdc2572817c7bc30/retrofit_request.png">
 
 
 
@@ -361,7 +361,7 @@
 <p>Manifest<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;</div></pre></td></tr></table></figure></p>
 <h3 id="2-创建接受服务器返回的数据的类"><a href="#2-创建接受服务器返回的数据的类" class="headerlink" title="2. 创建接受服务器返回的数据的类"></a>2. 创建接受服务器返回的数据的类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Translation &#123;</div><div class="line">        private int status;</div><div class="line"></div><div class="line">    private content content;</div><div class="line">    private static class content &#123;</div><div class="line">        private String from;</div><div class="line">        private String to;</div><div class="line">        private String vendor;</div><div class="line">        private String out;</div><div class="line">        private int errNo;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //定义 输出返回数据 的方法</div><div class="line">    public void show() &#123;</div><div class="line">        System.out.println(status);</div><div class="line">        System.out.println(content.from);</div><div class="line">        System.out.println(content.to);</div><div class="line">        System.out.println(content.vendor);</div><div class="line">        System.out.println(content.out);</div><div class="line">        System.out.println(content.errNo);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="3-创建用于描述网络请求的接口"><a href="#3-创建用于描述网络请求的接口" class="headerlink" title="3. 创建用于描述网络请求的接口"></a>3. 创建用于描述网络请求的接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public interface GetRequest_Interface &#123;</div><div class="line"></div><div class="line"> @GET(&quot;ajax.php?a=fy&amp;f=auto&amp;t=auto&amp;w=hello%20world&quot;)</div><div class="line">    Call&lt;Translation&gt; getCall();</div><div class="line">    // 注解里传入 网络请求 的部分URL地址</div><div class="line">    // Retrofit把网络请求的URL分成了两部分：一部分放在Retrofit对象里，另一部分放在网络请求接口里</div><div class="line">    // 如果接口里的url是一个完整的网址，那么放在Retrofit对象里的URL可以忽略</div><div class="line">    // getCall()是接受网络请求数据的方法</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-1-接口拆分"><a href="#3-1-接口拆分" class="headerlink" title="3.1 接口拆分"></a>3.1 接口拆分</h4><p><img src="https://raw.githubusercontent.com/sunxlfred/RES/0e2ef92b1884ee5e6f798a9efdc2572817c7bc30/retrofit_request.png" alt=""></p>
+<h4 id="3-1-接口拆分"><a href="#3-1-接口拆分" class="headerlink" title="3.1 接口拆分"></a>3.1 接口拆分</h4><p><img src="https://raw.githubusercontent.com/fredsun/RES/0e2ef92b1884ee5e6f798a9efdc2572817c7bc30/retrofit_request.png" alt=""></p>
 <h3 id="4-创建-Retrofit-对象"><a href="#4-创建-Retrofit-对象" class="headerlink" title="4. 创建 Retrofit 对象"></a>4. 创建 Retrofit 对象</h3><h4 id="4-1-数据解析器-Converter"><a href="#4-1-数据解析器-Converter" class="headerlink" title="4.1 数据解析器(Converter)"></a>4.1 数据解析器(Converter)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Retrofit retrofit = new Retrofit.Builder()</div><div class="line">        .baseUrl(&quot;http://fy.iciba.com/&quot;) // 设置 网络请求 Url</div><div class="line">        .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析(记得加入依赖)</div><div class="line">        .build();</div></pre></td></tr></table></figure>
 <table>
 <thead>
@@ -649,7 +649,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

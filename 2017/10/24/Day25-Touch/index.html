@@ -85,12 +85,12 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="TODO View.onTouchEvent的分析.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/c5c84dc629252ce859d95e03bc1caf4fcc80c789/dispatchTouch.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/c5c84dc629252ce859d95e03bc1caf4fcc80c789/dispatchTouch.png">
 <meta property="og:updated_time" content="2018-04-18T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day25 - Touch">
 <meta name="twitter:description" content="TODO View.onTouchEvent的分析.">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/c5c84dc629252ce859d95e03bc1caf4fcc80c789/dispatchTouch.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fredsun/RES/c5c84dc629252ce859d95e03bc1caf4fcc80c789/dispatchTouch.png">
 
 
 
@@ -373,7 +373,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="事件传递图解from"><a href="#事件传递图解from" class="headerlink" title="事件传递图解from"></a>事件传递图解<a href="http://www.jianshu.com/p/e99b5e8bd67b" target="_blank" rel="external">from</a></h2><p>如下是在某个 ViewGroup 用 intercept 拦截了 Down事件. 然后在 onTouchEvent 时又被上一层的 onTouchEvent 消费的情况<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/c5c84dc629252ce859d95e03bc1caf4fcc80c789/dispatchTouch.png" alt=""></p>
+<h2 id="事件传递图解from"><a href="#事件传递图解from" class="headerlink" title="事件传递图解from"></a>事件传递图解<a href="http://www.jianshu.com/p/e99b5e8bd67b" target="_blank" rel="external">from</a></h2><p>如下是在某个 ViewGroup 用 intercept 拦截了 Down事件. 然后在 onTouchEvent 时又被上一层的 onTouchEvent 消费的情况<br><img src="https://raw.githubusercontent.com/fredsun/RES/c5c84dc629252ce859d95e03bc1caf4fcc80c789/dispatchTouch.png" alt=""></p>
 <h2 id="事件传递简述from"><a href="#事件传递简述from" class="headerlink" title="事件传递简述from"></a>事件传递简述<a href="http://blog.csdn.net/chaihuasong/article/details/17499799" target="_blank" rel="external">from</a></h2><p>当手指触摸到屏幕, 系统就会调用相应的 View 的 <figure class="highlight plain"><figcaption><span>并传入一系列 action.</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">当有多个层级的 View, 在父层级允许的情况下, 这个 action 会传递到最底层的 View, 所以 touch 事件默认最先调用的是最底层的 View 的 ```onTouchEvent```. 如果 View 的 ```onTouchEvent``` 接收到某个 touch action 并做了处理, 最后有两种返回方式,</div><div class="line">  * return true 会告诉系统, 当前的 View 需要处理这次的 touch 事件, 以后系统发出的 ACTION_MOVE, ACTION_UP 还是需要继续监听并接收的. 而且这次的action已经被消费掉了, 父层是不可能触发 ```onTouchEvent()```.</div><div class="line">&gt;所以, 每一个action 最多只能由一个 onTouchEvent 返回 true.</div><div class="line"></div><div class="line">  * 如果return false, 便会通知系统, 当前 view 不关心这一次的 touch 事件, 此时这个 action 会传向父级, 调用父级的 ```onTouchEvent()```. 但是这一次 touch 事件发出的任何 action, 该 view 都不会再接收, ```onTouchEvent```在这一次的 touch 事件中再也不会触发了, 也就是说一旦 view 返回false, 那么之后的 ACTION_MOVE, ACTION_UP 等 action 都不会再传入这个 View. 但是下一次 touch 事件的 action 还是会传进来.</div><div class="line"></div><div class="line">前面说了, 底层的 view 能够接收这次事件有一个前提条件: 在父层级允许的情况下. 假设不改变父层级的 dispatch 方法, 系统在调用底层的 ```onTouchEvent``` 之前会先调用父View 的 ```onInterceptTouchEvent```方法判断, 父层View是不是要截获本次touch事件之后的 action.</div><div class="line">  * 如果 ```onInterceptTouchEvent``` 返回了 true, 那么本次touch事件之后的所有 action 不会再向深层 View 传递,  统统传给父层View 的 ```onTouchEvent```. 就是说父层已经截获了这次 touch 事件的后续所有 action. 这些 action 也不再询问 ```onInterceptTouchEvent```, 在这次的 touch 事件之后发出的 action, ```onInterceptTouchEvent``` 不会再调用, 直到下一次touch事件的到来.</div><div class="line">  * 如果 ```onInterceptTouchEvent``` 返回了 false, 那么本次 action 将会传送给更深层的view, 并且之后的每一次 action 都会询问父层的 ```onInterceptTouchEvent``` 需不需要截获本次 touch 事件. 只有 ViewGroup 才有 ```onInterceptTouchEvent ```, 因为一个普通的 view 肯定是位于最深层的view,  touch事件能传到这里已经是最后一站了. 肯定会调用View 的 onTouchEvent.</div><div class="line">对于底层的 view, 有一种方法可以阻止父层截获 touch 事件, 就是调用 ```getParent.requestDisallowInterceptTouchEvent(true)``` 方法.</div><div class="line"></div><div class="line"></div><div class="line">## 事件传递详述</div><div class="line">#### 一. 当按下屏幕, 点击事件最先传到的是 Activity 的 dispatchTouchEvent()</div></pre></td></tr></table></figure></p>
 <pre><code>public boolean dispatchTouchEvent(MotionEvent ev) {
     if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -808,7 +808,7 @@ return false;
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

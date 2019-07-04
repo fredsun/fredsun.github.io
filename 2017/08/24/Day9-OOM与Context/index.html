@@ -85,12 +85,12 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="OOM举例分析">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/cd4f1d60d6b590d9762116bf08db0d9f48cc7e8b/context.png">
-<meta property="og:updated_time" content="2018-05-14T22:26:36.664Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/cd4f1d60d6b590d9762116bf08db0d9f48cc7e8b/context.png">
+<meta property="og:updated_time" content="2019-07-04T07:57:29.605Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day9 - OOM + Context">
 <meta name="twitter:description" content="OOM举例分析">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/cd4f1d60d6b590d9762116bf08db0d9f48cc7e8b/context.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fredsun/RES/cd4f1d60d6b590d9762116bf08db0d9f48cc7e8b/context.png">
 
 
 
@@ -360,7 +360,7 @@
 </ul>
 <h1 id="第一种-布局的锅"><a href="#第一种-布局的锅" class="headerlink" title="第一种 布局的锅"></a>第一种 布局的锅</h1><p>最初学习创建 Fragment, 在 inflate 时, 往往会忘记第三个参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">inflate（int resources,  当前布局D</div><div class="line">         ViewGroup root, 根布局G</div><div class="line">         boolean attachToRoot 是否依赖根布局G）,</div></pre></td></tr></table></figure></p>
 <p>而去使用了两个参数的方法, 即第三个参数为true, 当new Fragment时 (多为 viewPager 添加Fragment), 会报 OOM, 没有特殊情况, attachToRoot 置为 false</p>
-<h1 id="第二种-Context-和-非静态内部类"><a href="#第二种-Context-和-非静态内部类" class="headerlink" title="第二种 Context 和 非静态内部类"></a>第二种 Context 和 非静态内部类</h1><h3 id="什么是-Context"><a href="#什么是-Context" class="headerlink" title="什么是 Context"></a>什么是 Context</h3><p>四大组件中 Activity, Service, 甚至 Application 的创建都离不开 Context<br>Context是一个抽象类, 提供了应用环境全局信息的接口, 它允许获取以应用为特征的资源和类型.<br>就是说通过它我们可以进行应用程序级别的操作(获取资源, 启动 activity, service, 接收intent),<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/cd4f1d60d6b590d9762116bf08db0d9f48cc7e8b/context.png" alt=""><br>context的子类是实现子类 ContextImpl 和 包装子类 ContextWrapper, 虽然 Activity, Application, service 都是 ContextWrapper 的子类, 但是它们的初始化过程都需要创建 ContextImpl 对象, 由 ContextImpl 对象实现Context中的方法.</p>
+<h1 id="第二种-Context-和-非静态内部类"><a href="#第二种-Context-和-非静态内部类" class="headerlink" title="第二种 Context 和 非静态内部类"></a>第二种 Context 和 非静态内部类</h1><h3 id="什么是-Context"><a href="#什么是-Context" class="headerlink" title="什么是 Context"></a>什么是 Context</h3><p>四大组件中 Activity, Service, 甚至 Application 的创建都离不开 Context<br>Context是一个抽象类, 提供了应用环境全局信息的接口, 它允许获取以应用为特征的资源和类型.<br>就是说通过它我们可以进行应用程序级别的操作(获取资源, 启动 activity, service, 接收intent),<br><img src="https://raw.githubusercontent.com/fredsun/RES/cd4f1d60d6b590d9762116bf08db0d9f48cc7e8b/context.png" alt=""><br>context的子类是实现子类 ContextImpl 和 包装子类 ContextWrapper, 虽然 Activity, Application, service 都是 ContextWrapper 的子类, 但是它们的初始化过程都需要创建 ContextImpl 对象, 由 ContextImpl 对象实现Context中的方法.</p>
 <h3 id="一个应用中有几个context"><a href="#一个应用中有几个context" class="headerlink" title="一个应用中有几个context"></a>一个应用中有几个context</h3><p>应用中 Context 的数量 = Activity 的数量 + Service 的数量 + 1（Application 的数量),</p>
 <h3 id="Context的作用域"><a href="#Context的作用域" class="headerlink" title="Context的作用域"></a>Context的作用域</h3><p>由于Context的具体实例都是由 ContextImpl 实现的, 因此在绝大多数场景下, Activity, Service 和 Application的context是可以通用的.<br>不过也有特殊的情况, 比如 Android 规定 Activity 和 Dialog 不能凭空出现, 一个Activity 的启动必须建立在另一个 Activity 的基础之上, 实现回退栈结构. Dialog 也必须实现在 Activity 之上, System 级的 Dialog 除外</p>
 <ul>
@@ -620,7 +620,7 @@ ResourcesCompat.getDrawable(getResources(), R.drawable.name, anotherTheme);
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

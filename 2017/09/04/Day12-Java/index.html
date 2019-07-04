@@ -85,12 +85,12 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="值传递和引用传递, String可再次赋值? Lambda">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png">
-<meta property="og:updated_time" content="2017-10-20T06:53:04.437Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png">
+<meta property="og:updated_time" content="2019-07-04T07:57:29.605Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day12 - Java">
 <meta name="twitter:description" content="值传递和引用传递, String可再次赋值? Lambda">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fredsun/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png">
 
 
 
@@ -395,13 +395,13 @@
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">一个能放水果以及一切水果派生类的盘子.它和```Plate&lt;Apple&gt;```的区别就是</div><div class="line">```Plate&lt;? extends Fruit&gt;``` 是 ```Plate&lt;Apple&gt;``` 和 ```Plate&lt;Fruit&gt;```的基类</div><div class="line">直接好处是可以用苹果盘子给水果盘子赋值了</div><div class="line">```Plate&lt;? extends Fruit&gt; = Plate&lt;Apple&gt;(new Apple());</div></pre></td></tr></table></figure>
 <p>  如果把Fruit和Apple的例子扩展一下,</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Food&#123;&#125;;</div><div class="line"></div><div class="line">class Fruit extends Food&#123;&#125;</div><div class="line">class Meat extends Food&#123;&#125;</div><div class="line"></div><div class="line">class Apple extends Fruit&#123;&#125;</div><div class="line">class Apple extends Fruit&#123;&#125;</div><div class="line">class Pork extends Meat&#123;&#125;</div><div class="line">class Beef extends Meat&#123;&#125;</div><div class="line"></div><div class="line">class RedApple extends Apple&#123;&#125;</div><div class="line">class GreenApple extends Apple&#123;&#125;</div></pre></td></tr></table></figure>
-<p>  上界通配符的范围是<br>  <img src="https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png" alt=""></p>
+<p>  上界通配符的范围是<br>  <img src="https://raw.githubusercontent.com/fredsun/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fextend.png" alt=""></p>
 </li>
 </ul>
 <ol>
 <li><p>下界通配符</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Plate&lt;? super Fruit&gt;</div></pre></td></tr></table></figure>
-<p> 一个能放水果以及一切水果基类的盘子, <figure class="highlight plain"><figcaption><span>super Fruit>``` 是 ```Plate<fruit>```的基类, 但不是 ```Plate<apple>``` 的基类,</apple></fruit></span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    下界通配符的范围是</div><div class="line">    ![](https://raw.githubusercontent.com/sunxlfred/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fsuper.png)</div><div class="line"></div><div class="line">4. 副作用</div><div class="line">    容器的部分功能会失效</div><div class="line">    盘子容器具有get和set的方法</div></pre></td></tr></table></figure></p>
+<p> 一个能放水果以及一切水果基类的盘子, <figure class="highlight plain"><figcaption><span>super Fruit>``` 是 ```Plate<fruit>```的基类, 但不是 ```Plate<apple>``` 的基类,</apple></fruit></span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    下界通配符的范围是</div><div class="line">    ![](https://raw.githubusercontent.com/fredsun/RES/e2954ad50c818ed46d3acf64ab0cd51ba64b1f10/%3Fsuper.png)</div><div class="line"></div><div class="line">4. 副作用</div><div class="line">    容器的部分功能会失效</div><div class="line">    盘子容器具有get和set的方法</div></pre></td></tr></table></figure></p>
 <p> class Plate<t>{<br>   private T item;<br>   public Plate(T t){item = t;}<br>   public void set(T t){item = t;}<br>   public T get(){return item;}<br> }  </t></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* 4.1 上界&lt;? extends T&gt;不能往里存, 只能往外取</div><div class="line">    set 方法会失效, 但 get 方法有效</div></pre></td></tr></table></figure>
 <p> Plate&lt;? extends Fruit&gt; p = new Plate<apple>(new Apple());<br> //不能存入元素<br> p.set(new Fruit()); //ERROR<br> p.set(new Apple()); //ERROR</apple></p>
@@ -641,7 +641,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

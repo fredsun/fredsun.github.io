@@ -85,13 +85,13 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="Activity 生命周期, 启动模式, Activity栈">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/activity_lifecycle.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/b761a9c324ffc934e11d4132df1a18d2387e6065/Serializable%26Parcelable.png">
-<meta property="og:updated_time" content="2017-12-26T06:33:09.753Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/master/activity_lifecycle.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/b761a9c324ffc934e11d4132df1a18d2387e6065/Serializable%26Parcelable.png">
+<meta property="og:updated_time" content="2019-07-04T07:57:29.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day11 - Activity">
 <meta name="twitter:description" content="Activity 生命周期, 启动模式, Activity栈">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/master/activity_lifecycle.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fredsun/RES/master/activity_lifecycle.png">
 
 
 
@@ -354,7 +354,7 @@
 
       
         <p>Activity 生命周期, 启动模式, Activity栈<br><a id="more"></a></p>
-<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p><img src="https://raw.githubusercontent.com/sunxlfred/RES/master/activity_lifecycle.png" alt=""></p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p><img src="https://raw.githubusercontent.com/fredsun/RES/master/activity_lifecycle.png" alt=""></p>
 <ul>
 <li>onCreate();</li>
 <li>onStart(); 可见,</li>
@@ -527,7 +527,7 @@
 </li>
 <li><p>Parcelable<br>android提供的, 为了IPC(进程间通信机制)而设计 parcel, 原理是将对象分解, 分解后的每一部分Intent都可以直接使用自己实现了封送和解封不需要反射, 数据也存在Native内存, 但是它无法很好的持久化保存数据,</p>
 </li>
-<li>对比:<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/b761a9c324ffc934e11d4132df1a18d2387e6065/Serializable%26Parcelable.png" alt=""></li>
+<li>对比:<br><img src="https://raw.githubusercontent.com/fredsun/RES/b761a9c324ffc934e11d4132df1a18d2387e6065/Serializable%26Parcelable.png" alt=""></li>
 </ul>
 <h3 id="onNewIntent"><a href="#onNewIntent" class="headerlink" title="onNewIntent"></a>onNewIntent</h3><p>singleTask等模式, 如果 Activity 还在任务栈, 且没被销毁, 则会调用 onNewIntent, 否则还是走onCreate.<br>onNewIntent(intent)中的intent是此次的intent, 但是getIntent 是上一次的intent.</p>
 <blockquote>
@@ -754,7 +754,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

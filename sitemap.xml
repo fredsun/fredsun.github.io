@@ -2,9 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.fredsun.me/2017/08/31/Day11-Activity/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.607Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/09/05/Day13-%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1IPC/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.607Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/08/23/Day8-Fragment%E6%87%92%E5%8A%A0%E8%BD%BD+ViewPager+TabLayout/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.607Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/09/18/Day18-Activity+DecorView/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.606Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/09/04/Day12-Java/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.605Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/09/11/Day15-View/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.605Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.fredsun.me/2017/08/24/Day9-OOM%E4%B8%8EContext/</loc>
     
-    <lastmod>2018-05-14T22:26:36.664Z</lastmod>
+    <lastmod>2019-07-04T07:57:29.605Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/09/22/Day22-Retrofit/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.604Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/08/09/Day3-7%E5%B1%824%E5%B1%82%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.604Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/08/25/Day10-idea,maven,spring%20boot,vim/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.604Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/09/22/Day20-%E6%B2%89%E6%B5%B8%E5%BC%8F%E7%8A%B6%E6%80%81%E6%A0%8F/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.604Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.fredsun.me/2017/09/13/Day17-Application%E5%92%8CActivity%E7%9A%84onCreate/</loc>
+    
+    <lastmod>2019-07-04T07:57:29.604Z</lastmod>
     
   </url>
   
@@ -12,13 +89,6 @@
     <loc>http://www.fredsun.me/2018/04/25/Day31-Room/</loc>
     
     <lastmod>2018-04-25T14:36:26.603Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/08/09/Day3-7%E5%B1%824%E5%B1%82%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</loc>
-    
-    <lastmod>2018-04-25T07:18:24.644Z</lastmod>
     
   </url>
   
@@ -51,30 +121,9 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/09/22/Day20-%E6%B2%89%E6%B5%B8%E5%BC%8F%E7%8A%B6%E6%80%81%E6%A0%8F/</loc>
-    
-    <lastmod>2018-01-28T16:21:27.969Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.fredsun.me/2018/01/12/Day29-Preference/</loc>
     
     <lastmod>2018-01-12T10:00:56.941Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/09/18/Day18-Activity+DecorView/</loc>
-    
-    <lastmod>2017-12-28T08:20:48.032Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/08/23/Day8-Fragment%E6%87%92%E5%8A%A0%E8%BD%BD+ViewPager+TabLayout/</loc>
-    
-    <lastmod>2017-12-28T08:19:28.493Z</lastmod>
     
   </url>
   
@@ -86,21 +135,14 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/08/31/Day11-Activity/</loc>
-    
-    <lastmod>2017-12-26T06:33:09.753Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/12/14/Day29-Kotlin/</loc>
+    <loc>http://www.fredsun.me/2017/12/14/Day30-Gradle/</loc>
     
     <lastmod>2017-12-13T16:00:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/12/14/Day30-Gradle/</loc>
+    <loc>http://www.fredsun.me/2017/12/14/Day29-Kotlin/</loc>
     
     <lastmod>2017-12-13T16:00:00.000Z</lastmod>
     
@@ -156,13 +198,6 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/09/22/Day22-Retrofit/</loc>
-    
-    <lastmod>2017-10-20T07:28:28.589Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.fredsun.me/2017/09/22/Day21-%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/</loc>
     
     <lastmod>2017-10-20T07:26:47.450Z</lastmod>
@@ -177,13 +212,6 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/09/13/Day17-Application%E5%92%8CActivity%E7%9A%84onCreate/</loc>
-    
-    <lastmod>2017-10-20T07:16:14.723Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.fredsun.me/2017/09/12/Day16-6%E5%A4%A7%E5%8E%9F%E5%88%99%E5%92%8C23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     
     <lastmod>2017-10-20T07:12:53.824Z</lastmod>
@@ -191,37 +219,9 @@
   </url>
   
   <url>
-    <loc>http://www.fredsun.me/2017/09/11/Day15-View/</loc>
-    
-    <lastmod>2017-10-20T07:10:06.378Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.fredsun.me/2017/09/07/Day14-Activity%E5%8A%A8%E7%94%BB/</loc>
     
     <lastmod>2017-10-20T07:00:51.499Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/09/05/Day13-%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1IPC/</loc>
-    
-    <lastmod>2017-10-20T06:58:36.500Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/09/04/Day12-Java/</loc>
-    
-    <lastmod>2017-10-20T06:53:04.437Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.fredsun.me/2017/08/25/Day10-idea,maven,spring%20boot,vim/</loc>
-    
-    <lastmod>2017-10-20T06:49:32.443Z</lastmod>
     
   </url>
   

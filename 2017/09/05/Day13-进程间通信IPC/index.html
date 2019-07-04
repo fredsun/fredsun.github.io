@@ -85,12 +85,12 @@
 <meta property="og:site_name" content="花花世界">
 <meta property="og:description" content="Serializable 和 Parcelable到底谁快, 各自是如何实现的, Intent能传多少数据">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunxlfred/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServer.png">
-<meta property="og:updated_time" content="2017-10-20T06:58:36.500Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/fredsun/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServer.png">
+<meta property="og:updated_time" content="2019-07-04T07:57:29.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day13 - 进程间通信">
 <meta name="twitter:description" content="Serializable 和 Parcelable到底谁快, 各自是如何实现的, Intent能传多少数据">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunxlfred/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServer.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fredsun/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServer.png">
 
 
 
@@ -354,10 +354,10 @@
       
         <p>Serializable 和 Parcelable到底谁快, 各自是如何实现的, Intent能传多少数据<br><a id="more"></a></p>
 <h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>进程有自己的内存地址, 一个进程中的1000地址可能在另一个进程中是10000, java的引用本质上还是内存地址, 如果要传递一个类的实例, 还需要传递方法等等, 方法是独立与类对象存在的, 所以到另一个进程中去引用同一个方法就错了, 还是因为独立内存地址的原因.<br>Android中Activity之间并不能保证两个Activity在同一个进程中, 比如一个APP调用系统打电话功能, 就是两个进程, 不同进程是不共享资源的, 所以需要进程间通信</p>
-<h3 id="Binder-From"><a href="#Binder-From" class="headerlink" title="Binder From"></a>Binder <a href="http://www.jianshu.com/p/04a034cbbc27" target="_blank" rel="external">From</a></h3><p>在 Android 开机过程中, Android 会初始化系统的各种service, 并将这些service 向 ServiceManager 注册, 客户端想要得到具体的 Service , 直接向 ServiceManager 要即可.<br>客户端先向 ServiceManager 查询想要得到具体的 Service 引用, 然后通过这个引用向具体的服务端发送请求, 服务端执行完成就返回.<br><img src="https://raw.githubusercontent.com/sunxlfred/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServer.png" alt=""><br>图来自[<a href="http://www.jianshu.com/p/04a034cbbc27" target="_blank" rel="external">http://www.jianshu.com/p/04a034cbbc27</a>]</p>
+<h3 id="Binder-From"><a href="#Binder-From" class="headerlink" title="Binder From"></a>Binder <a href="http://www.jianshu.com/p/04a034cbbc27" target="_blank" rel="external">From</a></h3><p>在 Android 开机过程中, Android 会初始化系统的各种service, 并将这些service 向 ServiceManager 注册, 客户端想要得到具体的 Service , 直接向 ServiceManager 要即可.<br>客户端先向 ServiceManager 查询想要得到具体的 Service 引用, 然后通过这个引用向具体的服务端发送请求, 服务端执行完成就返回.<br><img src="https://raw.githubusercontent.com/fredsun/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServer.png" alt=""><br>图来自[<a href="http://www.jianshu.com/p/04a034cbbc27" target="_blank" rel="external">http://www.jianshu.com/p/04a034cbbc27</a>]</p>
 <p>服务端跨进程的类都要继承Binder类, 我们所持有的Binder引用, 并不是实际真实的远程Binder对象, 我们的引用在 Binder 驱动的时候还要做一次映射.设备驱动跟我们引用对象找到对应的远程进程.</p>
 <blockquote>
-<p>客户端要调用远程对象函数时, 只需把数据写入Parcel, 在调用所持有的Binder引用的<figure class="highlight plain"><figcaption><span>transact函数执行过程中会把参数, 标志符(标记远程对象及其函数)等数据放到Client的共享内存, Binder驱动会从Client的共享内存中, 并通过远程进程执行```onTransact()```函数, 远程进程 Binder 对象执行完成后, 将得到的写入自己的共享内存, Binder 驱动再将远程进程的共享内存数据拷贝到客户端的共享内存, 并唤醒客户端的进程.</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">所以别在主线程去调用远程函数, 防止 ANR</div><div class="line"></div><div class="line">![](https://raw.githubusercontent.com/sunxlfred/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServerByBinder.png)</div></pre></td></tr></table></figure></p>
+<p>客户端要调用远程对象函数时, 只需把数据写入Parcel, 在调用所持有的Binder引用的<figure class="highlight plain"><figcaption><span>transact函数执行过程中会把参数, 标志符(标记远程对象及其函数)等数据放到Client的共享内存, Binder驱动会从Client的共享内存中, 并通过远程进程执行```onTransact()```函数, 远程进程 Binder 对象执行完成后, 将得到的写入自己的共享内存, Binder 驱动再将远程进程的共享内存数据拷贝到客户端的共享内存, 并唤醒客户端的进程.</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">所以别在主线程去调用远程函数, 防止 ANR</div><div class="line"></div><div class="line">![](https://raw.githubusercontent.com/fredsun/RES/da524229240c54ab812fa2edb10c38e9a6796f4c/clientRequestServerByBinder.png)</div></pre></td></tr></table></figure></p>
 </blockquote>
 <p>//获取WindowManager服务引用<br>       WindowManager wm = (WindowManager)getSystemService(getApplication().WINDOW_SERVICE);<br>//布局参数layoutParams相关设置略…<br>       View view= LayoutInflater.from(getApplication()).inflate(R.layout.activity_main, null);<br>//添加view<br>       wm.addView(view, img.getLayoutParams());<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;getSystemService(getApplication().WINDOW_SERVICE);函数内部原理就是向ServiceManager查询标识符为getApplication().WINDOW_SERVICE的远程对象的引用。即WindowManager对象的引用，这个引用的真正实现是WindowManager的某个代理。得到这个引用后，在调用addView时，真正的实现是在代理里面，代理把参数打包到Parcel对象中，然后调用transact函数（该函数继承自Binder），再触发Binder驱动的一系列调用过程</div><div class="line">作者：huachao1001</div><div class="line">链接：http://www.jianshu.com/p/04a034cbbc27</div><div class="line">來源：简书</div><div class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</div><div class="line">### getSystemService 时发生了什么 [From](http://blog.csdn.net/xyh269/article/details/52789737)</div><div class="line"></div><div class="line"></div><div class="line">1. getSystemService调用的到 ContextWrapper 的 getSystemService:</div></pre></td></tr></table></figure></p>
 <p>@Override<br>public Object getSystemService(String name) {<br>    return mBase.getSystemService(name);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">2. mBase 为Context的实现类 ContextImpl, 它的getSystemService:</div></pre></td></tr></table></figure></p>
@@ -720,7 +720,7 @@ synchronized (cache) {
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
